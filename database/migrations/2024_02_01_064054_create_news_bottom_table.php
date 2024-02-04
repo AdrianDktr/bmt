@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('news_bottom', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->longText('isi');
+            $table->string('judul_bawah');
+            $table->longText('berita');
             $table->date('tanggal_terbit');
-            $table->string('thumbnail_path')->nullable();
+            $table->foreignId('penulis_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
     }

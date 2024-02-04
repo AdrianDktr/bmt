@@ -12,8 +12,8 @@ class NewsController extends Controller
 {
     public function index()
     {
-        $newsbottom = NewsBottom::all();
         $news = News::all();
+        $newsbottom = NewsBottom::all();
         return View::make('news.index-news', compact('news', 'newsbottom'));
     }
 
@@ -114,6 +114,55 @@ class NewsController extends Controller
         return redirect()->back();
     }
 
+
+
+    // newsbottom
+    public function create2(){
+        $users = User::all();
+        return view('admin.create-newsbottom', compact('users'));
+    }
+
+    public function store2(Request $request){
+        $request->validate([
+            'judul_bawah' => 'required',
+            'berita' => 'required',
+            'penulis_id' => 'required',
+            'tanggal_terbit' => 'required|date_format:Y-m-d',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+        ], [
+            'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
+            'thumbnail.required' => 'File thumbnail harus diunggah.',
+            'thumbnail.image' => 'File thumbnail harus berupa gambar.',
+            'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
+        ]);
+
+        $file = $request->file('thumbnail');
+        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+        $path =$file->storeAs('/assets/img2/thumbnail2',$imageFileName);
+        $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
+       $store= NewsBottom::create([
+            'judul_bawah' => $request->judul_bawah,
+            'berita' => $request->berita,
+            'penulis_id' => $request->penulis_id,
+            'tanggal_terbit' => $request->tanggal_terbit,
+            'thumbnail' => $imageFileName,
+        ]);
+
+
+
+        return redirect()->route('index_news')->with('success', 'Data berhasil diperbarui.');
+    }
+
+
+    public function show2(NewsBottom $newsbottom){
+
+        return view('news.show-newsbottom',compact('newsbottom'));
+    }
+
+    public function edit2( NewsBottom $newsbottom){
+        $users=User::all();
+        return view('admin.edit-newsbottom',compact('newsbottom','users'));
+    }
 
 }
 

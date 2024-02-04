@@ -10,11 +10,11 @@ class NewsBottom extends Model
     use HasFactory;
     protected $fillable =
     [
-        'judul',
-        'isi',
+        'judul_bawah',
+        'berita',
         'penulis_id',
         'tanggal_terbit',
-        'thumbnail_path'
+        'thumbnail'
     ];
     protected $table = 'news_bottom';
 }

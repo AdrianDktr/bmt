@@ -65,7 +65,7 @@
 <script>
     $(document).ready(function() {
         $('#berita').summernote({
-            placeholder: 'Hello Bootstrap 5',
+            placeholder: 'masukan berita',
             tabsize: 2,
             height: 300 // Sesuaikan dengan kebutuhan
         });

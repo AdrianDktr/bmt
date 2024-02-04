@@ -23,17 +23,25 @@ Auth::routes();
 
 //news
 Route::get('/', [Newscontroller::class, 'index'])->name('index_news');
+
 Route::get('/show-news/{news}', [Newscontroller::class, 'show'])->name('news-show');
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 
 
 Route::middleware(['admin'])->group(function(){
-
+    //news
     Route::get('/admin/create-news', [Newscontroller::class, 'create'])->name('news-create');
     Route::post('/admin/store-news', [Newscontroller::class, 'store'])->name('news-store');
     Route::get('/admin/edit-news/{news}', [Newscontroller::class, 'edit'])->name('news-edit');
     Route::patch('/admin/update-news/{news}', [Newscontroller::class, 'update'])->name('news-update');
     Route::delete('/admin/delete-news/{news}', [Newscontroller::class, 'delete'])->name('news-delete');
+
+    // news bottom
+    Route::get('/create2', [NewsController::class, 'create2'])->name('create_news_bottom');
+    Route::post('/store2', [NewsController::class, 'store2'])->name('store_news_bottom');
+
+
+
 
 
 });

@@ -7,6 +7,7 @@
 
     <title>BMT</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/BMT2.png') }}">
     <!-- Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="dns-prefetch" href="//fonts.bunny.net">
@@ -49,7 +50,7 @@
                                     <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
 
                                     <!-- Link untuk Create Bottom News -->
-                                    <a class="dropdown-item" href="{{ route('news-create') }}">Create Bottom News</a>
+                                    <a class="dropdown-item" href="{{ route('create_news_bottom') }}">Create Bottom News</a>
 
                                     <div class="dropdown-divider"></div>
 
@@ -76,9 +77,13 @@
         <footer class="bg-dark text-white text-center py-3">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center">
                         <a href="https://www.facebook.com/profile.php?id=61555838824419&sfnsn=wiwspwa&mibextid=RUbZ1f" target="_blank" class="text-white">
-                            <img src="{{ asset('assets/img/fblogo.png') }}" alt="Facebook" height="20">
+                            <img src="{{ asset('assets/img/fblogo.png') }}" alt="Facebook" height="30">
+                        </a>
+
+                        <a href="https://www.youtube.com/channel/YOUR_YOUTUBE_CHANNEL_ID" target="_blank" class="text-white" style="margin-left: 10px">
+                            <img src="{{ asset('assets/img/youtube.png') }}" alt="YouTube" height="30">
                         </a>
                     </div>
                     <div class="col-md-12">
