@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('News Bottom') }}</div>
 
                 <div class="card-body" >
-                    <form action="{{ route('store_news_bottom') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('store-news-bottom') }}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group">
@@ -50,12 +50,6 @@
         </div>
     </div>
 </div>
-<!-- Load jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- Load Bootstrap 5 CSS and JS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Load Summernote CSS and JS for Bootstrap 5 -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.css" rel="stylesheet">

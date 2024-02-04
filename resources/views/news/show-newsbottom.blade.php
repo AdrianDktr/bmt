@@ -6,14 +6,14 @@
             <div class="card">
                 <div class="card-header">{{ __('Show News') }}</div>
                     <div class="card-body text-center overflow-auto">
-                        <h1>{{ $news->judul }}</h1>
+                        <h1>{{ $newsbottom->judul_bawah }}</h1>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left;">
-                            {!! $news->isi !!}
+                            {!! $newsbottom->berita !!}
                         </div>
                     </div>
                     <p>
-                        Posted by {{ optional($news->penulis)->name }} on {{ \Carbon\Carbon::parse($news->tanggal_terbit)->format('F d, Y') }}
+                        Posted by {{ optional($newsbottom->penulis)->name }} on {{ \Carbon\Carbon::parse($newsbottom->tanggal_terbit)->format('F d, Y') }}
                     </p>
                 </div>
             </div>

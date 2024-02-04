@@ -7,6 +7,7 @@ use App\Models\News;
 use App\Models\NewsBottom;
 use App\Models\User;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
@@ -39,21 +40,47 @@ class NewsController extends Controller
             'thumbnail_path.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
         ]);
 
+        // Proses gambar thumbnail
         $file = $request->file('thumbnail_path');
-        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
-        $path =$file->storeAs('public/assets/img/thumbnail',$imageFileName);
-        $file->move(public_path('assets/img/thumbnail'), $imageFileName);
+        $imageFileName = time() . '_' . $request->judul . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/assets/img/thumbnail', $imageFileName);
 
+        // Simpan berita ke dalam database
         $news = News::create([
             'judul' => $request->judul,
-            'isi' => $request->isi,
+            'isi' => '', // Teks Summernote tidak disimpan di sini, kita akan proses terpisah
             'penulis_id' => $request->penulis_id,
             'tanggal_terbit' => $request->tanggal_terbit,
             'thumbnail_path' => $imageFileName,
         ]);
 
+        // Proses teks Summernote untuk gambar dan menyimpannya terpisah
+        $dom = new \DomDocument();
+        $dom->loadHtml($request->isi, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $img) {
+            $data = $img->getAttribute('src');
+            list($type, $data) = explode(';', $data);
+            list(, $data) = explode(',', $data);
+            $data = base64_decode($data);
+            $imageFileName = time() . '_' . Str::random(10) . '.png'; // Nama file gambar acak
+            $path = public_path('assets/img/berita') . '/' . $imageFileName;
+            file_put_contents($path, $data);
+
+            // Simpan path atau URL gambar ke dalam kolom 'isi'
+            $img->removeAttribute('src');
+            $img->setAttribute('src', asset('assets/img/berita/' . $imageFileName));
+        }
+
+        // Simpan teks Summernote yang telah dimodifikasi dengan URL gambar ke dalam kolom 'isi'
+        $news->isi = $dom->saveHTML();
+        $news->save();
+
         return redirect()->route('index_news')->with('success', 'Data berhasil disimpan.');
     }
+
 
     public function show(News $news){
 

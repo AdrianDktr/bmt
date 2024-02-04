@@ -25,6 +25,7 @@ Auth::routes();
 Route::get('/', [Newscontroller::class, 'index'])->name('index_news');
 
 Route::get('/show-news/{news}', [Newscontroller::class, 'show'])->name('news-show');
+Route::get('/show-news-bottom/{newsbottom}', [Newscontroller::class, 'show2'])->name('news-bottom-show');
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 
 
@@ -37,11 +38,10 @@ Route::middleware(['admin'])->group(function(){
     Route::delete('/admin/delete-news/{news}', [Newscontroller::class, 'delete'])->name('news-delete');
 
     // news bottom
-    Route::get('/create2', [NewsController::class, 'create2'])->name('create_news_bottom');
-    Route::post('/store2', [NewsController::class, 'store2'])->name('store_news_bottom');
-
-
-
-
+    Route::get('/admin/create-news-bottom', [NewsController::class, 'create2'])->name('create-news-bottom');
+    Route::post('/admin/store-news-bottom', [NewsController::class, 'store2'])->name('store-news-bottom');
+    Route::get('/admin/edit-news-bottom/{newsbottom}', [Newscontroller::class, 'edit2'])->name('news-bottom-edit');
+    Route::patch('/admin/update-news-bottom/{newsbottom}', [Newscontroller::class, 'update2'])->name('news-bottom-update');
+    Route::delete('/admin/delete-news-bottom/{newsbottom}', [Newscontroller::class, 'delete2'])->name('news-bottom-delete');
 
 });

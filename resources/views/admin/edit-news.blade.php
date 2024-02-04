@@ -58,4 +58,18 @@
         </div>
     </div>
 </div>
+
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#berita').summernote({
+            placeholder: 'masukan berita',
+            tabsize: 2,
+            height: 300
+        });
+    });
+</script>
+
 @endsection
