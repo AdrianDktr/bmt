@@ -18,7 +18,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('news-update', $news) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('news-bottom-update', $news) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">

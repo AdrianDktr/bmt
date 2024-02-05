@@ -42,9 +42,9 @@ class NewsController extends Controller
 
         // Proses gambar thumbnail
         $file = $request->file('thumbnail_path');
-        $imageFileName = time() . '_' . $request->judul . '.' . $file->getClientOriginalExtension();
+        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
         $file->storeAs('public/assets/img/thumbnail', $imageFileName);
-
+        $file->move(public_path('assets/img/thumbnail'), $imageFileName);
         // Simpan berita ke dalam database
         $news = News::create([
             'judul' => $request->judul,
@@ -165,8 +165,8 @@ class NewsController extends Controller
     ]);
 
     $file = $request->file('thumbnail');
-    $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
-    $path = $file->storeAs('/assets/img2/thumbnail2', $imageFileName);
+    $imageFileName = time() . '_' . $file->getClientOriginalName(); // Ganti 'name' dengan 'getClientOriginalName'
+    $path = $file->storeAs('public/assets/img2/thumbnail2', $imageFileName);
     $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
 
     $dom = new \DomDocument();
@@ -179,16 +179,17 @@ class NewsController extends Controller
         list($type, $data) = explode(';', $data);
         list(, $data) = explode(',', $data);
         $data = base64_decode($data);
-        $imageFileName = time() . '_' . Str::random(10) . '.png'; // Nama file gambar acak
+
+        // Hapus bagian ini
+        // $imageFileName = time() . '_' . Str::random(10) . '.png';
+
         $path = public_path('assets/img2/berita2') . '/' . $imageFileName;
         file_put_contents($path, $data);
 
-        // Simpan path atau URL gambar ke dalam kolom 'berita'
         $img->removeAttribute('src');
         $img->setAttribute('src', asset('assets/img2/berita2/' . $imageFileName));
     }
 
-    // Simpan teks Summernote yang telah dimodifikasi dengan URL gambar ke dalam kolom 'berita'
     $newsBottom = NewsBottom::create([
         'judul_bawah' => $request->judul_bawah,
         'berita' => $dom->saveHTML(),
@@ -196,9 +197,11 @@ class NewsController extends Controller
         'tanggal_terbit' => $request->tanggal_terbit,
         'thumbnail' => $imageFileName,
     ]);
+    $newsBottom->save();
 
     return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
 }
+
 
 
 
@@ -212,6 +215,32 @@ class NewsController extends Controller
         return view('admin.edit-newsbottom',compact('newsbottom','users'));
     }
 
+    public function update2(Request $request, NewsBottom $newsbottom){
+        $request->validate([
+            'judul_bawah' => 'required',
+            'berita' => 'required',
+            'penulis_id' => 'required',
+            'tanggal_terbit' => 'required|date_format:Y-m-d',
+            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+        ], [
+            'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
+            'thumbnail.required' => 'File thumbnail harus diunggah.',
+            'thumbnail.image' => 'File thumbnail harus berupa gambar.',
+            'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
+        ]);
+        $file = $request->file('thumbnail');
+        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+        $path = $file->storeAs('/assets/img2/thumbnail2', $imageFileName);
+        $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
+
+        $newsbottom->update([
+            'judul_bawah' => $request->judul_bawah,
+            'berita' => $request->berita,
+            'penulis_id' => $request->penulis_id,
+            'tanggal_terbit' => $request->tanggal_terbit,
+            'thumbnail' => $imageFileName,
+        ]);
+    }
     public function delete2(NewsBottom $newsbottom){
 
         $newsbottom->delete();

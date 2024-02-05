@@ -53,14 +53,13 @@
         <div class="container"></div>
         <section>
             <div class="row gx-lg-5">
-                
                 @foreach ($newsbottom as $newsbot)
                     <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
                         <div>
                             <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
                                 <div class="row mb-4 border-bottom pb-2">
                                     <div class="col-3">
-                                        <img src="{{ asset('assets/img2/thumbnail2' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded"  />
+                                        <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded"  />
                                     </div>
                                     <div class="col-9">
                                         <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
@@ -74,11 +73,11 @@
                                         </p>
                                         @if (Auth::check() && Auth::user()->is_admin)
                                         <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-primary">Edit</a>
-                                                    <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                    </form>
+                                         <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                            @csrf
+                                                @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                            </form>
                                         @endif
                                     </div>
                                 </div>
