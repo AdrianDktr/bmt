@@ -80,7 +80,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center">
-                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white" style="margin-left: 65px">
+                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white" style="margin-left: 85px">
                             <img src="{{ asset('assets/img/fblogo.png') }}" alt="Facebook" height="30">
                         </a>
 
