@@ -12,12 +12,54 @@ use Illuminate\Support\Str;
 
 class NewsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('query');
+
+        // Lakukan logika pencarian
+        $searchResults = $this->performSearch($query);
+
+        // Ambil semua berita dan berita bottom
         $news = News::all();
         $newsbottom = NewsBottom::all();
-        return View::make('news.index-news', compact('news', 'newsbottom'));
+
+        // Tampilkan hasil
+        return view('news.index-news', compact('searchResults', 'news', 'newsbottom'));
     }
+
+    private function performSearch($query)
+    {
+        $searchResults = [];
+
+        if ($query) {
+            // Cari berita (News) berdasarkan judul atau isi
+            $news = News::where('judul', 'like', '%' . $query . '%')
+                ->orWhere('isi', 'like', '%' . $query . '%')
+                ->get();
+
+            // Cari berita bottom (NewsBottom) berdasarkan judul_bawah atau berita
+            $newsbottom = NewsBottom::where('judul_bawah', 'like', '%' . $query . '%')
+                ->orWhere('berita', 'like', '%' . $query . '%')
+                ->get();
+
+            // Jika hanya satu hasil yang diharapkan, gunakan firstOrFail
+            if ($news->count() === 1) {
+                $searchResults['news'] = $news->firstOrFail();
+            } else {
+                $searchResults['news'] = $news;
+            }
+
+            if ($newsbottom->count() === 1) {
+                $searchResults['newsbottom'] = $newsbottom->firstOrFail();
+            } else {
+                $searchResults['newsbottom'] = $newsbottom;
+            }
+        }
+
+        return $searchResults;
+    }
+
+
 
 
     public function create()
