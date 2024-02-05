@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('news_bottom', function (Blueprint $table) {
             $table->id();
             $table->string('judul_bawah');
+            $table->foreignId('category_id')->constrained('news_category')->cascadeOnUpdate()->cascadeOnDelete();
             $table->longText('berita');
             $table->date('tanggal_terbit');
             $table->foreignId('penulis_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();

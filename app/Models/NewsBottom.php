@@ -13,8 +13,21 @@ class NewsBottom extends Model
         'judul_bawah',
         'berita',
         'penulis_id',
+        'category_id',
         'tanggal_terbit',
         'thumbnail'
     ];
     protected $table = 'news_bottom';
+    public function category()
+    {
+        return $this->belongsTo(NewsCategory::class, 'category_id');
+    }
+
+    public function penulis()
+    {
+        return $this->belongsTo(User::class, 'penulis_id');
+    }
+
+    
 }
+

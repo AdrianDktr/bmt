@@ -13,4 +13,6 @@ class NewsCategory extends Model
         'name'
     ];
 
+    protected $table ='news_category';
+
 }

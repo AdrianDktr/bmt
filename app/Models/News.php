@@ -12,6 +12,7 @@ protected $fillable = [
     'judul',
     'isi',
     'penulis_id',
+    'category_id',
     'tanggal_terbit',
     'thumbnail_path',
 ];
@@ -20,6 +21,11 @@ protected $table = 'news';
 public function penulis()
 {
     return $this->belongsTo(User::class, 'penulis_id');
+}
+
+public function category()
+{
+    return $this->belongsTo(NewsCategory::class, 'category_id');
 }
 
 }

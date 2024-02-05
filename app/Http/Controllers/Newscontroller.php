@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\NewsBottom;
 use App\Models\User;
+use App\Models\NewsCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 
@@ -22,7 +23,8 @@ class NewsController extends Controller
     public function create()
     {
         $users = User::all();
-        return View::make('admin.create-news', compact('users'));
+        $category = NewsCategory::all();
+        return View::make('admin.create-news', compact('users', 'category'));
     }
 
     public function store(Request $request)
@@ -31,6 +33,7 @@ class NewsController extends Controller
             'judul' => 'required',
             'isi' => 'required',
             'penulis_id' => 'required',
+            'category_id'=>'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail_path' => 'required|image|mimes:jpeg,png,jpg',
         ], [
@@ -50,6 +53,7 @@ class NewsController extends Controller
             'judul' => $request->judul,
             'isi' => '', // Teks Summernote tidak disimpan di sini, kita akan proses terpisah
             'penulis_id' => $request->penulis_id,
+            'category_id'=>$request->category_id,
             'tanggal_terbit' => $request->tanggal_terbit,
             'thumbnail_path' => $imageFileName,
         ]);
@@ -89,7 +93,8 @@ class NewsController extends Controller
 
     public function edit( News $news){
         $users=User::all();
-        return view('admin.edit-news',compact('news','users'));
+        $category = NewsCategory::all();
+        return view('admin.edit-news',compact('news','users','category'));
     }
 
     public function update(Request $request, News $news)
@@ -98,6 +103,7 @@ class NewsController extends Controller
             'judul' => 'required',
             'isi' => 'required',
             'penulis_id' => 'required',
+            'category_id'=>'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail_path' => 'image|mimes:jpeg,png,jpg',
         ], [
@@ -118,6 +124,7 @@ class NewsController extends Controller
                 'judul' => $request->judul,
                 'isi' => $request->isi,
                 'penulis_id' => $request->penulis_id,
+                'category_id'=>$request->category_id,
                 'tanggal_terbit' => $request->tanggal_terbit,
                 'thumbnail_path' => $imageFileName,
             ]);
@@ -127,6 +134,7 @@ class NewsController extends Controller
                 'judul' => $request->judul,
                 'isi' => $request->isi,
                 'penulis_id' => $request->penulis_id,
+                'category_id'=>$request->category_id,
                 'tanggal_terbit' => $request->tanggal_terbit,
             ]);
         }
@@ -146,7 +154,8 @@ class NewsController extends Controller
     // newsbottom
     public function create2(){
         $users = User::all();
-        return view('admin.create-newsbottom', compact('users'));
+        $category = NewsCategory::all();
+        return view('admin.create-newsbottom', compact('users', 'category'));
     }
 
     public function store2(Request $request)
@@ -155,6 +164,7 @@ class NewsController extends Controller
         'judul_bawah' => 'required',
         'berita' => 'required',
         'penulis_id' => 'required',
+        'category_id'=>'required',
         'tanggal_terbit' => 'required|date_format:Y-m-d',
         'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
     ], [
@@ -194,6 +204,7 @@ class NewsController extends Controller
         'judul_bawah' => $request->judul_bawah,
         'berita' => $dom->saveHTML(),
         'penulis_id' => $request->penulis_id,
+        'category_id'=>$request->category_id,
         'tanggal_terbit' => $request->tanggal_terbit,
         'thumbnail' => $imageFileName,
     ]);
@@ -212,7 +223,8 @@ class NewsController extends Controller
 
     public function edit2( NewsBottom $newsbottom){
         $users=User::all();
-        return view('admin.edit-newsbottom',compact('newsbottom','users'));
+        $category = NewsCategory::all();
+        return view('admin.edit-newsbottom',compact('newsbottom','users','category'));
     }
 
     public function update2(Request $request, NewsBottom $newsbottom){
@@ -220,6 +232,7 @@ class NewsController extends Controller
             'judul_bawah' => 'required',
             'berita' => 'required',
             'penulis_id' => 'required',
+            'category_id'=>'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
         ], [
@@ -237,6 +250,7 @@ class NewsController extends Controller
             'judul_bawah' => $request->judul_bawah,
             'berita' => $request->berita,
             'penulis_id' => $request->penulis_id,
+            'category_id'=>$request->category_id,
             'tanggal_terbit' => $request->tanggal_terbit,
             'thumbnail' => $imageFileName,
         ]);

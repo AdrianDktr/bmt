@@ -6,11 +6,20 @@
         <div class="col-md-13">
             <div class="card">
                 <div class="card-header">{{ __('Show News') }}</div>
-                    <div class="card-body text-center overflow-auto"> <!-- Tambahkan class overflow-auto untuk membuat scroll jika kontennya terlalu panjang -->
+                <div class="card-body text-center overflow-auto">
+                    <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>
+                    <div style="float: left;">
                         <h1>{{ $news->judul }}</h1>
-                        {{-- <img src="{{ asset('assets/img/thumbnail/' . $news->thumbnail_path) }}" alt="Thumbnail" class="img-fluid mb-3" height="740" width="493"> --}}
+                    </div>
                     <div class="mx-auto" style="max-width: 800px;">
-                        <div style="text-align: left;"> <!-- Mengatur teks menjadi rata kiri -->
+                        <div style="text-align: left;">
+                            <style>
+                                img {
+                                    display: block;
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                }
+                            </style>
                             {!! $news->isi !!}
                         </div>
                     </div>

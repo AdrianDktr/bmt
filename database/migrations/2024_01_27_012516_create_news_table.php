@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->longText('isi');
+            $table->foreignId('category_id')->constrained('news_category')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('penulis_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->date('tanggal_terbit');
             $table->string('thumbnail_path')->nullable();
