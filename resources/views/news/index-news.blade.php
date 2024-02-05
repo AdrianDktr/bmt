@@ -59,7 +59,7 @@
                             <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
                                 <div class="row mb-4 border-bottom pb-2">
                                     <div class="col-3">
-                                        <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded"  />
+                                        <img src="{{ asset('assets/img2/thumbnail2' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded"  />
                                     </div>
                                     <div class="col-9">
                                         <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
@@ -78,7 +78,7 @@
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
                                                     </form>
-                                                    @endif
+                                        @endif
                                     </div>
                                 </div>
                             </a>

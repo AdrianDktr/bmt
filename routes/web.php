@@ -22,7 +22,7 @@ Auth::routes();
 // Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //news
-Route::get('/', [Newscontroller::class, 'index'])->name('index_news');
+Route::get('/', [Newscontroller::class, 'index'])->name('index-news');
 
 Route::get('/show-news/{news}', [Newscontroller::class, 'show'])->name('news-show');
 Route::get('/show-news-bottom/{newsbottom}', [Newscontroller::class, 'show2'])->name('news-bottom-show');

@@ -78,7 +78,7 @@ class NewsController extends Controller
         $news->isi = $dom->saveHTML();
         $news->save();
 
-        return redirect()->route('index_news')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('index-news')->with('success', 'Data berhasil disimpan.');
     }
 
 
@@ -131,7 +131,7 @@ class NewsController extends Controller
             ]);
         }
 
-        return redirect()->route('index_news')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function delete(News $news){
@@ -149,36 +149,57 @@ class NewsController extends Controller
         return view('admin.create-newsbottom', compact('users'));
     }
 
-    public function store2(Request $request){
-        $request->validate([
-            'judul_bawah' => 'required',
-            'berita' => 'required',
-            'penulis_id' => 'required',
-            'tanggal_terbit' => 'required|date_format:Y-m-d',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
-        ], [
-            'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
-            'thumbnail.required' => 'File thumbnail harus diunggah.',
-            'thumbnail.image' => 'File thumbnail harus berupa gambar.',
-            'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
-        ]);
+    public function store2(Request $request)
+{
+    $request->validate([
+        'judul_bawah' => 'required',
+        'berita' => 'required',
+        'penulis_id' => 'required',
+        'tanggal_terbit' => 'required|date_format:Y-m-d',
+        'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+    ], [
+        'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
+        'thumbnail.required' => 'File thumbnail harus diunggah.',
+        'thumbnail.image' => 'File thumbnail harus berupa gambar.',
+        'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
+    ]);
 
-        $file = $request->file('thumbnail');
-        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
-        $path =$file->storeAs('/assets/img2/thumbnail2',$imageFileName);
-        $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
-       $store= NewsBottom::create([
-            'judul_bawah' => $request->judul_bawah,
-            'berita' => $request->berita,
-            'penulis_id' => $request->penulis_id,
-            'tanggal_terbit' => $request->tanggal_terbit,
-            'thumbnail' => $imageFileName,
-        ]);
+    $file = $request->file('thumbnail');
+    $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
+    $path = $file->storeAs('/assets/img2/thumbnail2', $imageFileName);
+    $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
 
+    $dom = new \DomDocument();
+    $dom->loadHtml($request->berita, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
+    $images = $dom->getElementsByTagName('img');
 
-        return redirect()->route('index_news')->with('success', 'Data berhasil diperbarui.');
+    foreach ($images as $img) {
+        $data = $img->getAttribute('src');
+        list($type, $data) = explode(';', $data);
+        list(, $data) = explode(',', $data);
+        $data = base64_decode($data);
+        $imageFileName = time() . '_' . Str::random(10) . '.png'; // Nama file gambar acak
+        $path = public_path('assets/img2/berita2') . '/' . $imageFileName;
+        file_put_contents($path, $data);
+
+        // Simpan path atau URL gambar ke dalam kolom 'berita'
+        $img->removeAttribute('src');
+        $img->setAttribute('src', asset('assets/img2/berita2/' . $imageFileName));
     }
+
+    // Simpan teks Summernote yang telah dimodifikasi dengan URL gambar ke dalam kolom 'berita'
+    $newsBottom = NewsBottom::create([
+        'judul_bawah' => $request->judul_bawah,
+        'berita' => $dom->saveHTML(),
+        'penulis_id' => $request->penulis_id,
+        'tanggal_terbit' => $request->tanggal_terbit,
+        'thumbnail' => $imageFileName,
+    ]);
+
+    return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
+}
+
 
 
     public function show2(NewsBottom $newsbottom){
@@ -191,5 +212,11 @@ class NewsController extends Controller
         return view('admin.edit-newsbottom',compact('newsbottom','users'));
     }
 
+    public function delete2(NewsBottom $newsbottom){
+
+        $newsbottom->delete();
+
+        return redirect()->back();
+    }
 }
 
