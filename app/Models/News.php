@@ -25,7 +25,7 @@ public function penulis()
 
 public function category()
 {
-    return $this->belongsTo(NewsCategory::class, 'category_id');
+    return $this->belongsToMany(NewsCategory::class, 'category_id');
 }
 
 }

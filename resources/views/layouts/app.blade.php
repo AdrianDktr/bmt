@@ -23,54 +23,72 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-dark shadow-sm"  >
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 5px;">
-                    <img src="{{ asset('assets/img/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
-                    <strong style="margin-left: 10px;">Busur Mamasa</strong>
-                </a>
+    <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-dark shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 5px;">
+                <img src="{{ asset('assets/img/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
+                <strong style="margin-left: 10px;">Busur Mamasa</strong>
+            </a>
 
-                <button class="navbar-toggler" style="border-color: white;"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon" style="background-color: white;"></span>
-                </button>
+            <button class="navbar-toggler" style="border-color: white;"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon" style="background-color: white;"></span>
+            </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto">
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-                                    <strong>{{ Auth::user()->name }}</strong>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <!-- ... (Tambahkan link lainnya) -->
+                </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown " style="margin-left: -20px;">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-color: white;">
+                            Categories
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            @foreach(\App\Models\NewsCategory::all() as $category)
+                                <a class="dropdown-item" href="{{ route('category-news', ['category' => $category->id]) }}">
+                                    {{ $category->name }}
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <!-- Link untuk Create News -->
-                                    <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
+                            @endforeach
+                        </div>
+                    </li>
 
-                                    <!-- Link untuk Create Bottom News -->
-                                    <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
-
-                                    <div class="dropdown-divider"></div>
-
-                                    <!-- Link untuk Logout -->
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
+                    @guest
+                        @if (auth()->check() && !auth()->user()->is_admin)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
                             </li>
-                        @endguest
-                    </ul>
-                </div>
+                         @endif
+                    @else
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                                <strong>{{ Auth::user()->name }}</strong>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <!-- Link untuk Create News -->
+                                <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
 
+                                <!-- Link untuk Create Bottom News -->
+                                <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
+
+                                <div class="dropdown-divider"></div>
+
+                                <!-- Link untuk Logout -->
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                    @endguest
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
+
+
 
         <main class="py-4">
             @yield('content')

@@ -20,7 +20,7 @@ class NewsBottom extends Model
     protected $table = 'news_bottom';
     public function category()
     {
-        return $this->belongsTo(NewsCategory::class, 'category_id');
+        return $this->belongsToMany(NewsCategory::class, 'category_id');
     }
 
     public function penulis()
@@ -28,6 +28,6 @@ class NewsBottom extends Model
         return $this->belongsTo(User::class, 'penulis_id');
     }
 
-    
+
 }
 

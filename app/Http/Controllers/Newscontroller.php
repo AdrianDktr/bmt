@@ -303,5 +303,24 @@ class NewsController extends Controller
 
         return redirect()->back();
     }
+
+    // news categories
+
+
+    public function showByCategory($category)
+    {
+        $category = NewsCategory::findOrFail($category);
+
+        $news = News::where('category_id', $category->id)->get();
+
+        $newsBottom = NewsBottom::where('category_id', $category->id)->get();
+
+        $mergedNews = $news->merge($newsBottom);
+
+        return view('news.news-show-category', compact('category', 'mergedNews'));
+    }
+
+
+
 }
 

@@ -8,7 +8,7 @@
                     <div class="card-body text-center overflow-auto">
                         <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>
                     <div style="float: left;">
-                        <h1>{{ $news->judul }}</h1>
+                        <h1>{{ $newsbottom->judul_bawah }}</h1>
                     </div>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left;">
