@@ -34,7 +34,7 @@
                         <div class="form-group">
                             <label class="fw-bold" for="penulis">Kategori Berita</label>
                         <select name="category_id" id="category_id" class="form-control">
-                                <option selected disabled>Select Admin</option>
+                                <option selected disabled>Select Category </option>
                                 @foreach ($category as $categories)
                                     <option value="{{ $categories->id }}">{{ $categories->name }}</option>
                                 @endforeach

@@ -18,34 +18,43 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('news-bottom-update', $news) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('news-bottom-update', $newsbottom) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
                             <label for="judul">Judul</label>
-                            <input type="text" name="judul" placeholder="Judul" class="form-control" value="{{ old('judul', $news->judul) }}">
+                            <input type="text" name="judul" placeholder="Judul" class="form-control" value="{{ old('judul', $newsbottom->judul) }}">
                         </div>
                         <div class="form-group">
                             <label for="isi">Isi</label>
-                            <textarea name="isi" id="summernote" class="form-control" rows="10">{{ old('isi', $news->isi) }}</textarea>
+                            <textarea name="isi" id="summernote" class="form-control" rows="10">{{ old('isi', $newsbottom->isi) }}</textarea>
                         </div>
                         <div class="form-group">
                             <label for="penulis">Penulis</label>
                             <select name="penulis_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('penulis_id', $news->penulis_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}" {{ old('penulis_id', $newsbottom->penulis_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="fw-bold" for="penulis">Kategori Berita</label>
+                            <select name="category_id" id="category_id" class="form-control">
+                                <option selected disabled>Select Category</option>
+                                @foreach ($category as $categories)
+                                    <option value="{{ $categories->id }}">{{ $categories->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="tanggal_terbit">Tanggal Pembuatan</label>
-                            <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $news->tanggal_terbit) }}">
+                            <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $newsbottom->tanggal_terbit) }}">
                         </div>
                         <div class="form-group">
                             <label for="thumbnail_path">Thumbnail</label>
                             <input type="file" name="thumbnail_path" class="form-control">
-                            <img src="{{ asset('assets/img/thumbnail/' . $news->thumbnail_path) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
+                            <img src="{{ asset('assets/img/thumbnail/' . $newsbottom->thumbnail_path) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
                             <small class="text-muted">Current Thumbnail</small>
                         </div>
 
@@ -64,7 +73,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#berita').summernote({
+        $('#summernote').summernote({
             placeholder: 'masukan berita',
             tabsize: 2,
             height: 300

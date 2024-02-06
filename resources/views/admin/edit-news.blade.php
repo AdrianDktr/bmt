@@ -39,6 +39,15 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label class="fw-bold" for="penulis">Kategori Berita</label>
+                            <select name="category_id" id="category_id" class="form-control">
+                                <option selected disabled>Select Category</option>
+                                @foreach ($category as $categories)
+                                    <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="tanggal_terbit">Tanggal Pembuatan</label>
                             <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $news->tanggal_terbit) }}">
                         </div>
@@ -64,7 +73,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#berita').summernote({
+        $('#summernote').summernote({
             placeholder: 'masukan berita',
             tabsize: 2,
             height: 300
