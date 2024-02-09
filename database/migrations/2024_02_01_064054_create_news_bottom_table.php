@@ -18,6 +18,8 @@ return new class extends Migration
             $table->longText('berita');
             $table->date('tanggal_terbit');
             $table->foreignId('penulis_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('video_file')->nullable();
+            $table->string('video_link')->nullable();
             $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
