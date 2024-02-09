@@ -13,6 +13,8 @@ protected $fillable = [
     'isi',
     'penulis_id',
     'category_id',
+    'video_file',
+    'video_link',
     'tanggal_terbit',
     'thumbnail_path',
 ];

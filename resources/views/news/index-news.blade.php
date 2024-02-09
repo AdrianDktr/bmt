@@ -5,49 +5,72 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">
-                <div class="card mb-4">
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-8">
+                        <form action="{{ route('index-news') }}" method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}" style="background-color: rgba(255, 255, 255, 0.9); border: 1px solid #ced4da; padding: 10px;" >
+                                <button type="submit" class="btn btn-primary">
+                                    <strong> Search</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <script>
+                    document.getElementById("searchButton").addEventListener("click", function(event) {
+                        var query = document.getElementById("searchInput").value;
+                        if (!query.trim()) {
+                            event.preventDefault(); // Mencegah pengiriman formulir
+                            window.location.href = "{{ route('index-news') }}"; // Arahkan kembali ke halaman index-news
+                        }
+                    });
+                </script>
+                <div class="card mb-4" style="max-height: 600px; overflow-y: auto;">
                     <div class="card-header">{{ __('Trending') }}</div>
                     <div class="container px-4 px-lg-5">
                         <div class="row gx-4 gx-lg-5 justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-7">
                                 <br>
                                 @if(empty($searchResults['news']))
-                                    <p class="text-center">No matching news found.</p>
+                                    <p class="text-center"></p>
                                 @endif
-
                                 @foreach ($searchResults['news'] ?? $news as $data)
-                                @if(is_object($data)) <!-- Periksa apakah $data adalah objek -->
-                                    <div class="card mb-4">
-                                        <div class="card-body bg-light">
-                                            <a href="{{ is_object($data) ? route('news-show', ['news' => $data->id]) : '#' }}">
-                                                <!-- Link to detail page -->
-                                                @if (is_object($data) && !empty($data->thumbnail_path))
-                                                    <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="card image cap" height="216" width="216">
-                                                @else
-                                                    <img class="card-img-top" src="{{ asset('placeholder-image.jpg') }}" alt="placeholder image" height="216" width="216">
+                                    @if(is_object($data)) <!-- Periksa apakah $data adalah objek -->
+                                        <div class="card mb-4">
+                                            <div class="card-body bg-light news-item-wrapper">
+                                                <a href="{{ is_object($data) ? route('news-show', ['news' => $data->id]) : '#' }}">
+                                                    <!-- Link to detail page -->
+                                                    @if (is_object($data) && !empty($data->thumbnail_path))
+                                                        <img class="card-img-top news-thumbnail" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="card image cap">
+                                                    @else
+                                                        <img class="card-img-top news-thumbnail" src="{{ asset('placeholder-image.jpg') }}" alt="placeholder image">
+                                                    @endif
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('news-show',['news'=>$data->id]) }}">{{ $data->judul }}</a>
+                                                        </h5>
+                                                    </div>
+                                                </a>
+                                                <p class="post-meta">
+                                                    Posted by {{ optional($data->penulis)->name }}
+                                                    on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
+                                                </p>
+                                                @if (Auth::check() && Auth::user()->is_admin)
+                                                    <div class="d-flex">
+                                                        <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                        <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                        </form>
+                                                    </div>
                                                 @endif
-                                                <h2 class="post-title">{{ $data->judul }}</h2>
-                                            </a>
-                                            <p class="post-meta">
-                                                Posted by {{ optional($data->penulis)->name }}
-                                                on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
-                                            </p>
-                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                <div class="d-flex">
-                                                    <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                    <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                    </form>
-                                                </div>
-                                            @endif
+                                            </div>
                                         </div>
-                                    </div>
-                                    <hr class="my-4" />
-                                @endif
-                            @endforeach
-
+                                        <hr class="my-4" />
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -56,33 +79,42 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="col-md-6 mb-4">
+            <div class="d-flex align-items-start">
+                <video width="320" height="200" controls class="me-3">
+                    <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
+                        CITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA
+                </video>
+            </div>
+            <div class="mt-2">
+                <div>
+                    <h4><strong>Facilis consequatur eligendi</strong></h4>
+                </div>
+                <p class="text-muted">
+                    Dari ketinggian di atas 1.000 MdPL. kawasan wisata Citol Hill di Kabupaten Mamasa menawarkan kesejukan dan keindahan tak terperi. Lokasi ini relatif tidak jauh dari pusat
+                </p>
+            </div>
+        </div>
+    </div>
     <!-- Main News Section -->
     <div class="container">
         <div class="row">
             <span class="display-3 fw-bold text-center mb-4">{{ __('News') }}</span>
         </div>
         <!-- Search Bar -->
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <form action="{{ route('index-news') }}" method="GET" class="mb-4">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search..." name="query" value="{{ request('query') }}">
-                        <button type="submit" class="btn btn-outline-secondary">Search</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="container"></div>
+
+
         <section>
             <div class="row gx-lg-5">
                 @foreach ($searchResults['newsbottom'] ?? $newsbottom as $newsbot)
-                    @if(is_object($newsbot)) <!-- Periksa apakah $newsbot adalah objek -->
+                    @if(is_object($newsbot))
                         <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
                             <div>
                                 <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
                                     <div class="row mb-4 border-bottom pb-2">
                                         <div class="col-3">
-                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded" />
+                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
                                         </div>
                                         <div class="col-9">
                                             <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>

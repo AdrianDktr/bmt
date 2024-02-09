@@ -14,7 +14,6 @@ class NewsCategorySeeder extends Seeder
     public function run(): void
     {
         $data=[
-            ['name' => 'Berita Terkini'],
             ['name' => 'Politik'],
             ['name' => 'Ekonomi'],
             ['name' => 'Olahraga'],
@@ -26,7 +25,7 @@ class NewsCategorySeeder extends Seeder
             ['name' => 'Internasional'],
             ['name' => 'Pendidikan'],
             ['name' => 'Gaya Hidup'],
-            ['name' => 'Opini dan Editorial'],
+            ['name' => 'Kriminalitas'],
             ['name' => 'Pertanian'],
 
         ];
