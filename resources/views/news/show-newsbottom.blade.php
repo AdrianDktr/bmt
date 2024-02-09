@@ -22,7 +22,15 @@
                             {!! $newsbottom->berita !!}
                         </div>
                     </div>
-                    <p>
+                    @if($newsbottom->video_link)
+                        <iframe width="560" height="315" src="{{ $newsbottom->video_link }}" frameborder="0" allowfullscreen></iframe>
+                    @elseif($newsbottom->video_file)
+                        <video width="560" height="315" controls>
+                            <source src="{{ asset('assets/vid/' . $newsbottom->video_file) }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    @endif
+                            <p>
                         Posted by {{ optional($newsbottom->penulis)->name }} on {{ \Carbon\Carbon::parse($newsbottom->tanggal_terbit)->format('F d, Y') }}
                     </p>
                 </div>

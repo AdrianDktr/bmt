@@ -17,18 +17,19 @@
                             </ul>
                         </div>
                     @endif
-
                     <form action="{{ route('news-bottom-update', $newsbottom) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
                             <label for="judul">Judul</label>
-                            <input type="text" name="judul" placeholder="Judul" class="form-control" value="{{ old('judul', $newsbottom->judul) }}">
+                            <input type="text" name="judul_bawah" placeholder="Judul" class="form-control" value="{{ old('judul_bawah', $newsbottom->judul_bawah) }}">
                         </div>
+
                         <div class="form-group">
-                            <label for="isi">Isi</label>
-                            <textarea name="isi" id="summernote" class="form-control" rows="10">{{ old('isi', $newsbottom->isi) }}</textarea>
+                            <label class="fw-bold" for="isi">Berita</label>
+                            <textarea name="berita" id="summernote" class="form-control" rows="10">{{ old('berita', $newsbottom->berita) }}</textarea>
                         </div>
+
                         <div class="form-group">
                             <label for="penulis">Penulis</label>
                             <select name="penulis_id" id="penulis" class="form-control">
@@ -52,9 +53,47 @@
                             <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $newsbottom->tanggal_terbit) }}">
                         </div>
                         <div class="form-group">
-                            <label for="thumbnail_path">Thumbnail</label>
-                            <input type="file" name="thumbnail_path" class="form-control">
-                            <img src="{{ asset('assets/img/thumbnail/' . $newsbottom->thumbnail_path) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
+                            <label class="fw-bold" for="video">Video</label>
+                            <div class="d-flex flex-row align-items-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="video_upload" name="video_option" value="upload" {{ old('video_option', isset($newsbottom->video_file) ? 'upload' : '') == 'upload' ? 'checked' : '' }} onchange="toggleVideoInput()">
+                                    <label class="form-check-label" for="video_upload">Upload Video</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="video_import" name="video_option" value="import" {{ old('video_option', isset($newsbottom->video_link) ? 'import' : '') == 'import' ? 'checked' : '' }} onchange="toggleVideoInput()">
+                                    <label class="form-check-label" for="video_import">Import Tautan Video</label>
+                                </div>
+                            </div>
+                            @if($newsbottom->video_file)
+                                <div class="mt-3">
+                                    <video controls style="max-width: 40%;">
+                                        <source src="{{ asset('assets/vid/' . $newsbottom->video_file) }}" type="video/mp4">
+                                    </video>
+                                    <small class="text-muted">Current Video</small>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div id="videoInput">
+                            <div id="videoUploadDiv" style="{{ old('video_option', $newsbottom->video_file ? 'display:block;' : 'display:none;') }}">
+                                <label class="btn btn-primary">
+                                    <input type="file" id="videoUpload" accept="video/mp4,video/webm,video/quicktime" name="video_file" style="display:none;" onchange="displaySelectedFile()">
+                                    Choose File
+                                </label>
+                                <span id="fileSelected">{{ old('video_file') ? 'Selected File: ' . old('video_file')->getClientOriginalName() : '' }}</span>
+                            </div>
+                        </div>
+                        <div id="videoLinkDiv" style="{{ old('video_option', $newsbottom->video_link ? 'import' : '') == 'import' ? 'display:block;' : 'display:none;' }}">
+                            <label class="fw-bold" for="videoLink">Link Url Video:</label><br>
+                            <input type="text" id="videoLink" name="video_link" class="form-control" value="{{ old('video_link', $newsbottom->video_link) }}"><br>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold" for="thumbnail_path">Thumbnail</label>
+                            <input type="file" name="thumbnail" class="form-control">
+                            @if($newsbottom->thumbnail)
+                                <img src="{{ asset('assets/img2/thumbnail2/' . $newsbottom->thumbnail) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
+                            @endif
                             <small class="text-muted">Current Thumbnail</small>
                         </div>
 
@@ -79,6 +118,27 @@
             height: 300
         });
     });
+
+    function toggleVideoInput() {
+        var option = document.querySelector('input[name="video_option"]:checked').value;
+        var videoUploadDiv = document.getElementById("videoUploadDiv");
+        var videoLinkDiv = document.getElementById("videoLinkDiv");
+
+        if (option === "upload") {
+            videoUploadDiv.style.display = "block";
+            videoLinkDiv.style.display = "none";
+        } else {
+            videoUploadDiv.style.display = "none";
+            videoLinkDiv.style.display = "block";
+        }
+    }
+
+    function displaySelectedFile() {
+        var input = document.getElementById('videoUpload');
+        var output = document.getElementById('fileSelected');
+        output.innerHTML = 'Selected File: ' + input.files[0].name;
+    }
+
 </script>
 
 @endsection

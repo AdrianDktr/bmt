@@ -360,8 +360,7 @@ class NewsController extends Controller
             'judul_bawah' => 'required',
             'berita' => 'required',
             'penulis_id' => 'required',
-            'category_id'=>'required',
-            'video'=>'required',
+            'category_id' => 'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
         ], [
@@ -370,20 +369,55 @@ class NewsController extends Controller
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
             'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
         ]);
-        $file = $request->file('thumbnail');
-        $imageFileName = time() . '_' . $request->name . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('/assets/img2/thumbnail2', $imageFileName);
-        $file->move(public_path('assets/img2/thumbnail2'), $imageFileName);
+
+        // Hapus thumbnail lama jika ada
+        if ($newsbottom->thumbnail) {
+            $oldThumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
+            if (file_exists($oldThumbnailPath)) {
+                unlink($oldThumbnailPath);
+            }
+        }
+
+        // Simpan video baru jika diunggah atau diimpor
+        $videoFileName = null;
+        if ($request->has('video_option')) {
+            if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
+                $request->validate([
+                    'video_file' => 'mimes:mp4,webm,quicktime|max:50000',
+                ]);
+                $videoFile = $request->file('video_file');
+                $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
+                $videoFile->move(public_path('assets/vid'), $videoFileName);
+            } elseif ($request->video_option == 'import' && $request->filled('video_link')) {
+                $request->validate([
+                    'video_link' => 'url',
+                ]);
+                $videoFileName = $request->video_link;
+            }
+        }
+
+        // Simpan thumbnail baru jika diunggah
+        $thumbnailFileName = null;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailFile = $request->file('thumbnail');
+            $thumbnailFileName = time() . '_' . $thumbnailFile->getClientOriginalName();
+            $thumbnailFile->move(public_path('assets/img2/thumbnail2'), $thumbnailFileName);
+        }
 
         $newsbottom->update([
             'judul_bawah' => $request->judul_bawah,
             'berita' => $request->berita,
             'penulis_id' => $request->penulis_id,
-            'category_id'=>$request->category_id,
+            'category_id' => $request->category_id,
+            'video_file'=>$videoFileName,
+            'video_link' => $request->video_link,
             'tanggal_terbit' => $request->tanggal_terbit,
-            'thumbnail' => $imageFileName,
+            'thumbnail' => $thumbnailFileName ? $thumbnailFileName : $newsbottom->thumbnail, // Gunakan thumbnail baru jika diunggah, jika tidak, gunakan thumbnail lama
         ]);
+
+        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
+
     public function delete2(NewsBottom $newsbottom){
 
         $newsbottom->delete();
