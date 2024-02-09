@@ -62,28 +62,30 @@ class NewsController extends Controller
         ]);
 
 
+        $videoFileName = null;
         $videoPath = null;
 
-
-        if ($request->video_option == 'upload') {
-            $request->validate([
-                'video_file' => 'required|mimes:mp4,webm,quicktime|max:50000',
-            ]);
-
-            $videoFile = $request->file('video_file');
-            $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
-            $pathvideo = $videoFile->storeAs('public/assets/vid', $videoFileName);
-            $videoFile->move(public_path('assets/vid'), $videoFileName);
-        }
-
-
-        elseif ($request->video_option == 'import') {
-            $request->validate([
-                'video_link' => 'required|url',
-            ]);
-
-
-            $videoPath = $request->video_link;
+        if ($request->has('video_option')) {
+            if ($request->video_option == 'upload') {
+                $request->validate([
+                    'video_file' => 'nullable|mimes:mp4,webm,quicktime|max:50000',
+                ]);
+                if ($request->hasFile('video_file')) {
+                    $videoFile = $request->file('video_file');
+                    $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
+                    $videoPath = $videoFile->storeAs('public/assets/vid', $videoFileName);
+                    $videoFile->move(public_path('assets/vid'), $videoFileName);
+                } else {
+                    // Jika file video tidak diunggah, atur nilai $videoFileName ke null atau kosong
+                    $videoFileName = null;
+                }
+            } elseif ($request->video_option == 'import') {
+                $request->validate([
+                    'video_link' => 'nullable|url',
+                ]);
+                // Jika tautan video tidak diisi, atur nilai $videoPath ke null atau kosong
+                $videoPath = $request->input('video_link', null);
+            }
         }
 
 
@@ -389,11 +391,15 @@ class NewsController extends Controller
                 $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
                 $videoFile->move(public_path('assets/vid'), $videoFileName);
             } elseif ($request->video_option == 'import' && $request->filled('video_link')) {
-                $request->validate([
-                    'video_link' => 'url',
-                ]);
                 $videoFileName = $request->video_link;
             }
+        }
+
+        // Validasi video link setelah logika upload atau import
+        if ($request->filled('video_link')) {
+            $request->validate([
+                'video_link' => 'url',
+            ]);
         }
 
         // Simpan thumbnail baru jika diunggah
@@ -417,6 +423,7 @@ class NewsController extends Controller
 
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
+
 
     public function delete2(NewsBottom $newsbottom){
 
