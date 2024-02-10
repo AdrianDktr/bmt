@@ -189,17 +189,14 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+                <ol class="carousel-indicators">
+                    @foreach ($chunked_news as $key => $chunk)
+                        <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>
+                    @endforeach
+                </ol>
             </div>
         </section>
     </div>
-
-
-    <script>
-        $(document).ready(function() {
-            $('#carouselExampleControls').carousel();
-        });
-    </script>
-
 
 
 @endsection
