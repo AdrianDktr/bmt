@@ -10,7 +10,7 @@
                         <form action="{{ route('index-news') }}" method="GET">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}" style="background-color: rgba(255, 255, 255, 0.9); border: 1px solid #ced4da; padding: 10px;" >
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" id="searchButton" class="btn btn-primary">
                                     <strong> Search</strong>
                                 </button>
                             </div>
@@ -18,8 +18,8 @@
                     </div>
                 </div>
                 <script>
-                    document.getElementById("searchButton").addEventListener("click", function(event) {
-                        var query = document.getElementById("searchInput").value;
+                    document.querySelector("form").addEventListener("submit", function(event) {
+                        var query = event.target.elements.query.value;
                         if (!query.trim()) {
                             event.preventDefault(); // Mencegah pengiriman formulir
                             window.location.href = "{{ route('index-news') }}"; // Arahkan kembali ke halaman index-news
