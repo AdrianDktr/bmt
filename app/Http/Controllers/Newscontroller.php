@@ -45,7 +45,8 @@ class NewsController extends Controller
         $request->validate([
             'judul' => 'required',
             'isi' => 'required',
-            'penulis_id' => 'required',
+            'user_id' => 'required',
+            'penulis_berita' => 'required',
             'category_id' => 'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail_path' => 'required|image|mimes:jpeg,png,jpg',
@@ -97,7 +98,8 @@ class NewsController extends Controller
         $news = News::create([
             'judul' => $request->judul,
             'isi' => '',
-            'penulis_id' => $request->penulis_id,
+            'user_id' => $request->user_id,
+            'penulis_berita' => $request->penulis_berita,
             'category_id' => $request->category_id,
             'video_file' => $videoFileName,
             'video_link' => $request->video_link,
@@ -152,7 +154,8 @@ class NewsController extends Controller
         $request->validate([
             'judul' => 'required',
             'isi' => 'required',
-            'penulis_id' => 'required',
+            'user_id' => 'required',
+            'penulis_berita' => 'required',
             'category_id' => 'required',
             'video_file' => 'nullable|mimes:mp4,webm,quicktime|max:50000',
             'video_link' => 'nullable|url',
@@ -217,7 +220,8 @@ class NewsController extends Controller
         $news->update([
             'judul' => $request->judul,
             'isi' => $request->isi,
-            'penulis_id' => $request->penulis_id,
+            'user_id' => $request->user_id,
+            'penulis_berita' => $request->penulis_berita,
             'category_id' => $request->category_id,
             'video_file' => $videoFileName,
             'video_link' => $request->video_link,
@@ -261,7 +265,8 @@ class NewsController extends Controller
         $request->validate([
             'judul_bawah' => 'required',
             'berita' => 'required',
-            'penulis_id' => 'required',
+            'user_id' => 'required',
+            'penulis_berita' => 'required',
             'category_id' => 'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
@@ -332,7 +337,8 @@ class NewsController extends Controller
         $newsBottom = NewsBottom::create([
             'judul_bawah' => $request->judul_bawah,
             'berita' => $dom->saveHTML(),
-            'penulis_id' => $request->penulis_id,
+            'user_id' => $request->user_id,
+            'penulis_berita' => $request->penulis_berita,
             'category_id' => $request->category_id,
             'video_file' => $videoFileName,
             'video_link' => $request->video_link,
@@ -361,7 +367,8 @@ class NewsController extends Controller
         $request->validate([
             'judul_bawah' => 'required',
             'berita' => 'required',
-            'penulis_id' => 'required',
+            'user_id' => 'required',
+            'penulis_berita' => 'required',
             'category_id' => 'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
@@ -413,7 +420,8 @@ class NewsController extends Controller
         $newsbottom->update([
             'judul_bawah' => $request->judul_bawah,
             'berita' => $request->berita,
-            'penulis_id' => $request->penulis_id,
+            'user_id' => $request->user_id,
+            'penulis_berita' => $request->penulis_berita,
             'category_id' => $request->category_id,
             'video_file'=>$videoFileName,
             'video_link' => $request->video_link,

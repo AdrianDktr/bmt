@@ -12,7 +12,8 @@ class NewsBottom extends Model
     [
         'judul_bawah',
         'berita',
-        'penulis_id',
+        'user_id',
+        'penulis_berita',
         'category_id',
         'video_file',
         'video_link',
@@ -27,7 +28,7 @@ class NewsBottom extends Model
 
     public function penulis()
     {
-        return $this->belongsTo(User::class, 'penulis_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 

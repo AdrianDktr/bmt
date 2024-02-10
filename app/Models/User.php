@@ -45,6 +45,6 @@ class User extends Authenticatable
 
     public function berita()
     {
-        return $this->hasMany(News::class, 'penulis_id');
+        return $this->hasMany(News::class, 'user_id');
     }
 }

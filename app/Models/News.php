@@ -11,7 +11,8 @@ class News extends Model
 protected $fillable = [
     'judul',
     'isi',
-    'penulis_id',
+    'user_id',
+    'penulis_berita',
     'category_id',
     'video_file',
     'video_link',
@@ -22,7 +23,7 @@ protected $table = 'news';
 
 public function penulis()
 {
-    return $this->belongsTo(User::class, 'penulis_id');
+    return $this->belongsTo(User::class, 'user_id');
 }
 
 public function category()
