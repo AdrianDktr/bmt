@@ -102,46 +102,104 @@
         <div class="row">
             <span class="display-3 fw-bold text-center mb-4">{{ __('News') }}</span>
         </div>
-        <!-- Search Bar -->
-
-
         <section>
-            <div class="row gx-lg-5">
-                @foreach ($searchResults['newsbottom'] ?? $newsbottom as $newsbot)
-                    @if(is_object($newsbot))
-                        <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
-                            <div>
-                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
-                                    <div class="row mb-4 border-bottom pb-2">
-                                        <div class="col-3">
-                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @php
+                        $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(6);
+                    @endphp
+                    @foreach ($chunked_news as $key => $chunk)
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <div class="row gx-lg-5">
+                                @foreach ($chunk->take(3) as $newsbot)
+                                    @if(is_object($newsbot))
+                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                            <div>
+                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
+                                                    <div class="row mb-4 border-bottom pb-2">
+                                                        <div class="col-4">
+                                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
+                                                            <p>
+                                                                <u>{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</u>
+                                                            </p>
+                                                            <p>
+                                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">Read more</a>
+                                                            </p>
+                                                            @if (Auth::check() && Auth::user()->is_admin)
+                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
+                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-9">
-                                            <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
-                                            <p>
-                                                <u>
-                                                    {{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}
-                                                </u>
-                                            </p>
-                                            <p>
-                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">Read more</a>
-                                            </p>
-                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
-                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                </form>
-                                            @endif
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="row gx-lg-5">
+                                @foreach ($chunk->slice(3, 3) as $newsbot)
+                                    @if(is_object($newsbot))
+                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                            <div>
+                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
+                                                    <div class="row mb-4 border-bottom pb-2">
+                                                        <div class="col-4">
+                                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
+                                                        </div>
+                                                        <div class="col-8">
+                                                            <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
+                                                            <p>
+                                                                <u>{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</u>
+                                                            </p>
+                                                            <p>
+                                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">Read more</a>
+                                                            </p>
+                                                            @if (Auth::check() && Auth::user()->is_admin)
+                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
+                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                                </form>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
-                    @endif
-                @endforeach
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </section>
     </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#carouselExampleControls').carousel();
+        });
+    </script>
+
+
+
 @endsection
