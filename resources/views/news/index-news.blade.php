@@ -18,14 +18,14 @@
                     </div>
                 </div>
                 <script>
-                    document.querySelector("form").addEventListener("submit", function(event) {
-                        var query = event.target.elements.query.value;
-                        if (!query.trim()) {
-                            event.preventDefault(); // Mencegah pengiriman formulir
-                            window.location.href = "{{ route('index-news') }}"; // Arahkan kembali ke halaman index-news
-                        }
-                    });
-                </script>
+    document.querySelector("form").addEventListener("submit", function(event) {
+        var query = event.target.elements.query.value;
+        if (!query.trim()) {
+            event.preventDefault(); // Mencegah pengiriman formulir
+            window.location.href = "{{ route('index-news') }}"; // Arahkan kembali ke halaman index-news
+        }
+    });
+</script>
                 <div class="card mb-4" style="max-height: 600px; overflow-y: auto;">
                     <div class="card-header">{{ __('Trending') }}</div>
                     <div class="container px-4 px-lg-5">
@@ -98,7 +98,7 @@
         </div>
     </div>
     <!-- Main News Section -->
-    <div class="container">
+    <div class="container   ">
         <div class="row">
             <span class="display-3 fw-bold text-center mb-4">{{ __('News') }}</span>
         </div>
@@ -110,7 +110,7 @@
                     @endphp
                     @foreach ($chunked_news as $key => $chunk)
                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <div class="row gx-lg-5">
+                            <div class="row gx-lg-5 justify-content-center align-items-center"> <!-- Menengahkan berita -->
                                 @foreach ($chunk->take(3) as $newsbot)
                                     @if(is_object($newsbot))
                                         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -144,7 +144,7 @@
                                     @endif
                                 @endforeach
                             </div>
-                            <div class="row gx-lg-5">
+                            <div class="row gx-lg-5 justify-content-center align-items-center"> <!-- Menengahkan berita -->
                                 @foreach ($chunk->slice(3, 3) as $newsbot)
                                     @if(is_object($newsbot))
                                         <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
@@ -181,14 +181,17 @@
                         </div>
                     @endforeach
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+       
+                <!-- Tombol sebelumnya dan selanjutnya -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
+                <!-- Indikator carousel -->
                 <ol class="carousel-indicators">
                     @foreach ($chunked_news as $key => $chunk)
                         <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>
@@ -197,6 +200,4 @@
             </div>
         </section>
     </div>
-
-
 @endsection
