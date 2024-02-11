@@ -32,13 +32,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="fw-bold" for="penulis">Penulis</label>
-                            <select name="penulis_id" id="penulis" class="form-control">
+                            <label class="fw-bold" for="penulis">Admin</label>
+                            <select name="user_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('penulis_id', $news->penulis_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}" {{ old('user_id', $news->user_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold" for="judul">Penulis</label>
+                            <input type="text" name="penulis_berita" placeholder="Penulis berita" class="form-control" value="{{ old('penulis_berita',$news->penulis_berita) }}">
                         </div>
 
                         <div class="form-group">

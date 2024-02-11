@@ -43,6 +43,8 @@
                             <input type="text" name="penulis_berita" placeholder="Penulis berita" class="form-control">
                         </div>
 
+                        
+
                         <div class="form-group">
                             <label class="fw-bold" for="penulis">Kategori Berita</label>
                             <select name="category_id" id="category_id" class="form-control">

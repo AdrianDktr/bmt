@@ -21,7 +21,7 @@
                         @csrf
                         @method('PATCH')
                         <div class="form-group">
-                            <label for="judul">Judul</label>
+                            <label class="fw-bold" for="judul">Judul</label>
                             <input type="text" name="judul_bawah" placeholder="Judul" class="form-control" value="{{ old('judul_bawah', $newsbottom->judul_bawah) }}">
                         </div>
 
@@ -31,25 +31,31 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="penulis">Penulis</label>
-                            <select name="penulis_id" id="penulis" class="form-control">
+                            <label class="fw-bold" for="penulis">Admin</label>
+                            <select name="user_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}" {{ old('penulis_id', $newsbottom->penulis_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}" {{ old('user_id', $newsbottom->user_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label class="fw-bold" for="judul">Penulis</label>
+                            <input type="text" name="penulis_berita" placeholder="Penulis berita" class="form-control" value="{{ old('penulis_berita',$newsbottom->penulis_berita) }}">
+                        </div>
+
                         <div class="form-group">
                             <label class="fw-bold" for="penulis">Kategori Berita</label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option selected disabled>Select Category</option>
                                 @foreach ($category as $categories)
-                                    <option value="{{ $categories->id }}">{{ $categories->name }}</option>
+                                    <option value="{{ $categories->id }}"{{ old('category_id', $newsbottom->category_id) == $categories->id ? 'selected' : '' }}>{{ $categories->name }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_terbit">Tanggal Pembuatan</label>
+                            <label class="fw-bold" for="tanggal_terbit">Tanggal Pembuatan</label>
                             <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $newsbottom->tanggal_terbit) }}">
                         </div>
                         <div class="form-group">
@@ -93,14 +99,17 @@
                             <input type="file" name="thumbnail" class="form-control">
                             @if($newsbottom->thumbnail)
                                 <img src="{{ asset('assets/img2/thumbnail2/' . $newsbottom->thumbnail) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
+                                <input type="hidden" name="thumbnail" value="{{ $newsbottom->thumbnail }}">
+                                <small class="text-muted">Current Thumbnail: {{ $newsbottom->thumbnail }}</small><br>
                             @endif
-                            <small class="text-muted">Current Thumbnail</small>
                         </div>
+
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary mt-3">Update News</button>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

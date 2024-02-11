@@ -21,8 +21,8 @@
     document.querySelector("form").addEventListener("submit", function(event) {
         var query = event.target.elements.query.value;
         if (!query.trim()) {
-            event.preventDefault(); // Mencegah pengiriman formulir
-            window.location.href = "{{ route('index-news') }}"; // Arahkan kembali ke halaman index-news
+            event.preventDefault();
+            window.location.href = "{{ route('index-news') }}";
         }
     });
 </script>
@@ -46,6 +46,7 @@
                                                     @else
                                                         <img class="card-img-top news-thumbnail" src="{{ asset('placeholder-image.jpg') }}" alt="placeholder image">
                                                     @endif
+
                                                     <div class="card-body">
                                                         <h5 class="card-title">
                                                             <a href="{{ route('news-show',['news'=>$data->id]) }}">{{ $data->judul }}</a>
@@ -181,8 +182,8 @@
                         </div>
                     @endforeach
                 </div>
-       
-                <!-- Tombol sebelumnya dan selanjutnya -->
+
+
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
                     <span class="carousel-control-prev-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
                     <span class="visually-hidden">Previous</span>
@@ -191,7 +192,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
-                <!-- Indikator carousel -->
+
                 <ol class="carousel-indicators">
                     @foreach ($chunked_news as $key => $chunk)
                         <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>

@@ -23,66 +23,67 @@
 </head>
 <body>
     <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light shadow-sm bg-dark shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 5px;">
-                <img src="{{ asset('assets/img/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
-                <strong style="margin-left: 10px;">Busur Mamasa</strong>
-            </a>
+        <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center;">
+                    <img src="{{ asset('assets/img/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
+                    <strong style="margin-left: 10px;">Busur Mamasa</strong>
+                </a>
 
-            <button class="navbar-toggler" style="border-color: white;"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                <span class="navbar-toggler-icon" style="background-color: white;"></span>
-            </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}" style="border-color: white;">
+                    <span class="navbar-toggler-icon" style="background-color: white;"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown " style="margin-left: -20px;">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-color: white;">
-                            Categories
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                            @foreach(\App\Models\NewsCategory::all() as $category)
-                                <a class="dropdown-item" href="{{ route('category-news', ['category' => $category->id]) }}">
-                                    {{ $category->name }}
-                                </a>
-                            @endforeach
-                        </div>
-                    </li>
-
-                    @guest
-                        @if (auth()->check() && !auth()->user()->is_admin)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
-                            </li>
-                         @endif
-                    @else
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-                                <strong>{{ Auth::user()->name }}</strong>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <!-- Link untuk Create News -->
-                                <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
-
-                                <!-- Link untuk Create Bottom News -->
-                                <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
-
-                                <div class="dropdown-divider"></div>
-
-                                <!-- Link untuk Logout -->
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="categoryDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="border-color: white;">
+                                Categories
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                @foreach(\App\Models\NewsCategory::all() as $category)
+                                    <a class="dropdown-item" href="{{ route('category-news', ['category' => $category->id]) }}">
+                                        {{ $category->name }}
+                                    </a>
+                                @endforeach
                             </div>
                         </li>
-                    @endguest
-                </ul>
+
+                        @guest
+                            @if (auth()->check() && !auth()->user()->is_admin)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
+                                    <strong>{{ Auth::user()->name }}</strong>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <!-- Link untuk Create News -->
+                                    <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
+
+                                    <!-- Link untuk Create Bottom News -->
+                                    <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
+
+                                    <div class="dropdown-divider"></div>
+
+                                    <!-- Link untuk Logout -->
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+
 
 
 
@@ -94,19 +95,22 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center">
-                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white" style="margin-left: 85px">
+                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white" style="margin-left: 0;">
                             <img src="{{ asset('assets/img/fblogo.png') }}" alt="Facebook" height="30">
                         </a>
-
-                        <a href="https://www.youtube.com/@BusurMamasa" target="_blank" class="text-white" style="margin-left: 13px">
+                        <a href="https://www.youtube.com/@BusurMamasa" target="_blank" class="text-white" style="margin-left: 13px;">
                             <img src="{{ asset('assets/img/youtube.png') }}" alt="YouTube" height="30">
                         </a>
-                        <a href="https://www.tiktok.com/@busurmamasa" target="_blank" class="text-white" style="margin-left: 12px">
+                        <a href="https://www.tiktok.com/@busurmamasa" target="_blank" class="text-white" style="margin-left: 12px;">
                             <img src="{{ asset('assets/img/tiktok.png') }}" alt="TikTok" height="30">
                         </a>
+                        <a href="https://www.instagram.com/busurmamasa" target="_blank" class="text-white" style="margin-left: 12px;">
+                            <img src="{{ asset('assets/img/instagram.png') }}" alt="Instagram" height="30">
+                        </a>
                     </div>
+
                     <div class="col-md-12">
-                        <p class="mb-0 mt-2" style="margin-left: 30px">&copy; {{ date('Y') }} Berita Terkini Mamasa. All rights reserved.</p>
+                        <p class="mb-0 mt-2" style="margin-left: 30px">&copy; {{ date('Y') }} Busur Mamasa. All rights reserved.</p>
                     </div>
                 </div>
             </div>
@@ -114,8 +118,8 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    <!-- Load Bootstrap 5 JS -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- ... (Script dan penutup body HTML Anda) ... -->
+
 </body>
 </html>

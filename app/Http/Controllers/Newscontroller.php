@@ -149,88 +149,84 @@ class NewsController extends Controller
 
 
     public function update(Request $request, News $news)
-    {
-        // Validasi request
-        $request->validate([
-            'judul' => 'required',
-            'isi' => 'required',
-            'user_id' => 'required',
-            'penulis_berita' => 'required',
-            'category_id' => 'required',
-            'video_file' => 'nullable|mimes:mp4,webm,quicktime|max:50000',
-            'video_link' => 'nullable|url',
-            'tanggal_terbit' => 'required|date_format:Y-m-d',
-            'thumbnail_path' => 'image|mimes:jpeg,png,jpg',
-        ], [
-            'judul.required' => 'Judul wajib diisi.',
-            'isi.required' => 'Isi berita wajib diisi.',
-            'penulis_id.required' => 'Penulis wajib dipilih.',
-            'category_id.required' => 'Kategori wajib dipilih.',
-            'tanggal_terbit.required' => 'Tanggal terbit wajib diisi.',
-            'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
-            'thumbnail_path.image' => 'File thumbnail harus berupa gambar.',
-            'thumbnail_path.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
-        ]);
+{
+    // Validasi request
+    $request->validate([
+        'judul' => 'required',
+        'isi' => 'required',
+        'user_id' => 'required',
+        'penulis_berita' => 'required',
+        'category_id' => 'required',
+        'video_file' => 'nullable|mimes:mp4,webm,quicktime|max:50000',
+        'video_link' => 'nullable|url',
+        'tanggal_terbit' => 'required|date_format:Y-m-d',
+        'thumbnail_path' => $request->hasFile('thumbnail') ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
+    ], [
+        'judul.required' => 'Judul wajib diisi.',
+        'isi.required' => 'Isi berita wajib diisi.',
+        'user_id.required'=>'Admin wajib diisi.',
+        'penulis_berita.required' => 'Penulis wajib dipilih.',
+        'category_id.required' => 'Kategori wajib dipilih.',
+        'tanggal_terbit.required' => 'Tanggal terbit wajib diisi.',
+        'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
+        'thumbnail_path.image' => 'File thumbnail harus berupa gambar.',
+        'thumbnail_path.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
+    ]);
 
-        // Hapus thumbnail lama jika ada
-        if ($news->thumbnail_path) {
-            $oldThumbnailPath = public_path('assets/img/thumbnail/' . $news->thumbnail_path);
-            if (file_exists($oldThumbnailPath)) {
-                unlink($oldThumbnailPath);
-            }
-        }
+    // Simpan thumbnail lama untuk digunakan kembali jika thumbnail tidak diubah
+    $oldThumbnail = $news->thumbnail_path;
 
-        // Hapus video lama jika ada
-        if ($news->video_file) {
-            $oldVideoPath = public_path('assets/vid/' . $news->video_file);
-            if (file_exists($oldVideoPath)) {
-                unlink($oldVideoPath);
-            }
-        }
+    // Simpan video lama untuk digunakan kembali jika video tidak diubah
+    $oldVideo = $news->video_file;
 
-        $videoPath = null;
+    // Simpan video baru jika diunggah atau diimpor
+    $videoPath = null;
+    $videoFileName = null;
 
+    if ($request->has('video_option')) {
         if ($request->video_option == 'upload') {
             // Validasi dan simpan video baru jika diunggah
             $request->validate([
-                'video_file' => 'required|mimes:mp4,webm,quicktime|max:12288',
+                'video_file' => 'mimes:mp4,webm,quicktime|max:50000',
             ]);
+
             $videoFile = $request->file('video_file');
             $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
-            $videoPath = $videoFile->storeAs('public/assets/vid', $videoFileName);
-            $videoFile->move(public_path('assets/vid'), $videoFileName);
-
+            $videoPath = $videoFile->move(public_path('assets/vid'), $videoFileName);
         } elseif ($request->video_option == 'import') {
             // Simpan link video jika diimpor
             $request->validate([
-                'video_link' => 'required|url',
+                'video_link' => 'url',
             ]);
+
             $videoPath = $request->video_link;
         }
-
-        // Simpan thumbnail baru jika diunggah
-        $thumbnailPath = null;
-        if ($request->hasFile('thumbnail_path')) {
-            $thumbnailFile = $request->file('thumbnail_path');
-            $thumbnailFileName = time() . '_' . $thumbnailFile->getClientOriginalName();
-            $thumbnailPath = $thumbnailFile->move(public_path('assets/img/thumbnail'), $thumbnailFileName);
-        }
-
-        // Update data berita
-        $news->update([
-            'judul' => $request->judul,
-            'isi' => $request->isi,
-            'user_id' => $request->user_id,
-            'penulis_berita' => $request->penulis_berita,
-            'category_id' => $request->category_id,
-            'video_file' => $videoFileName,
-            'video_link' => $request->video_link,
-            'thumbnail_path' => $thumbnailPath ? $thumbnailFileName : $news->thumbnail_path,
-            'tanggal_terbit' => $request->tanggal_terbit,
-        ]);
-
-        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
+
+    // Simpan thumbnail baru jika diunggah
+    $thumbnailPath = null;
+    if ($request->hasFile('thumbnail_path')) {
+        $thumbnailFile = $request->file('thumbnail_path');
+        $thumbnailFileName = time() . '_' . $thumbnailFile->getClientOriginalName();
+        $thumbnailPath = $thumbnailFile->move(public_path('assets/img/thumbnail'), $thumbnailFileName);
+    }
+
+    // Update data berita
+    $news->update([
+        'judul' => $request->judul,
+        'isi' => $request->isi,
+        'user_id' => $request->user_id,
+        'penulis_berita' => $request->penulis_berita,
+        'category_id' => $request->category_id,
+        'video_file' => $videoFileName ? $videoFileName : $oldVideo,
+        'video_link' => $request->video_link,
+        'thumbnail_path' => $thumbnailPath ? $thumbnailFileName : $oldThumbnail,
+        'tanggal_terbit' => $request->tanggal_terbit,
+    ]);
+
+    return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
+}
+
 
 
 
@@ -371,8 +367,9 @@ class NewsController extends Controller
             'penulis_berita' => 'required',
             'category_id' => 'required',
             'tanggal_terbit' => 'required|date_format:Y-m-d',
-            'thumbnail' => 'required|image|mimes:jpeg,png,jpg',
+            'thumbnail' => $request->hasFile('thumbnail') ? 'required|image|mimes:jpeg,png,jpg|max:2048' : 'nullable',
         ], [
+            'user_id.required'=>'Admin wajib diisi.',
             'tanggal_terbit.date_format' => 'Format tanggal tidak valid. Gunakan format YYYY-MM-DD.',
             'thumbnail.required' => 'File thumbnail harus diunggah.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
