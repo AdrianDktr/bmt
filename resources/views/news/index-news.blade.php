@@ -90,7 +90,7 @@
             </div>
             <div class="mt-2">
                 <div>
-                    <h4><strong>Facilis consequatur eligendi</strong></h4>
+                    <h4><strong>CITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA</strong></h4>
                 </div>
                 <p class="text-muted">
                     Dari ketinggian di atas 1.000 MdPL. kawasan wisata Citol Hill di Kabupaten Mamasa menawarkan kesejukan dan keindahan tak terperi. Lokasi ini relatif tidak jauh dari pusat

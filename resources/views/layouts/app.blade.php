@@ -94,27 +94,29 @@
         <footer class="bg-dark shadow-sm text-white text-center py-3">
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center">
-                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white" style="margin-left: 0;">
-                            <img src="{{ asset('assets/img/fblogo.png') }}" alt="Facebook" height="30">
+                    <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center" style="margin-right: -19px;">
+                        <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white">
+                            <img src="http://busurmamasa.test/assets/img/fblogo.png" alt="Facebook" height="30" style="margin-right: 15px;">
                         </a>
-                        <a href="https://www.youtube.com/@BusurMamasa" target="_blank" class="text-white" style="margin-left: 13px;">
-                            <img src="{{ asset('assets/img/youtube.png') }}" alt="YouTube" height="30">
+                        <a href="https://www.youtube.com/@BusurMamasa" target="_blank" class="text-white">
+                            <img src="http://busurmamasa.test/assets/img/youtube.png" alt="YouTube" height="30" style="margin-right: 15px; margin-left: 15px;">
                         </a>
-                        <a href="https://www.tiktok.com/@busurmamasa" target="_blank" class="text-white" style="margin-left: 12px;">
-                            <img src="{{ asset('assets/img/tiktok.png') }}" alt="TikTok" height="30">
+                        <a href="https://www.tiktok.com/@busurmamasa" target="_blank" class="text-white">
+                            <img src="http://busurmamasa.test/assets/img/tiktok.png" alt="TikTok" height="30" style="margin-right: 15px; margin-left: 15px;">
                         </a>
-                        <a href="https://www.instagram.com/busurmamasa" target="_blank" class="text-white" style="margin-left: 12px;">
-                            <img src="{{ asset('assets/img/instagram.png') }}" alt="Instagram" height="30">
+                        <a href="https://www.instagram.com/busurmamasa" target="_blank" class="text-white">
+                            <img src="http://busurmamasa.test/assets/img/instagram.png" alt="Instagram" height="30" style="margin-left: 15px;">
                         </a>
                     </div>
-
                     <div class="col-md-12">
-                        <p class="mb-0 mt-2" style="margin-left: 30px">&copy; {{ date('Y') }} Busur Mamasa. All rights reserved.</p>
+                        <p class="mb-0 mt-2" style="margin-left: 15px">&copy; {{ date('Y') }} Busur Mamasa. All rights reserved.</p>
                     </div>
                 </div>
             </div>
         </footer>
+
+
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
