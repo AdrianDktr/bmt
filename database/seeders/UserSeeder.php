@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         $currentTimestamp = now();
         $data =[
             [
-                'name' => 'Adrian ',
+                'name' => 'Adrian Adhi Wicaksana',
                 'email' => 'admin@admin.com',
                 'password' =>  bcrypt('Dktr19'),
                 'is_admin'=>true,
@@ -25,9 +25,26 @@ class UserSeeder extends Seeder
 
             ],
             [
-                'name' => 'Ashraf fikri Yathier',
-                'email' => 'admin2@admin.com',
-                'password' =>  bcrypt('Black12'),
+                'name' => 'Farhan Rahmat',
+                'email' => 'farhan.rahmat@admin.com',
+                'password' =>  bcrypt('BIKININaja'),
+                'is_admin'=>true,
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+
+            ],
+            [
+                'name' => 'Zulfihadi',
+                'email' => 'zulfihadi@admin.com',
+                'password' =>  bcrypt('CeraikanDuluIstrimu'),
+                'is_admin'=>true,
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                'name' => 'Ardiansyah',
+                'email' => 'ardiansyah@admin.com',
+                'password' =>  bcrypt('NGOPI'),
                 'is_admin'=>true,
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp

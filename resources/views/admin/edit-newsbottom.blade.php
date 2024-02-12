@@ -71,15 +71,23 @@
                                 </div>
                             </div>
                             @if($newsbottom->video_file)
-                                <div class="mt-3">
+                            <div class="mt-3">
                                     <video controls style="max-width: 40%;">
                                         <source src="{{ asset('assets/vid/' . $newsbottom->video_file) }}" type="video/mp4">
                                     </video>
                                     <small class="text-muted">Current Video</small>
                                 </div>
+
+                                <div class="mt-3">
+                                    <form id="removeVideoForm" action="{{ route('remove-video-bottom', ['newsbottom' => $newsbottom->id]) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="remove_video" value="true">
+                                        <button id="removeVideoButton" type="submit" class="btn btn-danger">Remove Video</button>
+                                    </form>
+                                </div>
                             @endif
                         </div>
-
+                        <br>
                         <div id="videoInput">
                             <div id="videoUploadDiv" style="{{ old('video_option', $newsbottom->video_file ? 'display:block;' : 'display:none;') }}">
                                 <label class="btn btn-primary">
