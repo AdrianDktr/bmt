@@ -18,17 +18,17 @@
                     </div>
                 </div>
                 <script>
-    document.querySelector("form").addEventListener("submit", function(event) {
-        var query = event.target.elements.query.value;
-        if (!query.trim()) {
-            event.preventDefault();
-            window.location.href = "{{ route('index-news') }}";
-        }
-    });
-</script>
-                <div class="card mb-4" style="max-height: 600px; overflow-y: auto;">
+                    document.querySelector("form").addEventListener("submit", function(event) {
+                        var query = event.target.elements.query.value;
+                        if (!query.trim()) {
+                            event.preventDefault();
+                            window.location.href = "{{ route('index-news') }}";
+                        }
+                    });
+                </script>
+                <div class="card mb-4" >
                     <div class="card-header">{{ __('Trending') }}</div>
-                    <div class="container px-4 px-lg-5">
+                    <div class="container px-4 px-lg-5" style="max-height: 600px; overflow-y: auto;">
                         <div class="row gx-4 gx-lg-5 justify-content-center">
                             <div class="col-md-10 col-lg-8 col-xl-7">
                                 <br>
@@ -79,6 +79,20 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="running-text-container">
+                    <div class="running-text">
+                        <!-- Isi teks yang akan berjalan di sini -->
+                        The New Mamasa Bersih Melayani !
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
 
     <div class="container">
         <div class="col-md-6 mb-4">

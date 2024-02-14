@@ -1,0 +1,16 @@
+/* styles.css */
+
+.running-text-container {
+    overflow: hidden; /* Menyembunyikan teks yang keluar dari batas kontainer */
+    white-space: nowrap; /* Mencegah teks pindah ke baris baru */
+}
+
+.running-text {
+    display: inline-block; /* Membuat teks berjalan secara horizontal */
+    animation: marquee 20s linear infinite; /* Animasi untuk membuat teks berjalan */
+}
+
+@keyframes marquee {
+    0% { transform: translateX(100%); } /* Mulai dari luar kanan */
+    100% { transform: translateX(-100%); } /* Berakhir di luar kiri */
+}
