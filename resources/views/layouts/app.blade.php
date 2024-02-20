@@ -28,7 +28,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center;">
-                    <img src="{{ asset('assets/img/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
+                    <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
                     <strong style="margin-left: 10px;">Busur Mamasa</strong>
                 </a>
 
@@ -98,16 +98,16 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center" style="margin-right: -19px;">
                         <a href="https://www.facebook.com/profile.php?id=61555978468767" target="_blank" class="text-white">
-                            <img src="http://busurmamasa.test/assets/img/fblogo.png" alt="Facebook" height="30" style="margin-right: 15px;">
+                            <img src="{{ asset('assets/logo/fblogo.png') }}" alt="Facebook" height="30" style="margin-right: 15px;">
                         </a>
                         <a href="https://www.youtube.com/@BusurMamasa" target="_blank" class="text-white">
-                            <img src="http://busurmamasa.test/assets/img/youtube.png" alt="YouTube" height="30" style="margin-right: 15px; margin-left: 15px;">
+                            <img src="{{ asset('assets/logo/youtube.png') }}" alt="YouTube" height="30" style="margin-right: 15px; margin-left: 15px;">
                         </a>
                         <a href="https://www.tiktok.com/@busurmamasa" target="_blank" class="text-white">
-                            <img src="http://busurmamasa.test/assets/img/tiktok.png" alt="TikTok" height="30" style="margin-right: 15px; margin-left: 15px;">
+                            <img src="{{ asset('assets/logo/tiktok.png') }} "alt="TikTok" height="30" style="margin-right: 15px; margin-left: 15px;">
                         </a>
                         <a href="https://www.instagram.com/busurmamasa" target="_blank" class="text-white">
-                            <img src="http://busurmamasa.test/assets/img/instagram.png" alt="Instagram" height="30" style="margin-left: 15px;">
+                            <img src="{{ asset('assets/logo/instagram.png') }}" alt="Instagram" height="30" style="margin-left: 15px;">
                         </a>
                     </div>
                     <div class="col-md-12">
