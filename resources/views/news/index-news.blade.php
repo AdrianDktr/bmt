@@ -36,11 +36,11 @@
                                     <p class="text-center"></p>
                                 @endif
                                 @foreach ($searchResults['news'] ?? $news as $data)
-                                    @if(is_object($data)) <!-- Periksa apakah $data adalah objek -->
+                                    @if(is_object($data))
                                         <div class="card mb-4">
                                             <div class="card-body bg-light news-item-wrapper">
                                                 <a href="{{ is_object($data) ? route('news-show', ['news' => $data->id]) : '#' }}">
-                                                    <!-- Link to detail page -->
+
                                                     @if (is_object($data) && !empty($data->thumbnail_path))
                                                         <img class="card-img-top news-thumbnail" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="card image cap">
                                                     @else
@@ -85,7 +85,6 @@
             <div class="col">
                 <div class="running-text-container">
                     <div class="running-text">
-                        <!-- Isi teks yang akan berjalan di sini -->
                         The New Mamasa Bersih Melayani !
                     </div>
                 </div>
@@ -113,106 +112,72 @@
         </div>
     </div>
     <!-- Main News Section -->
-    <div class="container   ">
-        <div class="row">
-            <span class="display-3 fw-bold text-center mb-4">{{ __('News') }}</span>
-        </div>
-        <section>
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    @php
-                        $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(6);
-                    @endphp
-                    @foreach ($chunked_news as $key => $chunk)
-                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                            <div class="row gx-lg-5 justify-content-center align-items-center"> <!-- Menengahkan berita -->
-                                @foreach ($chunk->take(3) as $newsbot)
-                                    @if(is_object($newsbot))
-                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                            <div>
-                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
-                                                    <div class="row mb-4 border-bottom pb-2">
-                                                        <div class="col-4">
-                                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
-                                                            <p>
-                                                                <u>{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</u>
-                                                            </p>
-                                                            <p>
-                                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">Read more</a>
-                                                            </p>
-                                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
-                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                                </form>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                            <div class="row gx-lg-5 justify-content-center align-items-center"> <!-- Menengahkan berita -->
-                                @foreach ($chunk->slice(3, 3) as $newsbot)
-                                    @if(is_object($newsbot))
-                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                                            <div>
-                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark">
-                                                    <div class="row mb-4 border-bottom pb-2">
-                                                        <div class="col-4">
-                                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="img-fluid shadow-1-strong rounded mb-3" />
-                                                        </div>
-                                                        <div class="col-8">
-                                                            <p class="mb-2"><strong>{{ $newsbot->judul_bawah }}</strong></p>
-                                                            <p>
-                                                                <u>{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</u>
-                                                            </p>
-                                                            <p>
-                                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">Read more</a>
-                                                            </p>
-                                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
-                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                                </form>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="row">
+                    <h1 class="display-4 text-center mb-4">News</h1>
                 </div>
-
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="color: black; font-size: 10px;"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-
-                <ol class="carousel-indicators">
-                    @foreach ($chunked_news as $key => $chunk)
-                        <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>
-                    @endforeach
-                </ol>
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @php
+                            $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(4);
+                        @endphp
+                        @foreach ($chunked_news as $key => $chunk)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <div class="row justify-content-center">
+                                    @foreach ($chunk as $newsbot)
+                                        @if(is_object($newsbot))
+                                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
+                                                <div class="card h-100">
+                                                    <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark text-decoration-none">
+                                                        <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
+                                                            <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
+                                                            <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">View more</a>
+                                                        </div>
+                                                        @if (Auth::check() && Auth::user()->is_admin)
+                                                        <div class="card-footer">
+                                                            <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
+                                                            <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                        @endif
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <br>
+                    <br>
+                    <ol class="carousel-indicators">
+                        @foreach ($chunked_news as $key => $chunk)
+                            <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>
+                        @endforeach
+                    </ol>
+                </div>
             </div>
-        </section>
+        </div>
     </div>
+
+
+
+
+
 @endsection
