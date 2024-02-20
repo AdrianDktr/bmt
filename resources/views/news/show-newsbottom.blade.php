@@ -9,7 +9,7 @@
                     <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>
                     <div style="clear: both;"></div>
                     <div style="margin-bottom: 20px;">
-                        <h1>{{ $newsbottom->judul_bawah }}</h1>
+                        <h1 class="fs-4">{{ $newsbottom->judul_bawah }}</h1>
                     </div>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left; margin-bottom: 20px;">
@@ -20,6 +20,9 @@
                                     margin-right: auto;
                                 }
                             </style>
+                             @if($newsbottom->penulis_berita)
+                             <p>Penulis Berita: {{ $newsbottom->penulis_berita }}</p>
+                             @endif
                             {!! $newsbottom->berita !!}
                         </div>
                     </div>
@@ -28,7 +31,7 @@
                     @elseif($newsbottom->video_file)
                         <video width="560" height="315" controls>
                             <source src="{{ asset('assets/vid/' . $newsbottom->video_file) }}" type="video/mp4">
-                            Browser Anda tidak mendukung tag video.
+                            Browser tidak mendukung tag video.
                         </video>
                     @endif
 

@@ -10,7 +10,7 @@
                     <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>
                     <div style="clear: both;"></div> <!-- Menambahkan elemen untuk membersihkan float -->
                     <div style="margin-bottom: 20px;"> <!-- Menambahkan margin bottom pada judul -->
-                        <h1>{{ $news->judul }}</h1>
+                        <h1 class="fs-4">{{ $news->judul }}</h1>
                     </div>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left;">
@@ -21,6 +21,9 @@
                                     margin-right: auto;
                                 }
                             </style>
+                              @if($news->penulis_berita)
+                              <p>Penulis : {{ $news->penulis_berita }}</p>
+                              @endif
                             {!! $news->isi !!}
                         </div>
                     </div>
@@ -31,11 +34,6 @@
                             <source src="{{ asset('assets/vid/' . $news->video_file) }}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
-                    @endif
-
-
-                    @if($news->penulis_berita)
-                    <p>Penulis Berita: {{ $news->penulis_berita }}</p>
                     @endif
                     <p>
                         Posted by {{ optional($news->penulis)->name }} on {{ \Carbon\Carbon::parse($news->tanggal_terbit)->format('F d, Y') }}
