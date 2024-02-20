@@ -25,7 +25,7 @@ class NewsCategorySeeder extends Seeder
             ['name' => 'Internasional'],
             ['name' => 'Pendidikan'],
             ['name' => 'Gaya Hidup'],
-            ['name' => 'Kriminalitas'],
+            ['name' => 'Hukum'],
             ['name' => 'Pertanian'],
 
         ];
