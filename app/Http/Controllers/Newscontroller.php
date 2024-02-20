@@ -242,6 +242,39 @@ class NewsController extends Controller
             'tanggal_terbit' => $request->tanggal_terbit,
         ]);
 
+
+        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $request->isi);
+        $dom = new \DomDocument();
+        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $imagePath = public_path('assets/berita') . '/' . basename($img->getAttribute('src'));
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        // Simpan gambar baru dan update konten berita
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $data = $img->getAttribute('src');
+            if (strpos($data, 'data:image') === 0) {
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $imageFileName = time() . '_' . Str::random(10) . '.png';
+                $path = public_path('assets/berita') . '/' . $imageFileName;
+                file_put_contents($path, $data);
+
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset('assets/berita/' . $imageFileName));
+            }
+        }
+
+        $news->isi = $dom->saveHTML();
+        $news->save();
+
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
 
