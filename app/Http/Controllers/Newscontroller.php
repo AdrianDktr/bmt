@@ -24,13 +24,21 @@ class NewsController extends Controller
 
 
     $searchResults = $news->merge($newsbottom);
-
-
     $searchResults = $searchResults->unique('judul');
-
 
     return view('news.index-news', compact('searchResults','news','newsbottom'));
 }
+
+public function allnews()
+{
+    $news = News::all();
+    $newsbottom = NewsBottom::all();
+    $all_news = $news->merge($newsbottom);
+    $total_news = $all_news->count();
+
+    return view('news.show-all-news', compact('all_news','total_news'));
+}
+
 
 
     public function create()
@@ -77,14 +85,12 @@ class NewsController extends Controller
                     $videoPath = $videoFile->storeAs('public/assets/vid', $videoFileName);
                     $videoFile->move(public_path('assets/vid'), $videoFileName);
                 } else {
-                    // Jika file video tidak diunggah, atur nilai $videoFileName ke null atau kosong
                     $videoFileName = null;
                 }
             } elseif ($request->video_option == 'import') {
                 $request->validate([
                     'video_link' => 'nullable|url',
                 ]);
-                // Jika tautan video tidak diisi, atur nilai $videoPath ke null atau kosong
                 $videoPath = $request->input('video_link', null);
             }
         }
@@ -153,22 +159,20 @@ class NewsController extends Controller
 
         public function update(Request $request, News $news)
     {
-        // Handle penghapusan video
+
         if ($request->has('remove_video')) {
-            // Hapus video lama jika ada
+
             if ($news->video_file) {
                 $oldVideoPath = public_path('assets/vid/' . $news->video_file);
                 if (File::exists($oldVideoPath)) {
-                    File::delete($oldVideoPath); // Menghapus file video lama
+                    File::delete($oldVideoPath);
                 }
-            }
-            // Set path video menjadi null
+        }
             $news->update(['video_file' => null]);
 
             return redirect()->route('news-edit', ['news' => $news])->with('success', 'Video berhasil dihapus.');
         }
 
-        // Validasi request
         $request->validate([
             'judul' => 'required',
             'isi' => 'required',
@@ -191,19 +195,15 @@ class NewsController extends Controller
             'thumbnail_path.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
         ]);
 
-        // Simpan thumbnail lama untuk digunakan kembali jika thumbnail tidak diubah
         $oldThumbnail = $news->thumbnail_path;
 
-        // Simpan video lama untuk digunakan kembali jika video tidak diubah
         $oldVideo = $news->video_file;
 
-        // Simpan video baru jika diunggah atau diimpor
         $videoPath = null;
         $videoFileName = null;
 
         if ($request->has('video_option')) {
-            if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
-                // Validasi dan simpan video baru jika diunggah
+        if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
                 $request->validate([
                     'video_file' => 'mimes:mp4,webm,quicktime|max:50000',
                 ]);
@@ -211,8 +211,7 @@ class NewsController extends Controller
                 $videoFile = $request->file('video_file');
                 $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
                 $videoPath = $videoFile->move(public_path('assets/vid'), $videoFileName);
-            } elseif ($request->video_option == 'import') {
-                // Simpan link video jika diimpor
+        } elseif ($request->video_option == 'import') {
                 $request->validate([
                     'video_link' => 'url',
                 ]);
@@ -221,7 +220,6 @@ class NewsController extends Controller
             }
         }
 
-        // Simpan thumbnail baru jika diunggah
         $thumbnailPath = null;
         if ($request->hasFile('thumbnail_path')) {
             $thumbnailFile = $request->file('thumbnail_path');
@@ -249,7 +247,7 @@ class NewsController extends Controller
 
         $images = $dom->getElementsByTagName('img');
         foreach ($images as $img) {
-            $imagePath = public_path('assets/berita') . '/' . basename($img->getAttribute('src'));
+            $imagePath = public_path('assets/img/berita') . '/' . basename($img->getAttribute('src'));
             if (file_exists($imagePath)) {
                 unlink($imagePath);
             }
@@ -264,11 +262,10 @@ class NewsController extends Controller
                 list(, $data) = explode(',', $data);
                 $data = base64_decode($data);
                 $imageFileName = time() . '_' . Str::random(10) . '.png';
-                $path = public_path('assets/berita') . '/' . $imageFileName;
+                $path = public_path('assets/img/berita') . '/' . $imageFileName;
                 file_put_contents($path, $data);
-
                 $img->removeAttribute('src');
-                $img->setAttribute('src', asset('assets/berita/' . $imageFileName));
+                $img->setAttribute('src', asset('assets/img/berita/' . $imageFileName));
             }
         }
 
@@ -277,10 +274,6 @@ class NewsController extends Controller
 
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
-
-
-
-
 
     public function delete(News $news){
         // Menghapus thumbnail
@@ -527,6 +520,39 @@ class NewsController extends Controller
             'tanggal_terbit' => $request->tanggal_terbit,
             'thumbnail' => $thumbnailFileName ? $thumbnailFileName : $newsbottom->thumbnail, // Gunakan thumbnail baru jika diunggah, jika tidak, gunakan thumbnail lama
         ]);
+
+
+        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $request->isi);
+        $dom = new \DomDocument();
+        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $imagePath = public_path('assets/img2/berita2') . '/' . basename($img->getAttribute('src'));
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        // Simpan gambar baru dan update konten berita
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $data = $img->getAttribute('src');
+            if (strpos($data, 'data:image') === 0) {
+                list($type, $data) = explode(';', $data);
+                list(, $data) = explode(',', $data);
+                $data = base64_decode($data);
+                $imageFileName = time() . '_' . Str::random(10) . '.png';
+                $path = public_path('assets/img2/berita2') . '/' . $imageFileName;
+                file_put_contents($path, $data);
+                $img->removeAttribute('src');
+                $img->setAttribute('src', asset('assets/img2/berita2/' . $imageFileName));
+            }
+        }
+
+        $newsbottom->isi = $dom->saveHTML();
+        $newsbottom->save();
+
 
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }

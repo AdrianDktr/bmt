@@ -98,7 +98,7 @@
             <div class="d-flex align-items-start">
                 <video width="320" height="200" controls class="me-3">
                     <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
-                        CITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA
+                        {{-- hCITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA --}}
                 </video>
             </div>
             <div class="mt-2">
@@ -116,7 +116,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="row">
-                    <h1 class="display-4 text-center mb-4">News</h1>
+                    <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif;">News</h5>
                 </div>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -135,17 +135,17 @@
                                                         <div class="card-body">
                                                             <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
                                                             <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
-                                                            <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}">View more</a>
+                                                            {{-- <a href="#" class="btn btn-primary">View more</a> --}}
                                                         </div>
                                                         @if (Auth::check() && Auth::user()->is_admin)
-                                                        <div class="card-footer">
-                                                            <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
-                                                            <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                            </form>
-                                                        </div>
+                                                            <div class="card-footer">
+                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
+                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                                </form>
+                                                            </div>
                                                         @endif
                                                     </a>
                                                 </div>
@@ -172,12 +172,14 @@
                         @endforeach
                     </ol>
                 </div>
+                {{-- @if ($all_news > 10) Jika total berita lebih dari 10, tampilkan tombol View More --}}
+                    <div class="text-center mt-4">
+                        <a href="{{ route('show-all-news') }}" class="btn btn-primary">View More</a>
+                    </div>
+                {{-- @endif --}}
             </div>
         </div>
     </div>
-
-
-
 
 
 @endsection
