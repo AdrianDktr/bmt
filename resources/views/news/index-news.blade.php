@@ -98,7 +98,6 @@
             <div class="d-flex align-items-start">
                 <video width="320" height="200" controls class="me-3">
                     <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
-                        {{-- hCITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA --}}
                 </video>
             </div>
             <div class="mt-2">
@@ -172,14 +171,102 @@
                         @endforeach
                     </ol>
                 </div>
-                {{-- @if ($all_news > 10) Jika total berita lebih dari 10, tampilkan tombol View More --}}
                     <div class="text-center mt-4">
                         <a href="{{ route('show-all-news') }}" class="btn btn-primary">View More</a>
                     </div>
-                {{-- @endif --}}
+                </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif; font-size: 2rem;">Explore Mamasa</h5>
+        </div>
+        <div class="owl-carousel owl-theme mx-auto">
+            <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/BuntuKepa/DSCF8339.JPG') }}" class="card-img-top" alt="Slide 1">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Buntu Kepa</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/SARMBULIAWANSUMARORONG/DSCF9007.JPG') }}" class="card-img-top" alt="Slide 2">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Sarmbu Liawan Sumararorong</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/TondokBakaru/tondokbakaru.jpeg') }}" class="card-img-top" alt="Slide 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Tondok Bakaru</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/Liarawan/diatasawanliarra.jpeg') }}" class="card-img-top" alt="Slide 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Buntu Liarra</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <script>
+       $(document).ready(function(){
+            $(".owl-carousel").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                autoplay: true, // Bergeser setiap 5 detik
+                autoplayTimeout: 5000, // Durasi 5 detik
+                responsive:{
+                    0:{
+                        items:1
+                    },
+                    600:{
+                        items:2
+                    },
+                    1000:{
+                        items:4
+                    }
+                }
+            });
+        });
+
+        $('.owl-carousel').magnificPopup({
+            delegate: 'a',
+            type: 'image',
+            gallery:{
+                enabled: true
+            },
+            callbacks: {
+                open: function() {
+                    $('.owl-carousel').owlCarousel('pause'); // Berhenti bergeser saat popup terbuka
+                },
+                close: function() {
+                    $('.owl-carousel').owlCarousel('play'); // Mulai bergeser lagi setelah popup tertutup
+                }
+            }
+        });
+
+    </script>
+
+
 
 @endsection
+{{-- <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/TondokBakaru/DJI_0693.JPG') }}" class="card-img-top" alt="Slide 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Slide 4</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div> --}}
