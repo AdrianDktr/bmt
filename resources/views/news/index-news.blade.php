@@ -3,62 +3,45 @@
 @section('content')
     <!-- Trending News Section -->
     <div class="container">
+        <div class="bg-img">
+            
+        </div>
+    </div>
+    <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="row justify-content-center mb-4">
-                    <div class="col-md-8">
-                        <form action="{{ route('index-news') }}" method="GET">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}" style="background-color: rgba(255, 255, 255, 0.9); border: 1px solid #ced4da; padding: 10px;" >
-                                <button type="submit" id="searchButton" class="btn btn-primary">
-                                    <strong> Search</strong>
-                                </button>
-                            </div>
-                        </form>
+            <div class="col-md-8">
+                <!-- Search Form -->
+                <form action="{{ route('index-news') }}" method="GET" id="searchForm">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
-                </div>
-                <script>
-                    document.querySelector("form").addEventListener("submit", function(event) {
-                        var query = event.target.elements.query.value;
-                        if (!query.trim()) {
-                            event.preventDefault();
-                            window.location.href = "{{ route('index-news') }}";
-                        }
-                    });
-                </script>
-                <div class="card mb-4" >
-                    <div class="card-header">{{ __('Trending') }}</div>
-                    <div class="container px-4 px-lg-5" style="max-height: 600px; overflow-y: auto;">
-                        <div class="row gx-4 gx-lg-5 justify-content-center">
-                            <div class="col-md-10 col-lg-8 col-xl-7">
-                                <br>
-                                @if(empty($searchResults['news']))
-                                    <p class="text-center"></p>
-                                @endif
-                                @foreach ($searchResults['news'] ?? $news as $data)
-                                    @if(is_object($data))
-                                        <div class="card mb-4">
-                                            <div class="card-body bg-light news-item-wrapper">
-                                                <a href="{{ is_object($data) ? route('news-show', ['news' => $data->id]) : '#' }}">
+                </form>
 
-                                                    @if (is_object($data) && !empty($data->thumbnail_path))
-                                                        <img class="card-img-top news-thumbnail" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="card image cap">
-                                                    @else
-                                                        <img class="card-img-top news-thumbnail" src="{{ asset('placeholder-image.jpg') }}" alt="placeholder image">
-                                                    @endif
-
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">
-                                                            <a href="{{ route('news-show',['news'=>$data->id]) }}">{{ $data->judul }}</a>
-                                                        </h5>
-                                                    </div>
-                                                </a>
+                <!-- Large Featured News -->
+                <div class="card mb-4">
+                    <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
+                    <div class="card-body bg-light">
+                        @foreach ($searchResults['news'] ?? $news as $data)
+                            @if(is_object($data))
+                                @if($loop->first)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a href="{{ route('news-show',['news'=> $data->id]) }}">
+                                                <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5 class="card-title">{{ $data->judul }}</h5>
+                                            <p class="card-text">{{ $data->deskripsi }}</p>
                                                 <p class="post-meta">
                                                     Posted by {{ optional($data->penulis)->name }}
                                                     on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
                                                 </p>
+                                            <div class="d-flex justify-content-between mt-2">
+                                                <a href="{{ route('news-show',['news'=> $data->id]) }}" class="btn btn-primary me-2">View More</a>
                                                 @if (Auth::check() && Auth::user()->is_admin)
-                                                    <div class="d-flex">
+                                                    <div>
                                                         <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
                                                         <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
                                                             @csrf
@@ -69,16 +52,47 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        <hr class="my-4" />
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
+                                    </div>
+                                @endif
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Other News -->
+                <div class="card mb-4">
+                    <div class="card-header">{{ __('Trending ') }}</div>
+                    <div class="card-body">
+                        @foreach ($searchResults['news'] ?? $news as $data)
+                            @if(is_object($data) && !$loop->first)
+                                <div class="media mb-3">
+                                    <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-start mr-3" alt="News Thumbnail">
+                                    <div class="media-body">
+                                        <h5 class="mt-0">{{ $data->judul }}</h5>
+                                        <p>{{ $data->deskripsi }}</p>
+                                        <a href="{{ route('news-show', ['news' => $data->id]) }}" class="btn btn-primary">Read more</a>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.querySelector("#searchForm").addEventListener("submit", function(event) {
+            var query = event.target.elements.query.value;
+            if (!query.trim()) {
+                event.preventDefault();
+                window.location.href = "{{ route('index-news') }}";
+            }
+        });
+    </script>
+
+
     <br>
     <div class="container">
         <div class="row">
@@ -238,22 +252,6 @@
                     }
                 }
             });
-        });
-
-        $('.owl-carousel').magnificPopup({
-            delegate: 'a',
-            type: 'image',
-            gallery:{
-                enabled: true
-            },
-            callbacks: {
-                open: function() {
-                    $('.owl-carousel').owlCarousel('pause'); // Berhenti bergeser saat popup terbuka
-                },
-                close: function() {
-                    $('.owl-carousel').owlCarousel('play'); // Mulai bergeser lagi setelah popup tertutup
-                }
-            }
         });
 
     </script>
