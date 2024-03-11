@@ -3,8 +3,10 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Aboutcontroller;
+use App\Http\Controllers\NewsBottomController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,11 +41,10 @@ Route::middleware(['admin'])->group(function(){
     Route::delete('/admin/delete-news/{news}', [NewsController::class, 'delete'])->name('news-delete');
 
     // news bottom
-    Route::get('/admin/create-news-bottom', [NewsController::class, 'create2'])->name('create-news-bottom');
-    Route::post('/admin/store-news-bottom', [NewsController::class, 'store2'])->name('store-news-bottom');
-    Route::get('/admin/edit-news-bottom/{newsbottom}', [NewsController::class, 'edit2'])->name('news-bottom-edit');
-    Route::patch('/admin/update-news-bottom/{newsbottom}', [NewsController::class, 'update2'])->name('news-bottom-update');
-    Route::delete('/admin/edit-news-bottom/{newsbottom}/remove-video',  [NewsController::class, 'update2'])->name('remove-video-bottom');
-    Route::delete('/admin/delete-news-bottom/{newsbottom}', [NewsController::class, 'delete2'])->name('news-bottom-delete');
-
+    Route::get('/admin/create-news-bottom', [NewsBottomController::class, 'create2'])->name('create-news-bottom');
+    Route::post('/admin/store-news-bottom', [NewsBottomController::class, 'store2'])->name('store-news-bottom');
+    Route::get('/admin/edit-news-bottom/{newsbottom}', [NewsBottomController::class, 'edit2'])->name('news-bottom-edit');
+    Route::patch('/admin/update-news-bottom/{newsbottom}', [NewsBottomController::class, 'update2'])->name('news-bottom-update');
+    Route::delete('/admin/edit-news-bottom/{newsbottom}/remove-video',  [NewsBottomController::class, 'update2'])->name('remove-video-bottom');
+    Route::delete('/admin/delete-news-bottom/{newsbottom}', [NewsBottomController::class, 'delete2'])->name('news-bottom-delete');
 });
