@@ -4,7 +4,7 @@
     <!-- Trending News Section -->
     <div class="container">
         <div class="bg-img">
-            
+
         </div>
     </div>
     <div class="container">
@@ -97,11 +97,6 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <div class="running-text-container">
-                    <div class="running-text">
-                        The New Mamasa Bersih Melayani !
-                    </div>
-                </div>
             </div>
         </div>
     </div>
