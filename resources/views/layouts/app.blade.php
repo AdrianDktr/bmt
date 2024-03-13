@@ -35,7 +35,7 @@
 <body>
     <div id="app">
         <div class="bg-dark shadow-sm">
-            <div class="running-text">
+            <div class="running-text text-white">
                <p><b> The New Mamasa Bersih Melayani ! </b></p>
             </div>
         </div>

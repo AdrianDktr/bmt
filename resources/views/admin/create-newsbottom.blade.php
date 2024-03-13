@@ -33,10 +33,13 @@
                             <select name="user_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
                                 @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    <option value="{{ $user->id }}" {{ Auth::check() && Auth::user()->id == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
+
 
                         <div class="form-group">
                             <label class="fw-bold" for="judul">Penulis</label>

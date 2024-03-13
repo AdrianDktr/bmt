@@ -20,7 +20,7 @@
 
                 <!-- Large Featured News -->
                 <div class="card mb-4">
-                    <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
+                  <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
                     <div class="card-body bg-light">
                         @foreach ($searchResults['news'] ?? $news as $data)
                             @if(is_object($data))
@@ -34,12 +34,13 @@
                                         <div class="col-md-6">
                                             <h5 class="card-title mt-3" style="cursor: pointer; text-decoration: none; color: inherit;">{{ $data->judul }}</h5>
                                             <p class="card-text">{{ $data->deskripsi }}</p>
-                                            <p class="post-meta text-dark">
+                                            <p class="post-meta text-dark" style="font-size: 12px;">
                                                 Posted by {{ optional($data->penulis)->name }}
                                                 on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
                                             </p>
+
                                             @if (Auth::check() && Auth::user()->is_admin)
-                                                <div>
+                                                <div class="mt-2">
                                                     <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
                                                     <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
                                                         @csrf
@@ -57,39 +58,51 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-header">{{ __('Trending ') }}</div>
-                    <div class="card-body overflow-auto" style="max-height: 300px;">
-                            @foreach ($searchResults['news'] ?? $news as $data)
-                                @if(is_object($data) && !$loop->first)
-                                    <div class="item">
-                                        <div class="media mb-3 d-flex flex-column">
-                                            <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
-                                                <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-start mr-3 img-fluid" alt="News Thumbnail">
-                                                <div class="media-body">
-                                                    <h5 class="mt-2">{{ $data->judul }}</h5>
-                                                    <p>{{ $data->deskripsi }}</p>
-                                                    @if (Auth::check() && Auth::user()->is_admin)
-                                                        <div>
-                                                            <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                            <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                            </form>
-                                                        </div>
-                                                    @endif
+                    @php
+                    $displayedNewsIds = [];
+                    @endphp
+
+                    <div class="card-body overflow-auto">
+                        @foreach ($searchResults['news'] ?? $news as $data)
+                            @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
+                                <div class="item">
+                                    <div class="media mb-3 d-flex flex-column align-items-center">
+                                        <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
+                                            <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px;">
+                                            <div class="media-body text-center">
+                                                <h5 class="mb-0" style="font-size: 14px;">{{ $data->judul }}</h5>
+                                                <div class="post-meta text-dark mt-2" style="font-size: 12px;">
+                                                    <p>Posted by {{ optional($data->penulis)->name }}</p>
+                                                    <p>on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
                                                 </div>
-                                            </a>
-                                        </div>
+                                                <p>{{ $data->deskripsi }}</p>
+                                                @if (Auth::check() && Auth::user()->is_admin)
+                                                    <div>
+                                                        <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                        <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                        </a>
                                     </div>
-                                @endif
-                            @endforeach
-                        </div>
+                                </div>
+                                @php
+                                    $displayedNewsIds[] = $data->id;
+                                @endphp
+                            @endif
+                        @endforeach
                     </div>
                 </div>
-            </div>
+
+
         </div>
     </div>
 
@@ -105,16 +118,10 @@
 
 
     <br>
-    <div class="container">
-        <div class="row">
-            <div class="col">
-            </div>
-        </div>
-    </div>
     <br>
 
     <div class="container">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 mb-4 mt-2">
             <div class="d-flex align-items-start">
                 <video width="320" height="200" controls class="me-3">
                     <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
@@ -221,7 +228,7 @@
             </div>
             <div class="item">
                 <div class="card">
-                    <img src="{{ asset('assets/slide/TondokBakaru/tondokbakaru.jpeg') }}" class="card-img-top" alt="Slide 3">
+                    <img src="{{ asset('assets/slide/TondokBakaru/tondokbakaru.jpg') }}" class="card-img-top" alt="Slide 3">
                     <div class="card-body text-center">
                         <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Tondok Bakaru</h5>
                     </div>
@@ -244,8 +251,8 @@
                 loop: true,
                 margin: 10,
                 nav: true,
-                autoplay: true, // Bergeser setiap 5 detik
-                autoplayTimeout: 5000, // Durasi 5 detik
+                autoplay: true,
+                autoplayTimeout: 5000,
                 responsive:{
                     0:{
                         items:1
@@ -265,12 +272,4 @@
 
 
 @endsection
-{{-- <div class="item">
-                <div class="card">
-                    <img src="{{ asset('assets/slide/TondokBakaru/DJI_0693.JPG') }}" class="card-img-top" alt="Slide 4">
-                    <div class="card-body">
-                        <h5 class="card-title">Slide 4</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-            </div> --}}
+
