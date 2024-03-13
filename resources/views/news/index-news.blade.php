@@ -60,8 +60,7 @@
             <div class="col-md-4">
                 <div class="card mb-4">
                     <div class="card-header">{{ __('Trending ') }}</div>
-                    <div class="card-body">
-
+                    <div class="card-body overflow-auto" style="max-height: 300px;">
                             @foreach ($searchResults['news'] ?? $news as $data)
                                 @if(is_object($data) && !$loop->first)
                                     <div class="item">
