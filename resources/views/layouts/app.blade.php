@@ -25,8 +25,8 @@
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link rel="stylesheet" href="/assets/css/runningtext.css">
-        {{-- <link rel="stylesheet" href="{{ asset('assets/css/owlslide.css') }}"> --}}
+        <link rel="stylesheet" href="{{ asset('/assets/css/runningtext.css')}}">
+        <link rel="stylesheet" href="{{ asset('assets/css/runtext.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -39,7 +39,7 @@
                <p><b> The New Mamasa Bersih Melayani ! </b></p>
             </div>
         </div>
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color:#212529;">
+        {{-- <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color:#212529;">
             <div class="container-fluid">
                 <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle" style="background-color:#212529;">
                 <strong style="margin-left: 10px; color:white ">BUSUR MAMASA</strong>
@@ -61,11 +61,11 @@
                 </form>
               </div>
             </div>
-          </nav>
+          </nav> --}}
         {{-- nav baru --}}
         <!-- Navigation -->
 
-        {{-- <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 10px;">
                     <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
@@ -127,9 +127,7 @@
                     </ul>
                 </div>
             </div>
-        </nav> --}}
-
-
+        </nav>
 
         <main class="py-4">
             @yield('content')

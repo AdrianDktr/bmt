@@ -10,21 +10,33 @@ use App\Models\NewsCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 
 class NewsController extends Controller
 {
+
     public function index(Request $request)
 {
+
     $query = $request->input('query');
 
 
     $news = News::where('judul', 'LIKE', "%$query%")->get();
     $newsbottom = NewsBottom::where('judul_bawah', 'LIKE', "%$query%")->get();
 
-
     $searchResults = $news->merge($newsbottom);
     $searchResults = $searchResults->unique('judul');
+
+    $newsViewedIds = News::whereDate('created_at', '<', Carbon::now()->subDays(5))->pluck('id')->toArray();
+
+    // Ambil berita yang diposting dalam 7 hari terakhir dan tidak termasuk dalam ID berita yang sudah ditampilkan
+    $news = News::where('judul', 'LIKE', "%$query%")
+                ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
+                ->whereNotIn('id', $newsViewedIds)
+                ->get();
+
+
 
     return view('news.index-news', compact('searchResults','news','newsbottom'));
 }

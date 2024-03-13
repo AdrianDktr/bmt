@@ -1,24 +1,5 @@
 /* styles.css */
 
-.running-text-container {
-    overflow: hidden; /* Menyembunyikan teks yang keluar dari batas kontainer */
-    white-space: nowrap; /* Mencegah teks pindah ke baris baru */
-}
-
-.running-text {
-    display: inline-block; /* Membuat teks berjalan secara horizontal */
-    animation: marquee 20s linear infinite; /* Animasi untuk membuat teks berjalan */
-}
-
-@keyframes marquee {
-    0% {
-        transform: translateX(700%);
-    } /* Mulai dari luar kanan */
-    100% {
-        transform: translateX(-100%);
-    } /* Berakhir di luar kiri */
-}
-
 .body {
     background-image: url("assets/slide/bg/1315724147.jpg");
 }
@@ -33,7 +14,6 @@ p {
     text-align: center;
     vertical-align: middle;
     display: table-cell;
-    color: white;
     padding-top: 5px;
 }
 
@@ -48,7 +28,7 @@ p {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     border: none;
     border-radius: 0;
-    padding: 0.7em;
+    /* padding: 0.7em; */
 }
 @media only screen and (min-width: 992px) {
     .dropdown:hover .dropdown-menu {
@@ -60,12 +40,12 @@ p {
 }
 .dropdown-menu ul {
     list-style: none;
-    padding: 0;
+    /* padding: 0; */
 }
 .dropdown-menu li .dropdown-item {
     color: gray;
     font-size: 1em;
-    padding: 0.5em 1em;
+    /* padding: 0.5em 1em; */
 }
 .dropdown-menu li .dropdown-item:hover {
     background-color: #f1f1f1;
@@ -127,3 +107,5 @@ p {
         overflow-y: scroll;
     }
 }
+
+

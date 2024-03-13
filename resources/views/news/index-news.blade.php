@@ -32,26 +32,24 @@
                                             </a>
                                         </div>
                                         <div class="col-md-6">
-                                            <h5 class="card-title">{{ $data->judul }}</h5>
+                                            <h5 class="card-title mt-3" style="cursor: pointer; text-decoration: none; color: inherit;">{{ $data->judul }}</h5>
                                             <p class="card-text">{{ $data->deskripsi }}</p>
-                                                <p class="post-meta">
-                                                    Posted by {{ optional($data->penulis)->name }}
-                                                    on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
-                                                </p>
-                                            <div class="d-flex justify-content-between mt-2">
-                                                <a href="{{ route('news-show',['news'=> $data->id]) }}" class="btn btn-primary me-2">View More</a>
-                                                @if (Auth::check() && Auth::user()->is_admin)
-                                                    <div>
-                                                        <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                        <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                        </form>
-                                                    </div>
-                                                @endif
-                                            </div>
+                                            <p class="post-meta text-dark">
+                                                Posted by {{ optional($data->penulis)->name }}
+                                                on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
+                                            </p>
+                                            @if (Auth::check() && Auth::user()->is_admin)
+                                                <div>
+                                                    <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                    <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            @endif
                                         </div>
+
                                     </div>
                                 @endif
                             @endif
@@ -60,22 +58,36 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <!-- Other News -->
                 <div class="card mb-4">
                     <div class="card-header">{{ __('Trending ') }}</div>
                     <div class="card-body">
-                        @foreach ($searchResults['news'] ?? $news as $data)
-                            @if(is_object($data) && !$loop->first)
-                                <div class="media mb-3">
-                                    <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-start mr-3" alt="News Thumbnail">
-                                    <div class="media-body">
-                                        <h5 class="mt-0">{{ $data->judul }}</h5>
-                                        <p>{{ $data->deskripsi }}</p>
-                                        <a href="{{ route('news-show', ['news' => $data->id]) }}" class="btn btn-primary">Read more</a>
+
+                            @foreach ($searchResults['news'] ?? $news as $data)
+                                @if(is_object($data) && !$loop->first)
+                                    <div class="item">
+                                        <div class="media mb-3 d-flex flex-column">
+                                            <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
+                                                <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-start mr-3 img-fluid" alt="News Thumbnail">
+                                                <div class="media-body">
+                                                    <h5 class="mt-2">{{ $data->judul }}</h5>
+                                                    <p>{{ $data->deskripsi }}</p>
+                                                    @if (Auth::check() && Auth::user()->is_admin)
+                                                        <div>
+                                                            <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                            <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                            @endif
-                        @endforeach
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
