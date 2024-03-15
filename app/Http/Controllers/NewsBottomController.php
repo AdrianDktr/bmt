@@ -146,7 +146,6 @@ class NewsBottomController extends Controller
             }
             // Set path video menjadi null
             $newsbottom->update(['video_file' => null]);
-
             return redirect()->route('news-bottom-edit', ['newsbottom' => $newsbottom])->with('success', 'Video berhasil dihapus.');
         }
 
@@ -166,15 +165,28 @@ class NewsBottomController extends Controller
             'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
         ]);
 
-        // Hapus thumbnail lama jika ada
-        if ($newsbottom->thumbnail) {
-            $oldThumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
-            if (file_exists($oldThumbnailPath)) {
-                unlink($oldThumbnailPath);
+
+        $thumbnailFileName = null;
+        if ($request->hasFile('thumbnail')) {
+
+            if ($newsbottom->thumbnail) {
+                $oldThumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
+                if (file_exists($oldThumbnailPath)) {
+                    unlink($oldThumbnailPath);
+                }
             }
+
+            $thumbnailFile = $request->file('thumbnail');
+            $thumbnailFileName = time() . '_' . $thumbnailFile->getClientOriginalName();
+            $thumbnailFile->move(public_path('assets/img2/thumbnail2'), $thumbnailFileName);
+        } else {
+            $thumbnailFileName = $newsbottom->thumbnail;
         }
 
-        // Simpan video baru jika diunggah atau diimpor
+
+
+
+
         $videoFileName = null;
         if ($request->has('video_option')) {
             if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
@@ -197,12 +209,7 @@ class NewsBottomController extends Controller
         }
 
         // Simpan thumbnail baru jika diunggah
-        $thumbnailFileName = null;
-        if ($request->hasFile('thumbnail')) {
-            $thumbnailFile = $request->file('thumbnail');
-            $thumbnailFileName = time() . '_' . $thumbnailFile->getClientOriginalName();
-            $thumbnailFile->move(public_path('assets/img2/thumbnail2'), $thumbnailFileName);
-        }
+
 
         $newsbottom->update([
             'judul_bawah' => $request->judul_bawah,
@@ -216,41 +223,53 @@ class NewsBottomController extends Controller
             'thumbnail' => $thumbnailFileName ? $thumbnailFileName : $newsbottom->thumbnail, // Gunakan thumbnail baru jika diunggah, jika tidak, gunakan thumbnail lama
         ]);
 
+        $content = $request->berita;
 
-        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $request->isi);
-        $dom = new \DomDocument();
-        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        // Pastikan $content tidak kosong dan merupakan HTML yang valid
+        if (!empty($content)) {
+            // Bersihkan konten dari tag o:p yang tidak valid
+            $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $content);
 
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $img) {
-            $imagePath = public_path('assets/img2/berita2') . '/' . basename($img->getAttribute('src'));
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+            $dom = new \DOMDocument();
+            libxml_use_internal_errors(true); // Gunakan error handling internal untuk melihat kesalahan parsing
+            $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+            // Gunakan fungsi libxml_get_errors() untuk melihat kesalahan parsing, jika ada
+            $errors = libxml_get_errors();
+            if (!empty($errors)) {
+                // Tampilkan atau tangani kesalahan parsing
+                foreach ($errors as $error) {
+                    // Proses kesalahan
+                }
+                libxml_clear_errors(); // Bersihkan daftar kesalahan
+            } else {
+                // Jika tidak ada kesalahan parsing, lanjutkan dengan manipulasi dan penyimpanan konten
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $data = $img->getAttribute('src');
+                    if (strpos($data, 'data:image') === 0) {
+                        list($type, $data) = explode(';', $data);
+                        list(, $data) = explode(',', $data);
+                        $data = base64_decode($data);
+                        $imageFileName = time() . '_' . Str::random(10) . '.png';
+                        $path = public_path('assets/img2/berita2') . '/' . $imageFileName;
+                        file_put_contents($path, $data);
+                        $img->removeAttribute('src');
+                        $img->setAttribute('src', asset('assets/img2/berita2/' . $imageFileName));
+                    }
+                }
+
+                // Simpan konten yang sudah dimanipulasi kembali ke dalam model
+                $newsbottom->berita = $dom->saveHTML();
+                $newsbottom->save();
             }
         }
 
-        // Simpan gambar baru dan update konten berita
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $img) {
-            $data = $img->getAttribute('src');
-            if (strpos($data, 'data:image') === 0) {
-                list($type, $data) = explode(';', $data);
-                list(, $data) = explode(',', $data);
-                $data = base64_decode($data);
-                $imageFileName = time() . '_' . Str::random(10) . '.png';
-                $path = public_path('assets/img2/berita2') . '/' . $imageFileName;
-                file_put_contents($path, $data);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', asset('assets/img2/berita2/' . $imageFileName));
-            }
-        }
-
-        $newsbottom->isi = $dom->saveHTML();
-        $newsbottom->save();
 
 
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
+
 
 
     public function delete2(NewsBottom $newsbottom){
