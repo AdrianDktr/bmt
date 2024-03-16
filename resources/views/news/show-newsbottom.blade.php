@@ -14,6 +14,9 @@
                     </div>
                     <br>
                     <img src="{{ asset('assets/img2/thumbnail2/' . $newsbottom->thumbnail) }}" class="align-self-start mr-3 img-fluid" alt="News Thumbnail" width="450">
+                    <p>
+                        Sumber gambar : {{ $newsbottom->photo_by }}
+                    </p>
                     <br>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left; margin-bottom: 20px;">

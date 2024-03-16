@@ -14,6 +14,7 @@ class NewsBottom extends Model
         'berita',
         'user_id',
         'penulis_berita',
+        'photo_by',
         'category_id',
         'video_file',
         'video_link',

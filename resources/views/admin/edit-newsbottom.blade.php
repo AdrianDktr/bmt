@@ -25,12 +25,12 @@
                             <input type="text" name="judul_bawah" placeholder="Judul" class="form-control" value="{{ old('judul_bawah', $newsbottom->judul_bawah) }}">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="isi">Berita</label>
                             <textarea name="berita" id="summernote" class="form-control" rows="10">{{ old('berita', $newsbottom->berita) }}</textarea>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="penulis">Admin</label>
                             <select name="user_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
@@ -40,12 +40,17 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="judul">Penulis</label>
                             <input type="text" name="penulis_berita" placeholder="Penulis berita" class="form-control" value="{{ old('penulis_berita',$newsbottom->penulis_berita) }}">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
+                            <label class="fw-bold" for="foto_oleh">Sumber Foto</label>
+                            <input type="text" name="photo_by" placeholder="Sumber Foto" class="form-control">
+                        </div>
+
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="penulis">Kategori Berita</label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option selected disabled>Select Category</option>
@@ -54,11 +59,11 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="tanggal_terbit">Tanggal Pembuatan</label>
                             <input type="date" name="tanggal_terbit" class="form-control" value="{{ old('tanggal_terbit', $newsbottom->tanggal_terbit) }}">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="video">Video</label>
                             <div class="d-flex flex-row align-items-center">
                                 <div class="form-check form-check-inline">
@@ -102,7 +107,7 @@
                             <input type="text" id="videoLink" name="video_link" class="form-control" value="{{ old('video_link', $newsbottom->video_link) }}"><br>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="thumbnail_path">Thumbnail</label>
                             <input type="file" name="thumbnail" class="form-control">
                             @if($newsbottom->thumbnail)
@@ -113,7 +118,7 @@
                         </div>
 
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <button type="submit" class="btn btn-primary mt-3">Update News</button>
                         </div>
                     </form>

@@ -8,10 +8,17 @@
                 <div class="card-header">{{ __('Show News') }}</div>
                 <div class="card-body text-center overflow-auto">
                     <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>
-                    <div style="clear: both;"></div> <!-- Menambahkan elemen untuk membersihkan float -->
-                    <div style="margin-bottom: 20px;"> <!-- Menambahkan margin bottom pada judul -->
+                    <div style="clear: both;"></div>
+                    <br>
+                    <div style="margin-bottom: 20px;">
                         <h1 class="fs-4">{{ $news->judul }}</h1>
                     </div>
+                    <br>
+                    <img  src="{{ asset('assets/img/thumbnail/' . $news->thumbnail_path) }}" alt="Featured News Image" width="450">
+                    <p>
+                        Sumber gambar : {{ $news->photo_by }}
+                    </p>
+                    <br>
                     <div class="mx-auto" style="max-width: 800px;">
                         <div style="text-align: left;">
                             <style>

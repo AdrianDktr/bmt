@@ -23,12 +23,12 @@
                             <input type="text" name="judul" placeholder="Judul" class="form-control">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="isi">Berita</label>
                             <textarea name="isi" id="berita" class="form-control" rows="10"></textarea>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="penulis">Admin</label>
                             <select name="user_id" id="penulis" class="form-control">
                                 <option selected disabled>Select Admin</option>
@@ -40,15 +40,17 @@
                             </select>
                         </div>
 
-
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="judul">Penulis</label>
                             <input type="text" name="penulis_berita" placeholder="Penulis berita" class="form-control">
                         </div>
 
+                        <div class="form-group mt-3">
+                            <label class="fw-bold" for="foto_oleh">Sumber Foto</label>
+                            <input type="text" name="photo_by" placeholder="Sumber Foto" class="form-control">
+                        </div>
 
-
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="penulis">Kategori Berita</label>
                             <select name="category_id" id="category_id" class="form-control">
                                 <option selected disabled>Select Category</option>
@@ -58,12 +60,12 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="tanggal_terbit">Tanggal Pembuatan</label>
                             <input type="date" name="tanggal_terbit" class="form-control">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label for="video" class="fw-bold">Video</label><br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="video_upload" name="video_option" value="upload" checked onchange="toggleVideoInput()">
@@ -89,14 +91,12 @@
                         </div>
 
                         <div id="fileSelected"></div>
-
-
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <label class="fw-bold" for="thumbnail_path">Thumbnail</label>
                             <input type="file" name="thumbnail_path" class="form-control">
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group mt-3">
                             <button type="submit" class="btn btn-primary mt-3">Create News</button>
                         </div>
                     </form>

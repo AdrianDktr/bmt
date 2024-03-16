@@ -118,6 +118,7 @@ public function allnews()
             'isi' => '',
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
+            'photo_by' => $request->photo_by,
             'category_id' => $request->category_id,
             'video_file' => $videoFileName,
             'video_link' => $request->video_link,
@@ -190,6 +191,7 @@ public function allnews()
             'isi' => 'required',
             'user_id' => 'required',
             'penulis_berita' => 'required',
+            'photo_by' => 'required',
             'category_id' => 'required',
             'video_file' => 'nullable|mimes:mp4,webm,quicktime|max:50000',
             'video_link' => 'nullable|url',
@@ -245,6 +247,7 @@ public function allnews()
             'isi' => $request->isi,
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
+            'photo_by' => $request->photo_by,
             'category_id' => $request->category_id,
             'video_file' => $videoFileName ? $videoFileName : $oldVideo,
             'video_link' => $request->video_link,
@@ -318,15 +321,6 @@ public function allnews()
 
         return redirect()->back();
     }
-
-
-
-// News Bottoms
-
-
-
-
-
 
     public function showByCategory($category)
     {

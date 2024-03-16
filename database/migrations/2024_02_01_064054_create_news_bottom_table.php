@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('tanggal_terbit');
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('penulis_berita');
+            $table->string('photo_by');
             $table->string('video_file')->nullable();
             $table->string('video_link')->nullable();
             $table->string('thumbnail')->nullable();
