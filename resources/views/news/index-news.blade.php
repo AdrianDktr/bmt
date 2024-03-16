@@ -25,33 +25,35 @@
                         @foreach ($searchResults['news'] ?? $news as $data)
                             @if(is_object($data))
                                 @if($loop->first)
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <a href="{{ route('news-show',['news'=> $data->id]) }}">
-                                                <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5 class="card-title mt-3" style="cursor: pointer; text-decoration: none; color: inherit;">{{ $data->judul }}</h5>
-                                            <p class="card-text">{{ $data->deskripsi }}</p>
-                                            <p class="post-meta text-dark" style="font-size: 12px;">
-                                                Posted by {{ optional($data->penulis)->name }}
-                                                on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
-                                            </p>
-
-                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                <div class="mt-2">
-                                                    <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                    <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                    </form>
-                                                </div>
-                                            @endif
-                                        </div>
-
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="{{ route('news-show',['news'=> $data->id]) }}">
+                                            <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
+                                        </a>
                                     </div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title mt-3">
+                                            <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none;">{{ $data->judul }}</a>
+                                        </h5>
+                                        <p class="card-text">{{ $data->deskripsi }}</p>
+                                        <p class="post-meta text-dark" style="font-size: 12px;">
+                                            Posted by {{ optional($data->penulis)->name }}
+                                            on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
+                                        </p>
+
+                                        @if (Auth::check() && Auth::user()->is_admin)
+                                            <div class="mt-2">
+                                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
                                 @endif
                             @endif
                         @endforeach
@@ -69,31 +71,31 @@
                     <div class="card-body overflow-auto">
                         @foreach ($searchResults['news'] ?? $news as $data)
                             @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
-                                <div class="item">
-                                    <div class="media mb-3 d-flex flex-column align-items-center">
-                                        <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
-                                            <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px;">
-                                            <div class="media-body text-center">
-                                                <h5 class="mb-0" style="font-size: 14px;">{{ $data->judul }}</h5>
-                                                <div class="post-meta text-dark mt-2" style="font-size: 12px;">
-                                                    <p>Posted by {{ optional($data->penulis)->name }}</p>
-                                                    <p>on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
-                                                </div>
-                                                <p>{{ $data->deskripsi }}</p>
-                                                @if (Auth::check() && Auth::user()->is_admin)
-                                                    <div>
-                                                        <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                        <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                        </form>
-                                                    </div>
-                                                @endif
+                            <div class="item">
+                                <div class="media mb-3 d-flex flex-column align-items-center">
+                                    <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
+                                        <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px;">
+                                        <div class="media-body text-center">
+                                            <h5 class="mb-0" style="font-size: 14px;">{{ $data->judul }}</h5>
+                                            <div class="post-meta text-dark mt-2" style="font-size: 12px;">
+                                                <p>Posted by {{ optional($data->penulis)->name }}</p>
+                                                <p>on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
                                             </div>
-                                        </a>
-                                    </div>
+                                            <p>{{ $data->deskripsi }}</p>
+                                            @if (Auth::check() && Auth::user()->is_admin)
+                                                <div>
+                                                    <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                    <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                    </form>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </a>
                                 </div>
+                            </div>
                                 @php
                                     $displayedNewsIds[] = $data->id;
                                 @endphp
@@ -101,8 +103,6 @@
                         @endforeach
                     </div>
                 </div>
-
-
         </div>
     </div>
 
@@ -214,7 +214,7 @@
                 <div class="card">
                     <img src="{{ asset('assets/slide/BuntuKepa/DSCF8339.JPG') }}" class="card-img-top" alt="Slide 1">
                     <div class="card-body text-center">
-                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Buntu Kepa</h5>
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Buntu Kepa</h5>
                     </div>
                 </div>
             </div>
@@ -222,7 +222,7 @@
                 <div class="card">
                     <img src="{{ asset('assets/slide/SARMBULIAWANSUMARORONG/DSCF9007.JPG') }}" class="card-img-top" alt="Slide 2">
                     <div class="card-body text-center">
-                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Sarmbu Liawan Sumararorong</h5>
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Sarmbu Liawan Sumararorong</h5>
                     </div>
                 </div>
             </div>
@@ -230,7 +230,7 @@
                 <div class="card">
                     <img src="{{ asset('assets/slide/TondokBakaru/tondokbakaru.jpg') }}" class="card-img-top" alt="Slide 3">
                     <div class="card-body text-center">
-                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Tondok Bakaru</h5>
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Tondok Bakaru</h5>
                     </div>
                 </div>
             </div>
@@ -238,7 +238,7 @@
                 <div class="card">
                     <img src="{{ asset('assets/slide/Liarawan/diatasawanliarra.jpeg') }}" class="card-img-top" alt="Slide 3">
                     <div class="card-body text-center">
-                        <h5 class="card-title" style="font-size: 1rem; font-weight: bold;">Buntu Liarra</h5>
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Buntu Liarra</h5>
                     </div>
                 </div>
             </div>
