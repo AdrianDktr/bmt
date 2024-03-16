@@ -252,37 +252,41 @@ public function allnews()
             'tanggal_terbit' => $request->tanggal_terbit,
         ]);
 
+        if (!empty($content)) {
+            $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $content);
+            $dom = new \DOMDocument();
+            $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            $errors = libxml_get_errors();
+            if (!empty($errors)) {
 
-        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $request->isi);
-        $dom = new \DomDocument();
-        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                foreach ($errors as $error) {
 
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $img) {
-            $imagePath = public_path('assets/img/berita') . '/' . basename($img->getAttribute('src'));
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
+                }
+
+            } else {
+
+                $images = $dom->getElementsByTagName('img');
+                foreach ($images as $img) {
+                    $data = $img->getAttribute('src');
+                    if (strpos($data, 'data:image') === 0) {
+                        list($type, $data) = explode(';', $data);
+                        list(, $data) = explode(',', $data);
+                        $data = base64_decode($data);
+                        $imageFileName = time() . '_' . Str::random(10) . '.png';
+                        $path = public_path('assets/img/berita') . '/' . $imageFileName;
+                        file_put_contents($path, $data);
+                        $img->removeAttribute('src');
+                        $img->setAttribute('src', asset('assets/img/berita/' . $imageFileName));
+                    }
+                }
+
+
+                $news->isi = $dom->saveHTML();
+                $news->save();
             }
         }
 
-        // Simpan gambar baru dan update konten berita
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $img) {
-            $data = $img->getAttribute('src');
-            if (strpos($data, 'data:image') === 0) {
-                list($type, $data) = explode(';', $data);
-                list(, $data) = explode(',', $data);
-                $data = base64_decode($data);
-                $imageFileName = time() . '_' . Str::random(10) . '.png';
-                $path = public_path('assets/img/berita') . '/' . $imageFileName;
-                file_put_contents($path, $data);
-                $img->removeAttribute('src');
-                $img->setAttribute('src', asset('assets/img/berita/' . $imageFileName));
-            }
-        }
 
-        $news->isi = $dom->saveHTML();
-        $news->save();
 
         return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
     }
