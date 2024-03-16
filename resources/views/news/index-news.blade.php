@@ -1,12 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <!-- Trending News Section -->
     <div class="container">
         <div class="bg-img">
 
         </div>
     </div>
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -120,7 +124,7 @@
     <br>
     <br>
 
-    <div class="container">
+    {{-- <div class="container">
         <div class="col-md-6 mb-4">
             <div class="d-flex align-items-start">
                 <video width="320" height="200" controls class="me-3">
@@ -128,10 +132,6 @@
                 </video>
             </div>
 
-<div class="d-flex justify-content-center">
-    <div>2</div>
-    <div>1</div>
-</div>
 
             <div class="mt-2">
                 <div>
@@ -142,8 +142,18 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Main News Section -->
+<div class="video mb-auto">
+    <div class="row justify-content-center">
+        <video width="100" height="500" controls class="me-3">
+            <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+</div>
+
+<br>
+<br>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-12">

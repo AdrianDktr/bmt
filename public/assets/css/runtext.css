@@ -31,4 +31,11 @@
     }
 }
 
-
+/* .navbar-nav > li {
+    padding-left: 10px;
+    padding-right: 10px;
+} */
+.navbar-nav > li {
+    margin-left: 15px;
+    margin-right: 10px;
+}
