@@ -43,23 +43,14 @@
               </button>
               <div class="collapse navbar-collapse justify-content-end  " id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                  <li class="nav-item ">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('create-news-bottom') }}">Create News Bottom</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Link</a>
+                    <a class="nav-link" href="{{ route('news-create') }}">Create News</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <a class="nav-link" href="{{ route('login') }}">Logout</a>
                   </li>
                 </ul>
               </div>

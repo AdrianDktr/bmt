@@ -126,11 +126,3 @@ p {
         overflow-y: scroll;
     }
 }
-.navbar-nav > li {
-    padding-left: 30px;
-    padding-right: 30px;
-}
-Also you can set margin .navbar-nav > li {
-    margin-left: 30px;
-    margin-right: 30px;
-}

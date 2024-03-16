@@ -30,6 +30,7 @@ Route::get('/show-news/{news}', [NewsController::class, 'show'])->name('news-sho
 Route::get('/show-news-bottom/{newsbottom}', [NewsBottomController::class, 'show2'])->name('news-bottom-show');
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 Route::get('/category/{category}', [NewsController::class, 'showByCategory'])->name('category-news');
+Route::get('/index-admin', [HomeController::class, 'admin'])->name('admin-index');
 
 Route::middleware(['admin'])->group(function(){
     //news
@@ -47,4 +48,11 @@ Route::middleware(['admin'])->group(function(){
     Route::patch('/admin/update-news-bottom/{newsbottom}', [NewsBottomController::class, 'update2'])->name('news-bottom-update');
     Route::delete('/admin/edit-news-bottom/{newsbottom}/remove-video',  [NewsBottomController::class, 'update2'])->name('remove-video-bottom');
     Route::delete('/admin/delete-news-bottom/{newsbottom}', [NewsBottomController::class, 'delete2'])->name('news-bottom-delete');
+});
+
+
+
+
+Route::get('/admin', function () {
+    return view('layouts.app.admin');
 });

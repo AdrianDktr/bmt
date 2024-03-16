@@ -146,9 +146,7 @@
     <!-- Main News Section -->
 <div class="video mb-auto">
     <div class="row justify-content-center">
-        <video width="100" height="500" controls class="me-3">
-            <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
-        </video>
+        <iframe width="1745" height="875" src="https://www.youtube.com/embed/rdenq1CP1h4" title="PART 1 EKSEKUSI LANGSUNG PEMDA KABUPATEN MAMASA! 🚀" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
 </div>
 
@@ -158,7 +156,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="row">
-                    <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif;">News</h5>
+                    <h5 class="display-4 text-center mb-4" style="font-size: 2rem; font-family: 'Roboto', sans-serif;">News</h5>
                 </div>
                 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
