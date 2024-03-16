@@ -10,18 +10,19 @@
     animation: marquee 20s linear infinite; /* Animasi untuk membuat teks berjalan */
 }
 
-@keyframes marquee {
+/* @keyframes marquee {
     0% {
         transform: translateX(700%);
     } /* Mulai dari luar kanan */
     100% {
         transform: translateX(-100%);
     } /* Berakhir di luar kiri */
-}
+} */
 
-.body {
+
+/* .body {
     background-image: url("assets/slide/bg/1315724147.jpg");
-}
+} */
 
 /* For devices 400px and larger: */
 @media only screen and (min-device-width: 400px) {
@@ -127,3 +128,5 @@ p {
         overflow-y: scroll;
     }
 }
+
+

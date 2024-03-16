@@ -104,11 +104,17 @@
 
     <div class="container">
         <div class="col-md-6 mb-4">
-            <div class="d-flex align-items-start">
-                <video width="320" height="200" controls class="me-3">
+            <div class="d-flex align-items-center">
+                <video style="" width="320" height="200" controls class="me-3">
                     <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
                 </video>
             </div>
+
+<div class="d-flex justify-content-center">
+    <div>2</div>
+    <div>1</div>
+</div>
+
             <div class="mt-2">
                 <div>
                     <h4><strong>CITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA</strong></h4>
@@ -226,6 +232,8 @@
             </div>
         </div>
     </div>
+
+
 
     <script>
        $(document).ready(function(){
