@@ -25,8 +25,8 @@
 
         <!-- Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link rel="stylesheet" href="/assets/css/runningtext.css">
-        {{-- <link rel="stylesheet" href="{{ asset('assets/css/owlslide.css') }}"> --}}
+        {{-- <link rel="stylesheet" href="{{ asset('/assets/css/runningtext.css')}}"> --}}
+        <link rel="stylesheet" href="{{ asset('assets/css/runtext.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -34,12 +34,11 @@
 
 <body>
     <div id="app">
-        {{-- <div class="bg-dark shadow-sm">
+        <div class="bg-dark shadow-sm">
             <div class="running-text">
                <p><b> The New Mamasa Bersih Melayani ! </b></p>
             </div>
-        </div> --}}
-        <marquee style="color:aliceblue;  background-color:#212529;width:100%;font-size:16px;font-family:'Raleway',sans-serif;font-weight:150;height:20px; display: block;"> The New Mamasa Bersih Melayani ! </marquee>
+        </div>
         <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color:#212529;">
             <div class="container-fluid">
                 <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle" style="background-color:#212529;">
@@ -47,8 +46,8 @@
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse  navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                   </li>
@@ -56,6 +55,10 @@
                     <a class="nav-link" href="#">Link</a>
                   </li>
                 </ul>
+                <form class="d-flex" role="search">
+                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
               </div>
             </div>
           </nav>
@@ -66,8 +69,9 @@
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 10px;">
                     <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
-                    <strong style="margin-left: 10px;">Busur Mamasa</strong>
+                    <strong style="margin-left: 10px; font-size: 1rem;">Busur Mamasa</strong>
                 </a>
+
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}" style="border-color: white;">
                     <span class="navbar-toggler-icon" style="background-color: white;"></span>
@@ -87,15 +91,9 @@
                                     <strong>{{ Auth::user()->name }}</strong>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <!-- Link untuk Create News -->
                                     <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
-
-                                    <!-- Link untuk Create Bottom News -->
                                     <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
-
                                     <div class="dropdown-divider"></div>
-
-                                    <!-- Link untuk Logout -->
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -109,14 +107,13 @@
                 </div>
             </div>
         </nav>
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm ">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm ">
             <div class="container">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mx-auto">
                         @foreach(\App\Models\NewsCategory::all() as $category)
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('category-news', ['category' => $category->id]) }}">
+                            <a class="nav-link" href="{{ route('category-news', ['category' => $category->id]) }}" style="font-size: 10px; margin-right: 10px;">
                                 {{ $category->name }}
                             </a>
                         </li>
@@ -124,8 +121,7 @@
                     </ul>
                 </div>
             </div>
-        </nav> --}}
-
+        </nav>
 
 
         <main class="py-4">

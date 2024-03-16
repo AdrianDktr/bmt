@@ -1,0 +1,34 @@
+.running-text-container {
+    overflow: hidden; /* Menyembunyikan teks yang keluar dari batas kontainer */
+    white-space: nowrap; /* Mencegah teks pindah ke baris baru */
+    width: 100vw; /* Lebar kontainer berjalan teks mengikuti lebar layar */
+}
+
+.running-text {
+    display: inline-block; /* Membuat teks berjalan secara horizontal */
+    animation: marquee 20s linear infinite; /* Animasi untuk membuat teks berjalan */
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    } /* Mulai dari luar kanan */
+    100% {
+        transform: translateX(-100%);
+    } /* Berakhir di luar kiri */
+}
+
+/* Mengatur kecepatan berjalan teks berdasarkan lebar layar */
+@media (max-width: 768px) {
+    .running-text {
+        animation-duration: 10s; /* Kecepatan berjalan teks di layar kecil */
+    }
+}
+
+@media (max-width: 480px) {
+    .running-text {
+        animation-duration: 5s; /* Kecepatan berjalan teks di layar sangat kecil */
+    }
+}
+
+

@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // ,
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
@@ -18,6 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('news_category')->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('penulis_berita');
+            $table->string('photo_by');
             $table->date('tanggal_terbit');
             $table->string('video_file')->nullable();
             $table->string('video_link')->nullable();
