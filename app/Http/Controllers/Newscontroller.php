@@ -17,29 +17,30 @@ class NewsController extends Controller
 {
 
     public function index(Request $request)
-{
+    {
+        $query = $request->input('query');
 
-    $query = $request->input('query');
+        $news = News::where('judul', 'LIKE', "%$query%")
+                    ->orWhere('isi', 'LIKE', "%$query%")
+                    ->get();
 
+        $newsbottom = NewsBottom::where('judul_bawah', 'LIKE', "%$query%")
+                                ->orWhere('berita', 'LIKE', "%$query%")
+                                ->get();
 
-    $news = News::where('judul', 'LIKE', "%$query%")->get();
-    $newsbottom = NewsBottom::where('judul_bawah', 'LIKE', "%$query%")->get();
+        $searchResults = $news->merge($newsbottom);
+        $searchResults = $searchResults->unique('judul');
 
-    $searchResults = $news->merge($newsbottom);
-    $searchResults = $searchResults->unique('judul');
+        $newsViewedIds = News::whereDate('created_at', '<', Carbon::now()->subDays(5))->pluck('id')->toArray();
 
-    $newsViewedIds = News::whereDate('created_at', '<', Carbon::now()->subDays(5))->pluck('id')->toArray();
+        $news = News::where('judul', 'LIKE', "%$query%")
+                    ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
+                    ->whereNotIn('id', $newsViewedIds)
+                    ->get();
 
-    // Ambil berita yang diposting dalam 7 hari terakhir dan tidak termasuk dalam ID berita yang sudah ditampilkan
-    $news = News::where('judul', 'LIKE', "%$query%")
-                ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
-                ->whereNotIn('id', $newsViewedIds)
-                ->get();
+        return view('news.index-news', compact('searchResults', 'news', 'newsbottom'));
+    }
 
-
-
-    return view('news.index-news', compact('searchResults','news','newsbottom'));
-}
 
 public function allnews()
 {

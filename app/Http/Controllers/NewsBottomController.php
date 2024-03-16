@@ -278,8 +278,32 @@ class NewsBottomController extends Controller
 
     public function delete2(NewsBottom $newsbottom){
 
+
+        $thumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
+        if (file_exists($thumbnailPath)) {
+            unlink($thumbnailPath);
+        }
+
+        // Menghapus gambar-gambar terkait
+        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $newsbottom->berita);
+        $content = preg_replace('/<p[^>]*>/', '', $content);
+        $content = preg_replace('/<\/p>/', '', $content);
+
+        $dom = new \DomDocument();
+        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $img) {
+            $imagePath = public_path('assets/img2/berita2') . '/' . basename($img->getAttribute('src'));
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+        // Menghapus berita
         $newsbottom->delete();
 
         return redirect()->back();
+
+
     }
 }
