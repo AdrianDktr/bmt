@@ -6,9 +6,8 @@ use Illuminate\Http\Request;
 
 class AboutController extends Controller
 {
-    public function about(){
-
-    return view('home.about');
-
+    public function about()
+    {
+        return view('layouts.about');
     }
 }
