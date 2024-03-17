@@ -47,7 +47,7 @@
 
                         <div class="form-group mt-3">
                             <label class="fw-bold" for="foto_oleh">Sumber Foto</label>
-                            <input type="text" name="photo_by" placeholder="Sumber Foto" class="form-control">
+                            <input type="text" name="photo_by" placeholder="Sumber Foto" class="form-control" value="{{ old('photo_by',$newsbottom->photo_by) }}">
                         </div>
 
                         <div class="form-group mt-3">

@@ -1,0 +1,30 @@
+/* Aturan CSS untuk halaman About Us */
+main {
+    margin-top: -25px; /* Sesuaikan dengan kebutuhan */
+}
+
+/* Untuk menghilangkan space antara konten dan footer */
+footer {
+    margin-top: -25px; /* Sesuaikan dengan kebutuhan */
+    margin-bottom: 0; /* Sesuaikan dengan kebutuhan */
+}
+/* Aturan CSS untuk membuat semua gambar pada carousel memiliki ukuran yang sama */
+/* Aturan CSS untuk membuat gambar dan carousel responsif */
+#carouselAboutUs .carousel-item img {
+    height: 400px; /* Tinggi gambar */
+    object-fit: cover; /* Menyamakan ukuran gambar tanpa merubah rasio aspek */
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    #carouselAboutUs .carousel-item img {
+        height: 300px; /* Ubah tinggi gambar untuk layar kecil */
+    }
+}
+
+@media (max-width: 576px) {
+    #carouselAboutUs .carousel-item img {
+        height: 200px; /* Ubah tinggi gambar untuk layar sangat kecil */
+    }
+}
+

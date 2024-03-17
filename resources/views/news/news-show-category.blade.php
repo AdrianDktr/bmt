@@ -29,8 +29,8 @@
                                                 <h5 class="card-title">
                                                     <a href="{{ $newsItem instanceof \App\Models\News ? route('news-show', ['news' => $newsItem->id]) : route('news-bottom-show', ['newsbottom' => $newsItem->id]) }}">{{ $newsItem->judul }}</a>
                                                 </h5>
+                                                <p class="card-text">{{ $newsItem->judul_bawah }}</p>
                                                 <p class="post-meta">Posted by {{ optional($newsItem->penulis)->name }} on {{ \Carbon\Carbon::parse($newsItem->tanggal_terbit)->format('d F Y') }}</p>
-                                                {{-- <p class="card-text">{{ $newsItem->judul }}</p> --}}
                                                 <a href="{{ $newsItem instanceof \App\Models\News ? route('news-show', ['news' => $newsItem->id]) : route('news-bottom-show', ['newsbottom' => $newsItem->id]) }}" class="btn btn-primary">Read More</a>
                                             </div>
                                         </div>

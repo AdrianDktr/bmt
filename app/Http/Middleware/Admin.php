@@ -18,8 +18,9 @@ class Admin
     {
         if(!Auth::check() || Auth::user()->is_admin ==false){
             return redirect()->route('index-news');
-        } else
-            return redirect()->route('index-admin');
+        }
+        // else
+        //     return redirect()->route('index-admin');
 
         return $next($request);
     }

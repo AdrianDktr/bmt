@@ -119,37 +119,15 @@
             }
         });
     </script>
-
-
     <br>
     <br>
-
-    {{-- <div class="container">
-        <div class="col-md-6 mb-4">
-            <div class="d-flex align-items-start">
-                <video width="320" height="200" controls class="me-3">
-                    <source src="{{ asset('assets/vid/mamasa.mp4') }}" type="video/mp4">
-                </video>
-            </div>
-
-
-            <div class="mt-2">
-                <div>
-                    <h4><strong>CITOL HILL, PENAWAR SAAT LELAH DENGAN BISINGNYA KOTA</strong></h4>
-                </div>
-                <p class="text-muted">
-                    Dari ketinggian di atas 1.000 MdPL. kawasan wisata Citol Hill di Kabupaten Mamasa menawarkan kesejukan dan keindahan tak terperi. Lokasi ini relatif tidak jauh dari pusat
-                </p>
+    <div class="video mb-auto">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8">
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/rdenq1CP1h4" title="PART 1 EKSEKUSI LANGSUNG PEMDA KABUPATEN MAMASA! 🚀" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
         </div>
-    </div> --}}
-    <!-- Main News Section -->
-<div class="video mb-auto">
-    <div class="row justify-content-center">
-        <iframe width="1745" height="875" src="https://www.youtube.com/embed/rdenq1CP1h4" title="PART 1 EKSEKUSI LANGSUNG PEMDA KABUPATEN MAMASA! 🚀" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
-</div>
-
 <br>
 <br>
     <div class="container">
