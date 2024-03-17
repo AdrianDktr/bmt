@@ -16,7 +16,7 @@
             <div class="col-md-8">
                 <!-- Search Form -->
                 <form action="{{ route('index-news') }}" method="GET" id="searchForm">
-                    <div class="input-group mb-3">
+                    <div class="input-group mb-3 mt-4">
                         <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}">
                         <button type="submit" class="btn btn-primary">Search</button>
                     </div>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="col-md-4">
-                <div class="card mb-4">
+                <div class="card mb-4 mt-4">
                     <div class="card-header">{{ __('Trending ') }}</div>
                     @php
                     $displayedNewsIds = [];
@@ -146,28 +146,28 @@
                                 <div class="row justify-content-center">
                                     @foreach ($chunk as $newsbot)
                                         @if(is_object($newsbot))
-                                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
-                                                <div class="card h-100">
-                                                    <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark text-decoration-none">
-                                                        <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
-                                                        <div class="card-body">
-                                                            <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
-                                                            <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
-                                                            {{-- <a href="#" class="btn btn-primary">View more</a> --}}
-                                                        </div>
-                                                        @if (Auth::check() && Auth::user()->is_admin)
-                                                            <div class="card-footer">
-                                                                <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning">Edit</a>
-                                                                <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                                </form>
-                                                            </div>
-                                                        @endif
-                                                    </a>
-                                                </div>
+                                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
+                                            <div class="card h-100 d-flex flex-column">
+                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark text-decoration-none">
+                                                    <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
+                                                    <div class="card-body flex-grow-1">
+                                                        <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
+                                                        <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
+                                                    </div>
+                                                </a>
+                                                @if (Auth::check() && Auth::user()->is_admin)
+                                                    <div class="card-footer mt-auto">
+                                                        <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                        <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
+                                        </div>
+
                                         @endif
                                     @endforeach
                                 </div>
@@ -197,7 +197,7 @@
         </div>
     </div>
 
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row">
             <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif; font-size: 2rem;">Explore Mamasa</h5>
         </div>

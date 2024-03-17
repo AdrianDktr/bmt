@@ -27,6 +27,8 @@ class NewsCategorySeeder extends Seeder
             ['name' => 'Gaya Hidup'],
             ['name' => 'Hukum'],
             ['name' => 'Pertanian'],
+            ['name' => 'Keagamaan'],
+
 
         ];
         DB::table('news_category')->insert($data);

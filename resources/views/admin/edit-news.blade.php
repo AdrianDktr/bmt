@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
+            <div class="card mt-4 mb-4">
                 <div class="card-header">{{ __('Edit News') }}</div>
 
                 <div class="card-body">

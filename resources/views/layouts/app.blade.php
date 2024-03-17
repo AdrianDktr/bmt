@@ -45,10 +45,10 @@
                 <ul class="navbar-nav">
                     <br>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link text-white" href="#"><b>Berkarya Bersama</b></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('about') }}">About Us</a>
+                    <a class="nav-link text-white" href="{{ route('about') }}"><b>Tentang Busur Mamasa</b></a>
                   </li>
                 </ul>
               </div>
