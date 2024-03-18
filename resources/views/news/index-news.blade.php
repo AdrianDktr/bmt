@@ -69,14 +69,13 @@
                     $displayedNewsIds = [];
                     @endphp
 
-                    <div class="card-body h-100" style="max-height: 500px; overflow-y: auto;">
+                    <div class="card-body overflow-auto">
                         @foreach ($searchResults['news'] ?? $news as $data)
                             @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
                             <div class="item">
                                 <div class="media mb-3 d-flex flex-column align-items-center">
                                     <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
-                                        <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px; height: 150px; object-fit: cover;">
-
+                                        <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px;">
                                         <div class="media-body text-center">
                                             <h5 class="mb-0" style="font-size: 14px;">{{ $data->judul }}</h5>
                                             <div class="post-meta text-dark mt-2" style="font-size: 12px;">
@@ -105,8 +104,6 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
-
         </div>
     </div>
 
