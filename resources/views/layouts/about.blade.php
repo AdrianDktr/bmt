@@ -53,7 +53,7 @@
     text-center" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="155" height="155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
         <h2 class="mt-3">Ashraf Fikri Yathier</h2>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 17px;">Director</p>
     </div>
 </div>
 
@@ -63,54 +63,54 @@
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
         <h3 class="mt-3">Adrian Adhi Wicaksana</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 17px;">Head of IT Division</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
         <h3 class="mt-3">Ardiansyah</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 17px;">Content Creator & Videographer</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Burhan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <h3 class="mt-3">Burhan Mangewa</h3>
+        <p style="font-size: 17px;">Head of Content Creator & Videographer</p>
     </div>
 
     {{-- baris 2 --}}
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Farhan Rahmat</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <h3 class="mt-3">Farhan Rahmat Alan</h3>
+        <p style="font-size: 17px;">Author I</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Haliq Hermawan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <h3 class="mt-3">Haly Potret</h3>
+        <p style="font-size: 17px;">Social Media Manager & Photographer</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
         <h3 class="mt-3">Kevin</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 17px;">IT Frontend Developer</p>
     </div>
 
     {{-- baris 3 --}}
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Mursalin</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <h3 class="mt-3">Mursalin Mustamin</h3>
+        <p style="font-size: 17px;">Public Relations II</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Riswan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <h3 class="mt-3">Riswan Sakir</h3>
+        <p style="font-size: 17px;">Head of Public Relations</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
         <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
         <h3 class="mt-3">Zulfihadi</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 17px;">Author II</p>
     </div>
 </div>
 
