@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-13">
-            <div class="card">
+            <div class="card mt-4 mb-4">
                 <div class="card-header">{{ __('Show News') }}</div>
                 <div class="card-body text-center overflow-auto">
                     <a href="{{ route('index-news') }}" class="btn btn-primary mb-3 text-left" style="float: left;">Kembali</a>

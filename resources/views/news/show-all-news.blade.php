@@ -10,7 +10,7 @@
                 <div class="row">
                     @foreach ($all_news as $newsItem)
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
-                        <div class="card">
+                        <div class="card mt-4 mb-4">
                             <a href="{{ route('news-bottom-show',['newsbottom'=>$newsItem->id]) }}" class="text-dark text-decoration-none">
                                 @if ($newsItem instanceof \App\Models\News)
                                     <img src="{{ asset('assets/img/thumbnail/' . $newsItem->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail">

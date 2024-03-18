@@ -1,15 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
-
     <!-- Trending News Section -->
     <div class="container">
         <div class="bg-img">
 
         </div>
     </div>
-
 
     <div class="container">
         <div class="row justify-content-center">
@@ -234,11 +231,16 @@
                     </div>
                 </div>
             </div>
+            <div class="item">
+                <div class="card">
+                    <img src="{{ asset('assets/slide/SebelahTondokBakaru/DSCF3582.jpg') }}" class="card-img-top" alt="Slide 3">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Rantai Pokok</h5>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
     <script>
        $(document).ready(function(){
             $(".owl-carousel").owlCarousel({
