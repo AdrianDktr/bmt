@@ -3,6 +3,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Aboutcontroller;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\NewsBottomController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ Route::get('/show-news-bottom/{newsbottom}', [NewsBottomController::class, 'show
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 Route::get('/category/{category}', [NewsController::class, 'showByCategory'])->name('category-news');
 
+
 Route::middleware(['admin'])->group(function(){
     Route::get('/index-admin', [HomeController::class, 'index'])->name('admin-index');
     //news
@@ -40,6 +42,13 @@ Route::middleware(['admin'])->group(function(){
     Route::delete('/admin/edit-news/{news}/remove-video',  [NewsController::class, 'update'])->name('remove-video');
     Route::patch('/admin/update-news/{news}', [NewsController::class, 'update'])->name('news-update');
     Route::delete('/admin/delete-news/{news}', [NewsController::class, 'delete'])->name('news-delete');
+
+    // event
+    Route::get('/admin/create-events]', [EventController::class, 'create'])->name('events-create');
+    Route::post('/admin/store-events]', [EventController::class, 'store'])->name('events-store');
+    Route::get('/admin/edit-events/{event}]', [EventController::class, 'edit'])->name('events-edit');
+    Route::patch('/admin/update-events/{event}]', [EventController::class, 'update'])->name('events-update');
+    Route::delete('/admin/delete-events/{event}]', [EventController::class, 'delete'])->name('events-delete');
 
     // news bottom
     Route::get('/admin/create-news-bottom', [NewsBottomController::class, 'create2'])->name('create-news-bottom');

@@ -43,6 +43,9 @@
               </button>
               <div class="collapse navbar-collapse justify-content-end  " id="navbarSupportedContent">
                 <ul class="navbar-nav">
+                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('events-create') }}">Create Events</a>
+                </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{ route('create-news-bottom') }}">Create News Bottom</a>
                   </li>

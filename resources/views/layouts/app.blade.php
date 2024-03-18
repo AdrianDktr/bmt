@@ -50,6 +50,11 @@
                   <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('about') }}"><b>Tentang Busur Mamasa</b></a>
                   </li>
+                  @if (Auth::check() && Auth::user()->is_admin)
+                  <li class="nav-item">
+                    <a class="nav-link text-white" href="{{ route('admin-index') }}"><b>Admin Dashboard</b></a>
+                  </li>
+                  @endif
                 </ul>
               </div>
             </div>

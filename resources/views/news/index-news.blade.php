@@ -12,13 +12,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <!-- Search Form -->
+                <br>
                 <form action="{{ route('index-news') }}" method="GET" id="searchForm">
                     <div class="input-group mb-3 mt-4">
                         <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}">
                         <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </form>
-
+                <br>
                 <!-- Large Featured News -->
                 <div class="card mb-4">
                   <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
@@ -60,9 +61,39 @@
                         @endforeach
                     </div>
                 </div>
+                {{-- Event --}}
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <strong>Upcoming Events</strong>
+                    </div>
+                    <div class="card-body bg-light">
+                        <div class="row">
+                            @foreach($events as $event)
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <img class="card-img-top" src="{{ asset('assets/events/' . $data->thumbnail_event) }}" alt="Featured News Image">
+                                        <h5 class="card-title">{{ $event->title }}</h5>
+                                        <p class="card-text text-center mt-3"><b>{{ $event->date }}</b></p>
+                                        <p class="text-center"><b>{{ $event->location }}</b></p>
+                                        @if (Auth::check() && Auth::user()->is_admin)
+                                            <a href="{{ route('events-edit', ['event' => $event->id]) }}" class="btn btn-warning me-2 text-center">Edit</a>
+                                            <form action="{{ route('events-delete', ['event' => $event->id]) }}" method="post" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 mt-4">
                 <div class="card mb-4 mt-4">
                     <div class="card-header">{{ __('Trending ') }}</div>
                     @php

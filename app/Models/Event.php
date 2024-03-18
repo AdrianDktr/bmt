@@ -12,5 +12,8 @@ class Event extends Model
         'title',
         'date',
         'location',
+        'thumbnail_event'
     ];
+
+    protected $table = 'events';
 }
