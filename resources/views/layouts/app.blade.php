@@ -30,7 +30,7 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
         <marquee style="color:aliceblue;  background-color:#212529;width:100%;font-size:16px;font-family:'Raleway',sans-serif;font-weight:150;height:20px; display: block;"> The New Mamasa Bersih Melayani ! </marquee>
         <nav class="navbar navbar-expand-lg navbar-dark shadow-sm pb-1" style="background-color:#212529;">
             <div class="container-fluid">
@@ -76,7 +76,7 @@
             @yield('content')
         </main>
 
-        <footer class="bg-dark shadow-sm text-white text-center py-2">
+        <footer class="bg-dark shadow-sm text-white text-center py-2 mt-auto">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center" style="">
