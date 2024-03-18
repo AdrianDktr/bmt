@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\NewsBottom;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\NewsCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -18,6 +19,7 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
+        $events = Event::all();
         $query = $request->input('query');
 
         $news = News::where('judul', 'LIKE', "%$query%")
@@ -38,7 +40,7 @@ class NewsController extends Controller
                     ->whereNotIn('id', $newsViewedIds)
                     ->get();
 
-        return view('news.index-news', compact('searchResults', 'news', 'newsbottom'));
+        return view('news.index-news', compact('searchResults', 'news', 'newsbottom','events'));
     }
 
 

@@ -6,8 +6,8 @@
         <div class="carousel-item active">
             <img src="{{ asset('assets/slide/bg/DJI_0686.JPG') }}" class="d-block w-100 img-fluid center-block" alt="...">
             <div class="carousel-caption d-none d-md-block position-absolute top-50 start-50 translate-middle">
-                <h3>Tempat </h5>
-                <p>perbaikan apa saja di daerah tsb</p>
+                <h3>Tondok bakaru </h5>
+                <p>Drone view</p>
             </div>
         </div>
         {{-- <div class="carousel-item">
@@ -51,65 +51,67 @@
 <div class="row gy-6 " style="margin: auto">
     <div class="col-md-6 offset-md-3
     text-center" style="text-align: center">
-    <img src="{{url('../assets/founding/Afikri.jpg')}}" class="rounded-circle" width="155" height="155"  alt="Avatar">
+    <img src="{{asset('assets/founding/Afikri.jpg')}}" class="rounded-circle" width="155" height="155" style="object-fit: cover;" alt="Avatar">
         <h2 class="mt-3">Ashraf Fikri Yathier</h2>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Director</p>
     </div>
 </div>
 {{-- baris 1 --}}
-<div class="row gy-3 " style="margin: auto">
+<div class="row gy-3 mt-4" style="margin: auto">
     {{-- 3 foto --}}
     <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{url('../assets/founding/riswan.jpg')}}" class="rounded-circle" width="140" height="140 style="" alt="Avatar">
+        <img src="{{asset('assets/founding/Adrian.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+
         <h3 class="mt-3">Adrian Adhi Wicaksana</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Head of IT Division</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+            <img src="{{asset('assets/founding/ardi.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
         <h3 class="mt-3">Ardiansyah</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Content Creator & Videographer</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{url('../assets/founding/Burhan.jpg')}}" class="rounded-circle" width="140" height="140 style="" alt="Avatar">
-        <h3 class="mt-3">Burhan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <img src="{{asset('assets/founding/Burhan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
+        <h3 class="mt-3">Burhan Mangewa</h3>
+        <p style="font-size: 18px">Head of Content Creator & Videographer</p>
     </div>
 
     {{-- baris 2 --}}
     <div class="col-lg-4 center-block" style="text-align: center">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <img src="{{asset('assets/founding/farhan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
         <h3 class="mt-3">Farhan Rahmat</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Author I</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-        <h3 class="mt-3">Haliq Hermawan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+            <img src="{{asset('assets/founding/haliq.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+        <h3 class="mt-3">Haly Potret</h3>
+        <p style="font-size: 18px">Social Media Manager & Photographer</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+            <img src="{{asset('assets/founding/kevin2.png')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
         <h3 class="mt-3">Kevin</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">IT Front-End Developer</p>
     </div>
 
     {{-- baris 3 --}}
     <div class="col-lg-4 center-block" style="text-align: center">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"></rect><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+        <img src="{{asset('assets/founding/mursalin.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
+
         <h3 class="mt-3">Mursalin</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Public Relations II</p>
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{url('../assets/founding/riswan.jpg')}}" class="rounded-circle" width="140" height="140 style="" alt="Avatar">
-        <h3 class="mt-3">Riswan</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <img src="{{asset('assets/founding/riswan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover;" alt="Avatar">
+        <h3 class="mt-3">Riswan Sakir</h3>
+        <p style="font-size: 18px">Head of Public Relations</p>
 
     </div>
     <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{url('../assets/founding/Zulfihadi.jpg')}}" class="rounded-circle" width="140" height="140 style="" alt="Avatar">
+        <img src="{{asset('assets/founding/Zulfihadi.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover;" alt="Avatar">
         <h3 class="mt-3">Zulfihadi</h3>
-        <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+        <p style="font-size: 18px">Author II</p>
     </div>
 </div>
 
