@@ -17,11 +17,8 @@ class Admin
     public function handle(Request $request, Closure $next): Response
     {
         if(!Auth::check() || Auth::user()->is_admin ==false){
-            return redirect()->route('index-news');
+            return redirect()->route('index-admin');
         }
-        // else
-        //     return redirect()->route('index-admin');
-
         return $next($request);
     }
 }

@@ -30,9 +30,9 @@ Route::get('/show-news/{news}', [NewsController::class, 'show'])->name('news-sho
 Route::get('/show-news-bottom/{newsbottom}', [NewsBottomController::class, 'show2'])->name('news-bottom-show');
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 Route::get('/category/{category}', [NewsController::class, 'showByCategory'])->name('category-news');
-Route::get('/index-admin', [HomeController::class, 'admin'])->name('admin-index');
 
 Route::middleware(['admin'])->group(function(){
+    Route::get('/index-admin', [HomeController::class, 'index'])->name('admin-index');
     //news
     Route::get('/admin/create-news', [NewsController::class, 'create'])->name('news-create');
     Route::post('/admin/store-news', [NewsController::class, 'store'])->name('news-store');
