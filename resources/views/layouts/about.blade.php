@@ -45,7 +45,7 @@
     </div>
 </div>
 <hr>
-<h3 class="text-center">Founder</h3>
+<h1 class="text-center">Founder</h1>
 <br>
 {{-- baris founder --}}
 <div class="row gy-6 " style="margin: auto">
