@@ -5,7 +5,7 @@
     <div class="carousel-inner">
         <div class="carousel-item active">
             <img src="{{ asset('assets/slide/bg/DJI_0686.JPG') }}" class="d-block w-100 img-fluid center-block" alt="...">
-            <div class="carousel-caption d-none d-md-block">
+            <div class="carousel-caption d-none d-md-block position-absolute top-50 start-50 translate-middle">
                 <h3>Tempat </h5>
                 <p>perbaikan apa saja di daerah tsb</p>
             </div>
@@ -35,7 +35,7 @@
     </button> --}}
 </div>
 
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row">
         <div class="col text-center">
             <h2>Selamat datang di Busur Mamasa!</h2>
@@ -45,7 +45,7 @@
     </div>
 </div>
 <hr>
-<h3 class="text-center">Founder</h3>
+<h1 class="display-5 text-center">Founder</h1>
 <br>
 {{-- baris founder --}}
 <div class="row gy-6 " style="margin: auto">
