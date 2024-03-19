@@ -27,6 +27,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         {{-- <link rel="stylesheet" href="{{ asset('/assets/css/runningtext.css')}}"> --}}
         <link rel="stylesheet" href="{{ asset('assets/css/runtext.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/events.css') }}">
 
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -125,13 +126,14 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <!-- Search Form -->
+                    <br>
                     <form action="{{ route('index-news') }}" method="GET" id="searchForm">
                         <div class="input-group mb-3 mt-4">
                             <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}">
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </form>
-
+                    <br>
                     <!-- Large Featured News -->
                     <div class="card mb-4">
                       <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
@@ -173,9 +175,37 @@
                             @endforeach
                         </div>
                     </div>
+                    {{-- Event --}}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <strong>{{ __('Upcoming Events') }}</strong>
+                        </div>
+                        <div class="card-body bg-light">
+                            <div class="event-container">
+                                @foreach($events as $event)
+                                <h3 class="year">{{ date('Y', strtotime($event->date)) }}</h3>
+                                <div class="event">
+                                    <div class="event-left">
+                                        <div class="event-date">
+                                            <div class="date">{{ date('d', strtotime($event->date)) }}</div>
+                                            <div class="month">{{ date('M', strtotime($event->date)) }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="event-right">
+                                        <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event">
+                                        <h5 class="event-title">{{ $event->title }}</h5>
+                                        <p class="event-location">{{ $event->location }}</p>
+                                        <p class="event-date">{{ date('d M Y', strtotime($event->date)) }}</p>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-4 mt-4">
                     <div class="card mb-4 mt-4">
                         <div class="card-header">{{ __('Trending ') }}</div>
                         @php
@@ -187,28 +217,29 @@
                                 @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
                                 <div class="item">
                                     <div class="media mb-3 d-flex flex-column align-items-center">
-                                        <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
-                                            <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="align-self-center mb-3 img-fluid" alt="News Thumbnail" style="width: 200px; height: 150px; object-fit: cover;">
-
-                                            <div class="media-body text-center">
-                                                <h5 class="mb-0" style="font-size: 14px;">{{ $data->judul }}</h5>
-                                                <div class="post-meta text-dark mt-2" style="font-size: 12px;">
-                                                    <p>Posted by {{ optional($data->penulis)->name }}</p>
-                                                    <p>on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
-                                                </div>
-                                                <p>{{ $data->deskripsi }}</p>
-                                                @if (Auth::check() && Auth::user()->is_admin)
-                                                    <div>
-                                                        <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                        <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                        </form>
+                                        <div class="card">
+                                            <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
+                                                <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 250px;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ $data->judul }}</h5>
+                                                    <p class="card-text">{{ $data->deskripsi }}</p>
+                                                    <div class="post-meta text-muted">
+                                                        <p>Posted by {{ optional($data->penulis)->name }} on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
                                                     </div>
-                                                @endif
+                                                </div>
+                                            </a>
+                                            @if (Auth::check() && Auth::user()->is_admin)
+                                            <div class="card-footer">
+                                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                </form>
                                             </div>
-                                        </a>
+                                            @endif
+                                        </div>
+
                                     </div>
                                 </div>
                                     @php
@@ -218,8 +249,6 @@
                             @endforeach
                         </div>
                     </div>
-                </div>
-
             </div>
         </div>
 
@@ -237,7 +266,7 @@
         <div class="video mb-auto">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-8">
-                    <iframe width="100%" height="315" src="https://www.youtube.com/embed/rdenq1CP1h4" title="PART 1 EKSEKUSI LANGSUNG PEMDA KABUPATEN MAMASA! 🚀" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/rdenq1CP1h4" title="PART 1 EKSEKUSI LANGSUNG PEMDA KABUPATEN MAMASA! 🚀" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </div>
             </div>
         </div>

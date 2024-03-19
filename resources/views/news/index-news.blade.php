@@ -64,27 +64,25 @@
                 {{-- Event --}}
                 <div class="card mb-4">
                     <div class="card-header">
-                        <strong>Upcoming Events</strong>
+                        <strong>{{ __('Upcoming Events') }}</strong>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="row">
+                        <div class="event-container">
                             @foreach($events as $event)
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <img class="card-img-top" src="{{ asset('assets/events/' . $data->thumbnail_event) }}" alt="Featured News Image">
-                                        <h5 class="card-title">{{ $event->title }}</h5>
-                                        <p class="card-text text-center mt-3"><b>{{ $event->date }}</b></p>
-                                        <p class="text-center"><b>{{ $event->location }}</b></p>
-                                        @if (Auth::check() && Auth::user()->is_admin)
-                                            <a href="{{ route('events-edit', ['event' => $event->id]) }}" class="btn btn-warning me-2 text-center">Edit</a>
-                                            <form action="{{ route('events-delete', ['event' => $event->id]) }}" method="post" style="display: inline-block;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                            </form>
-                                        @endif
+                            <h3 class="year">{{ date('Y', strtotime($event->date)) }}</h3>
+                            <div class="event">
+                                <div class="event-left">
+                                    <div class="event-date">
+                                        <div class="date">{{ date('d', strtotime($event->date)) }}</div>
+                                        <div class="month">{{ date('M', strtotime($event->date)) }}</div>
                                     </div>
+                                </div>
+
+                                <div class="event-right">
+                                    <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event">
+                                    <h5 class="event-title">{{ $event->title }}</h5>
+                                    <p class="event-location">{{ $event->location }}</p>
+                                    <p class="event-date">{{ date('d M Y', strtotime($event->date)) }}</p>
                                 </div>
                             </div>
                             @endforeach

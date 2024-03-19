@@ -120,7 +120,7 @@ class NewsBottomController extends Controller
         $newsBottom->berita = $dom->saveHTML();
         $newsBottom->save();
 
-        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin-index')->with('success', 'Data berhasil diperbarui.');
     }
 
 
@@ -271,7 +271,7 @@ class NewsBottomController extends Controller
 
 
 
-        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin-index')->with('success', 'Data berhasil diperbarui.');
     }
 
 

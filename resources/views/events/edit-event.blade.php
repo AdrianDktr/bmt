@@ -33,9 +33,9 @@
                         </div>
                         <div class="form-group">
                             <label class="mt-2" for="location">Thumbnail Event</label>
-                            <input type="file" name="thumbnail_path" class="form-control">
-                                @if($news->thumbnail_path)
-                                    <img src="{{ asset('assets/img/thumbnail/' . $news->thumbnail_path) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
+                            <input type="file" name="thumbnail_event" class="form-control">
+                                @if($event->thumbnail_event)
+                                    <img src="{{ asset('assets/events/' . $news->thumbnail_event) }}" alt="Current Thumbnail" class="img-fluid mt-2" style="max-width: 200px;">
                                 @endif
                             <small class="text-muted">Current Thumbnail</small>
                         </div>

@@ -155,7 +155,7 @@ public function allnews()
         $news->isi = $dom->saveHTML();
         $news->save();
 
-        return redirect()->route('index-news')->with('success', 'Data berhasil disimpan.');
+        return redirect()->route('admin-index')->with('success', 'Data berhasil disimpan.');
     }
 
 
@@ -294,7 +294,7 @@ public function allnews()
 
 
 
-        return redirect()->route('index-news')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin-index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function delete(News $news){

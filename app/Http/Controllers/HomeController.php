@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\NewsBottom;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\NewsCategory;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
@@ -31,6 +32,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $events= Event::all();
         $query = $request->input('query');
 
         $news = News::where('judul', 'LIKE', "%$query%")
@@ -50,6 +52,6 @@ class HomeController extends Controller
                     ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
                     ->whereNotIn('id', $newsViewedIds)
                     ->get();
-        return view('layouts.admin',compact('news','newsViewedIds','newsbottom','query','searchResults'));
+        return view('layouts.admin',compact('news','newsViewedIds','newsbottom','query','searchResults','events'));
     }
 }

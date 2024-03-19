@@ -26,6 +26,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('assets/css/runtext.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/aboutus.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/events.css') }}">
+        
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
