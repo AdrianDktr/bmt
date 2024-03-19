@@ -45,75 +45,80 @@
     </div>
 </div>
 <hr>
-<h1 class="display-5 text-center">Founder</h1>
+<h1 class="display-5 text-center">Our Team</h1>
 <br>
-{{-- baris founder --}}
-<div class="row gy-6 " style="margin: auto">
-    <div class="col-md-6 offset-md-3
-    text-center" style="text-align: center">
-    <img src="{{asset('assets/founding/Afikri.jpg')}}" class="rounded-circle" width="155" height="155" style="object-fit: cover;" alt="Avatar">
-        <h2 class="mt-3">Ashraf Fikri Yathier</h2>
-        <p style="font-size: 18px">Director</p>
+    {{-- baris founder --}}
+    <div class="row gy-6" style="margin: auto">
+        <div class="col-md-6 offset-md-3 text-center" style="text-align: center">
+            <img src="{{ asset('assets/founding/blek1.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover;" alt="Avatar">
+            <h3 class="mt-3">Ashraf Fikri Yathier</h2>
+            <p style="font-size: 19px">Director</p>
+        </div>
+    </div>
+    {{-- baris 1 --}}
+    <div class="row gy-3 mt-4" style="margin: auto">
+        {{-- 3 foto --}}
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/Adrian.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+            <h4 class="mt-3">Adrian Adhi Wicaksana</h3>
+            <p style="font-size: 17px">Head of IT Division</p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/ardi.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+            <h4 class="mt-3">Ardiansyah</h3>
+            <p style="font-size: 17px">Content Creator & Videographer</p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/Burhan.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: top;" alt="Avatar">
+            <h4 class="mt-3">Burhan Mangewa</h3>
+            <p style="font-size: 17px">Head of Content Creator & Videographer</p>
+        </div>
+        {{-- baris 2 --}}
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/farhan.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+            <h4 class="mt-3">Farhan Rahmat</h3>
+            <p style="font-size: 17px">Author I</p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/haliq.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+            <h4 class="mt-3">Haly Potret</h3>
+            <p style="font-size: 17px">Social Media Manager & Photographer</p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/kevin2.png') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: top;" alt="Avatar">
+            <h4 class="mt-3">Kevin</h3>
+            <p style="font-size: 17px">IT Front-End Developer</p>
+        </div>
+        {{-- baris 3 --}}
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/mursalin.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: top;" alt="Avatar">
+            <h4 class="mt-3">Mursalin Mustamin</h3>
+            <p style="font-size: 17px">Head of Public Relations </p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/riswan.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover;" alt="Avatar">
+            <h4 class="mt-3">Riswan Sakir</h3>
+            <p style="font-size: 17px">Public Relations</p>
+        </div>
+        <div class="col-lg-4 center-block" style="text-align: center">
+            <img src="{{ asset('assets/founding/Zulfihadi.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover;" alt="Avatar">
+            <h4 class="mt-3">Zulfihadi</h3>
+            <p style="font-size: 17px">Author II</p>
+        </div>
     </div>
 </div>
-{{-- baris 1 --}}
-<div class="row gy-3 mt-4" style="margin: auto">
-    {{-- 3 foto --}}
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/Adrian.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
 
-        <h3 class="mt-3">Adrian Adhi Wicaksana</h3>
-        <p style="font-size: 18px">Head of IT Division</p>
+<hr>
+<div class="row me-auto">
+    <div class="col-md-7">
+        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
     </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-            <img src="{{asset('assets/founding/ardi.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
-        <h3 class="mt-3">Ardiansyah</h3>
-        <p style="font-size: 18px">Content Creator & Videographer</p>
-
-    </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/Burhan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
-        <h3 class="mt-3">Burhan Mangewa</h3>
-        <p style="font-size: 18px">Head of Content Creator & Videographer</p>
-    </div>
-
-    {{-- baris 2 --}}
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/farhan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
-        <h3 class="mt-3">Farhan Rahmat</h3>
-        <p style="font-size: 18px">Author I</p>
-    </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-            <img src="{{asset('assets/founding/haliq.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
-        <h3 class="mt-3">Haly Potret</h3>
-        <p style="font-size: 18px">Social Media Manager & Photographer</p>
-
-    </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-            <img src="{{asset('assets/founding/kevin2.png')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
-        <h3 class="mt-3">Kevin</h3>
-        <p style="font-size: 18px">IT Front-End Developer</p>
-    </div>
-
-    {{-- baris 3 --}}
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/mursalin.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover; object-position: top;" alt="Avatar">
-
-        <h3 class="mt-3">Mursalin</h3>
-        <p style="font-size: 18px">Public Relations II</p>
-    </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/riswan.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover;" alt="Avatar">
-        <h3 class="mt-3">Riswan Sakir</h3>
-        <p style="font-size: 18px">Head of Public Relations</p>
-
-    </div>
-    <div class="col-lg-4 center-block" style="text-align: center">
-        <img src="{{asset('assets/founding/Zulfihadi.jpg')}}" class="rounded-circle" width="140" height="140" style="object-fit: cover;" alt="Avatar">
-        <h3 class="mt-3">Zulfihadi</h3>
-        <p style="font-size: 18px">Author II</p>
+    <div class="col-md-5 d-flex align-items-center justify-content-center">
+        <img src="{{ asset('path/to/your/image.jpg') }}" class="img-fluid" alt="Placeholder Image">
     </div>
 </div>
+
 
 
 

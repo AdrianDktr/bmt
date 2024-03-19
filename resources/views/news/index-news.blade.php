@@ -10,7 +10,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-7">
                 <!-- Search Form -->
                 <br>
                 <form action="{{ route('index-news') }}" method="GET" id="searchForm">
@@ -35,9 +35,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <h5 class="card-title mt-3">
-                                            <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none;">{{ $data->judul }}</a>
+                                            <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
                                         </h5>
-                                        <p class="card-text">{{ $data->deskripsi }}</p>
                                         <p class="post-meta text-dark" style="font-size: 12px;">
                                             Posted by {{ optional($data->penulis)->name }}
                                             on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
@@ -61,34 +60,50 @@
                         @endforeach
                     </div>
                 </div>
+                <br>
                 {{-- Event --}}
+
                 <div class="card mb-4">
                     <div class="card-header">
                         <strong>{{ __('Upcoming Events') }}</strong>
                     </div>
                     <div class="card-body bg-light">
-                        <div class="event-container">
+                        <div class="row">
                             @foreach($events as $event)
-                            <h3 class="year">{{ date('Y', strtotime($event->date)) }}</h3>
-                            <div class="event">
-                                <div class="event-left">
-                                    <div class="event-date">
-                                        <div class="date">{{ date('d', strtotime($event->date)) }}</div>
-                                        <div class="month">{{ date('M', strtotime($event->date)) }}</div>
+                            <div class="col-md-6">
+                                <div class="card mb-3">
+                                    <div class="row g-0">
+                                        <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center">
+                                            <div class="text-center text-white">
+                                                <div class="date">{{ date('d', strtotime($event->date)) }}</div>
+                                                <div class="month">{{ date('M', strtotime($event->date)) }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="card-body">
+                                                {{-- <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event" class="card-img" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px; margin-right: 20px;"> --}}
+                                                <h5 class="card-title">{{ $event->title }}</h5>
+                                                <p class="card-text">{{ $event->location }}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="event-right">
-                                    <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event">
-                                    <h5 class="event-title">{{ $event->title }}</h5>
-                                    <p class="event-location">{{ $event->location }}</p>
-                                    <p class="event-date">{{ date('d M Y', strtotime($event->date)) }}</p>
                                 </div>
                             </div>
                             @endforeach
                         </div>
+                        @if (Auth::check() && Auth::user()->is_admin)
+                            <div class="mt-2">
+                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                </form>
+                            </div>
+                        @endif
                     </div>
-                </div>
+           </div>
+
             </div>
 
             <div class="col-md-4 mt-4">
@@ -107,8 +122,7 @@
                                         <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
                                             <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 250px;">
                                             <div class="card-body">
-                                                <h5 class="card-title">{{ $data->judul }}</h5>
-                                                <p class="card-text">{{ $data->deskripsi }}</p>
+                                                <h5 class="card-title" style="font-size: 14px;">{{ $data->judul }}</h5>
                                                 <div class="post-meta text-muted">
                                                     <p>Posted by {{ optional($data->penulis)->name }} on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
                                                 </div>
@@ -254,19 +268,19 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
+            {{-- <div class="item">
                 <div class="card">
                     <img src="{{ asset('assets/slide/Liarawan/diatasawanliarra.jpeg') }}" class="card-img-top" alt="Slide 3">
                     <div class="card-body text-center">
                         <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Buntu Liarra</h5>
                     </div>
                 </div>
-            </div>
+            </div> --}}
             <div class="item">
                 <div class="card">
                     <img src="{{ asset('assets/slide/SebelahTondokBakaru/DSCF3582.jpg') }}" class="card-img-top" alt="Slide 3">
                     <div class="card-body text-center">
-                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Rantai Pokok</h5>
+                        <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Rante Pongko'</h5>
                     </div>
                 </div>
             </div>
@@ -275,7 +289,7 @@
     <script>
        $(document).ready(function(){
             $(".owl-carousel").owlCarousel({
-                loop: true,
+                loop: false,
                 margin: 10,
                 nav: true,
                 autoplay: true,
@@ -294,6 +308,28 @@
             });
         });
 
+        $(document).ready(function(){
+        $(".eventcarousel").owlCarousel({
+            loop:true,
+            margin:10,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:2,
+                    nav:false
+                },
+                1000:{
+                    items:3,
+                    nav:true,
+                    loop:false
+                }
+            }
+        });
+    });
     </script>
 
 

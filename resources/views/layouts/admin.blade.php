@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         {{-- <link rel="stylesheet" href="{{ asset('/assets/css/runningtext.css')}}"> --}}
         <link rel="stylesheet" href="{{ asset('assets/css/runtext.css') }}">
-        <link rel="stylesheet" href="{{ asset('assets/css/events.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('assets/css/events.css') }}"> --}}
 
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -124,7 +124,7 @@
 
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <!-- Search Form -->
                     <br>
                     <form action="{{ route('index-news') }}" method="GET" id="searchForm">
@@ -175,6 +175,7 @@
                             @endforeach
                         </div>
                     </div>
+                    <br>
                     {{-- Event --}}
                     <div class="card mb-4">
                         <div class="card-header">

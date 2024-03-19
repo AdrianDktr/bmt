@@ -1,89 +1,28 @@
-.card {
-    margin-bottom: 20px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px -8px rgba(0, 0, 0, 0.4);
-  }
+/* CSS */
+.card-body {
+    padding: 20px;
+}
 
-  .card-body {
-    padding: 10px;
-    background-color: #f8f9fa;
-  }
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
 
-  .event-container {
-    margin-top: 20px;
-  }
+.card-text {
+    font-size: 14px;
+    color: #555;
+}
 
-  .event {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
-  }
-
-  .event-left {
-    background-color: #218bbb;
-    color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-    text-align: center;
-    width: 80px;
-    margin-right: 20px;
-  }
-
-  .event-left .date {
+.date {
     font-size: 24px;
-  }
+}
 
-  .event-left .month {
+.month {
     font-size: 16px;
-  }
-
-  .event-right {
-    flex: 1;
-  }
-
-  .event-right img {
-    width: 80px; /* Mengurangi ukuran thumbnail */
-    height: 80px; /* Mengurangi ukuran thumbnail */
-    object-fit: cover;
-    border-radius: 8px;
-    margin-right: 20px;
-  }
-
-  .event-title {
-    font-size: 20px; /* Mengurangi ukuran font */
-    color: #218bbb;
-    margin-bottom: 10px;
-  }
-
-  .event-location {
-    color: #333;
-    margin-bottom: 10px;
-  }
-
-  .event-date {
-    font-size: 16px;
-    color: #666;
-  }
-
-  @media (max-width: 768px) {
-    .event {
-      flex-direction: column;
+}
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 50%;
+        max-width: 50%;
     }
-
-    .event-left {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 10px;
-    }
-
-    .event-right img {
-      width: 100%; /* Mengisi lebar */
-      height: auto; /* Mengisi tinggi */
-      margin-right: 0;
-      margin-bottom: 10px;
-    }
-  }
+}
