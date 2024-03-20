@@ -18,7 +18,7 @@
                 <div class="card-body">
                     <form action="{{ route('events-update', ['event' => $event->id]) }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                        @method('patch')
                         <div class="form-group">
                             <label class="mt-2" for="title">Event Title</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="ex: Ulang Tahun Mamasa" value="{{ old('title') }}">

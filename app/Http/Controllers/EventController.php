@@ -13,27 +13,34 @@ class EventController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|max:255',
-            'date' => 'required|date',
-            'location' => 'nullable',
-            'thumbnail_event' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Allowed image types and maximum file size in KB
+{
+    $request->validate([
+        'title' => 'required|max:255',
+        'date' => 'required|date',
+        'location' => 'nullable',
+        'thumbnail_event' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Allowed image types and maximum file size in KB
+    ]);
+
+    $imageName = null;
+    
+            if ($request->hasFile('thumbnail_event')) {
+                $file = $request->file('thumbnail_event');
+                $imageName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('public/assets/events', $imageName);
+                $file->move(public_path('assets/events'), $imageName);
+            }
+
+         Event::create([
+            'title' => $request->title,
+            'date' => $request->date,
+            'location' => $request->location,
+            'thumbnail_event' => $imageName
         ]);
 
-        if ($request->hasFile('thumbnail_event')) {
-            $file = $request->file('thumbnail_event');
-            $imageFileName = time() . '_' . $request->title . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/assets/events', $imageFileName);
-            $file->move(public_path('assets/events'), $imageFileName);
-        } else {
-            $imageFileName = 'default.jpg'; // Set default image file name if no file is uploaded
-        }
-
-        Event::create(array_merge($request->all(), ['thumbnail_event' => $imageFileName]));
         return redirect()->route('admin-index');
+}
 
-    }
+
 
     public function edit(Event $event)
     {

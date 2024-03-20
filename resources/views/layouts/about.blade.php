@@ -7,32 +7,27 @@
             <img src="{{ asset('assets/slide/bg/DJI_0686.JPG') }}" class="d-block w-100 img-fluid center-block" alt="...">
             <div class="carousel-caption d-none d-md-block position-absolute top-50 start-50 translate-middle">
                 <h3>Tondok bakaru </h5>
-                <p>Drone view</p>
             </div>
         </div>
-        {{-- <div class="carousel-item">
+        <div class="carousel-item">
             <img src="{{ asset('assets/slide/bg/DSCF6878.JPG') }}" class="d-block w-100 img-fluid" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
             </div>
-        </div> --}}
-        {{-- <div class="carousel-item">
+        </div>
+        <div class="carousel-item">
             <img src="{{ asset('assets/slide/bg/DSCF8539.JPG') }}" class="d-block w-100 img-fluid" alt="...">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
             </div>
-        </div> --}}
+        </div>
     </div>
-    {{-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselAboutUs" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAboutUs" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span classs="visually-hidden">Previous</span>
+        <span classs="visually-hidden"></span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselAboutUs" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button> --}}
+        <span class="visually-hidden"></span>
+    </button>
 </div>
 
 <div class="container mt-3">
@@ -91,7 +86,7 @@
         </div>
         {{-- baris 3 --}}
         <div class="col-lg-4 center-block" style="text-align: center">
-            <img src="{{ asset('assets/founding/mursalin.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: top;" alt="Avatar">
+            <img src="{{ asset('assets/founding/lin.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: top;" alt="Avatar">
             <h4 class="mt-3">Mursalin Mustamin</h3>
             <p style="font-size: 17px">Head of Public Relations </p>
         </div>
@@ -109,7 +104,7 @@
 </div>
 
 <hr>
-<div class="row me-auto">
+{{-- <div class="row me-auto">
     <div class="col-md-7">
         <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
         <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
@@ -117,7 +112,7 @@
     <div class="col-md-5 d-flex align-items-center justify-content-center">
         <img src="{{ asset('path/to/your/image.jpg') }}" class="img-fluid" alt="Placeholder Image">
     </div>
-</div>
+</div> --}}
 
 
 

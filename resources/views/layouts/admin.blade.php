@@ -46,7 +46,7 @@
                 <ul class="navbar-nav">
                  <li class="nav-item">
                     <a class="nav-link" href="{{ route('events-create') }}">Create Events</a>
-                </li>
+                    </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{{ route('create-news-bottom') }}">Create News Bottom</a>
                   </li>
@@ -54,75 +54,17 @@
                     <a class="nav-link" href="{{ route('news-create') }}">Create News</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{{ route('login') }}">Logout</a>
-                  </li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link">Logout</button>
+                    </form>
+                </li>
                 </ul>
               </div>
             </div>
           </nav>
-        {{-- nav baru --}}
-        <!-- Navigation -->
 
-       {{-- <nav class="navbar navbar-expand-md navbar-light bg-dark shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="color: white; display: flex; align-items: center; margin-top: 10px;">
-                    <img src="{{ asset('assets/logo/bsrmamasa.png') }}" alt="Logo" height="40" class="d-inline-block align-text-top rounded-circle">
-                    <strong style="margin-left: 10px; font-size: 1rem;">Busur Mamasa</strong>
-                </a>
-
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}" style="border-color: white;">
-                    <span class="navbar-toggler-icon" style="background-color: white;"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto">
-                        @guest
-                            @if (auth()->check() && !auth()->user()->is_admin)
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}" style="color: white;">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white;">
-                                    <strong>{{ Auth::user()->name }}</strong>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('news-create') }}">Create News</a>
-                                    <a class="dropdown-item" href="{{ route('create-news-bottom') }}">Create Bottom News</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm ">
-            <div class="container">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mx-auto">
-                        @foreach(\App\Models\NewsCategory::all() as $category)
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('category-news', ['category' => $category->id]) }}" style="font-size: 10px; margin-right: 10px;">
-                                {{ $category->name }}
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </nav> --}}
-
-
-        <div class="container">
+          <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-7">
                     <!-- Search Form -->
@@ -149,9 +91,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <h5 class="card-title mt-3">
-                                                <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none;">{{ $data->judul }}</a>
+                                                <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
                                             </h5>
-                                            <p class="card-text">{{ $data->deskripsi }}</p>
                                             <p class="post-meta text-dark" style="font-size: 12px;">
                                                 Posted by {{ optional($data->penulis)->name }}
                                                 on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
@@ -177,33 +118,49 @@
                     </div>
                     <br>
                     {{-- Event --}}
+
                     <div class="card mb-4">
                         <div class="card-header">
                             <strong>{{ __('Upcoming Events') }}</strong>
                         </div>
-                        <div class="card-body bg-light">
-                            <div class="event-container">
-                                @foreach($events as $event)
-                                <h3 class="year">{{ date('Y', strtotime($event->date)) }}</h3>
-                                <div class="event">
-                                    <div class="event-left">
-                                        <div class="event-date">
-                                            <div class="date">{{ date('d', strtotime($event->date)) }}</div>
-                                            <div class="month">{{ date('M', strtotime($event->date)) }}</div>
+                        <div class="card-body">
+                            @foreach($events as $event)
+                            <div class="row mb-3">
+                                <div class="col-3" style="background-color: #f1f1f1; padding: 10px; text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: bold; margin-top: 20px;">{{ \Carbon\Carbon::parse($event->date)->format('d') }}</div>
+                                    <div>{{ \Carbon\Carbon::parse($event->date)->format('M Y') }}</div>
+                                </div>
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <img src="{{ asset('assets/events/'. $event->thumbnail_event) }}" class="img-fluid" alt="{{ $event->title }}" style="max-width: 100%; height: auto;">
+                                        </div>
+                                        <div class="col-9">
+                                            <div class="card-body">
+                                                <h5 class="card-title" style="font-size: 1rem">{{ $event->title }}</h5>
+                                                <p class="card-text">{{ $event->location }}</p>
+                                            </div>
+                                            @if (Auth::check() && Auth::user()->is_admin)
+                                            <div class="card-footer">
+                                                <a href="{{ route('events-edit', ['event' => $event->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                                <form action="{{ route('events-delete', ['event' => $event->id]) }}" method="post" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                </form>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
-
-                                    <div class="event-right">
-                                        <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event">
-                                        <h5 class="event-title">{{ $event->title }}</h5>
-                                        <p class="event-location">{{ $event->location }}</p>
-                                        <p class="event-date">{{ date('d M Y', strtotime($event->date)) }}</p>
-                                    </div>
                                 </div>
-                                @endforeach
                             </div>
+                            @endforeach
                         </div>
                     </div>
+
+
+
+
                 </div>
 
                 <div class="col-md-4 mt-4">
@@ -222,8 +179,7 @@
                                             <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
                                                 <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 250px;">
                                                 <div class="card-body">
-                                                    <h5 class="card-title">{{ $data->judul }}</h5>
-                                                    <p class="card-text">{{ $data->deskripsi }}</p>
+                                                    <h5 class="card-title" style="font-size: 14px;">{{ $data->judul }}</h5>
                                                     <div class="post-meta text-muted">
                                                         <p>Posted by {{ optional($data->penulis)->name }} on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}</p>
                                                     </div>
@@ -333,64 +289,18 @@
                             @endforeach
                         </ol>
                     </div>
-                        <div class="text-center mt-4">
+                        <div class="text-center mt-4 mb-4">
                             <a href="{{ route('show-all-news') }}" class="btn btn-primary">View More</a>
                         </div>
                     </div>
             </div>
         </div>
 
-        <div class="container mt-5 mb-5">
-            <div class="row">
-                <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif; font-size: 2rem;">Explore Mamasa</h5>
-            </div>
-            <div class="owl-carousel owl-theme mx-auto">
-                <div class="item">
-                    <div class="card">
-                        <img src="{{ asset('assets/slide/BuntuKepa/DSCF8339.JPG') }}" class="card-img-top" alt="Slide 1">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Buntu Kepa</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card">
-                        <img src="{{ asset('assets/slide/SARMBULIAWANSUMARORONG/DSCF9007.JPG') }}" class="card-img-top" alt="Slide 2">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Sarmbu Liawan Sumararorong</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card">
-                        <img src="{{ asset('assets/slide/TondokBakaru/tondokbakaru.jpg') }}" class="card-img-top" alt="Slide 3">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Tondok Bakaru</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card">
-                        <img src="{{ asset('assets/slide/Liarawan/diatasawanliarra.jpeg') }}" class="card-img-top" alt="Slide 3">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Buntu Liarra</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="card">
-                        <img src="{{ asset('assets/slide/SebelahTondokBakaru/DSCF3582.jpg') }}" class="card-img-top" alt="Slide 3">
-                        <div class="card-body text-center">
-                            <h5 class="card-title" style="font-size: 0.8rem; font-weight: bold;">Rantai Pokok</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <script>
            $(document).ready(function(){
-                $(".owl-carousel").owlCarousel({
-                    loop: true,
+               $(".owl-carousel").owlCarousel({
+                   loop: true,
                     margin: 10,
                     nav: true,
                     autoplay: true,
@@ -409,7 +319,16 @@
                 });
             });
 
-        </script>
+
+                document.querySelector("#searchForm").addEventListener("submit", function(event) {
+                    var query = event.target.elements.query.value;
+                    if (!query.trim()) {
+                        event.preventDefault();
+                        window.location.href = "{{ route('index-news') }}";
+                    }
+                });
+
+            </script>
 
         <footer class="bg-dark shadow-sm text-white text-center py-2">
             <div class="container">

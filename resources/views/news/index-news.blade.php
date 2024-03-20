@@ -2,11 +2,6 @@
 
 @section('content')
     <!-- Trending News Section -->
-    <div class="container">
-        <div class="bg-img">
-
-        </div>
-    </div>
 
     <div class="container">
         <div class="row justify-content-center">
@@ -67,48 +62,51 @@
                     <div class="card-header">
                         <strong>{{ __('Upcoming Events') }}</strong>
                     </div>
-                    <div class="card-body bg-light">
-                        <div class="row">
-                            @foreach($events as $event)
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <div class="row g-0">
-                                        <div class="col-md-4 bg-primary d-flex align-items-center justify-content-center">
-                                            <div class="text-center text-white">
-                                                <div class="date">{{ date('d', strtotime($event->date)) }}</div>
-                                                <div class="month">{{ date('M', strtotime($event->date)) }}</div>
-                                            </div>
+                    <div class="card-body">
+                        @foreach($events as $event)
+                        <div class="row mb-3">
+                            <div class="col-3" style="background-color: rgba(241, 241, 241, 0.7); padding: 10px; text-align: center;">
+                                <div style="font-size: 1.5rem; font-weight: bold; margin-top: 20px;">{{ \Carbon\Carbon::parse($event->date)->format('d') }}</div>
+                                <div>{{ \Carbon\Carbon::parse($event->date)->format('M Y') }}</div>
+                            </div>
+
+
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-3">
+                                        <img src="{{ asset('assets/events/'. $event->thumbnail_event) }}" class="img-fluid" alt="{{ $event->title }}" style="max-width: 100px; max-height: 120px;">
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="font-size: 1rem">{{ $event->title }}</h5>
+                                            <p class="card-text">{{ $event->location }}</p>
                                         </div>
-                                        <div class="col-md-8">
-                                            <div class="card-body">
-                                                {{-- <img src="{{ asset('assets/events/' . $event->thumbnail_event) }}" alt="Thumbnail Event" class="card-img" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px; margin-right: 20px;"> --}}
-                                                <h5 class="card-title">{{ $event->title }}</h5>
-                                                <p class="card-text">{{ $event->location }}</p>
-                                            </div>
+                                        @if (Auth::check() && Auth::user()->is_admin)
+                                        <div class="card-footer">
+                                            <a href="{{ route('events-edit', ['event' => $event->id]) }}" class="btn btn-warning me-2">Edit</a>
+                                            <form action="{{ route('events-delete', ['event' => $event->id]) }}" method="post" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                            </form>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                            @endforeach
                         </div>
-                        @if (Auth::check() && Auth::user()->is_admin)
-                            <div class="mt-2">
-                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                </form>
-                            </div>
-                        @endif
+                        @endforeach
                     </div>
-           </div>
+                </div>
+
+
+
 
             </div>
 
             <div class="col-md-4 mt-4">
                 <div class="card mb-4 mt-4">
-                    <div class="card-header">{{ __('Trending ') }}</div>
+                    <div class="card-header"><b>{{ __('More Trending ') }}</b></div>
                     @php
                     $displayedNewsIds = [];
                     @endphp
