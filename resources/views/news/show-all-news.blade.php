@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="row">
-                    <h5 class="display-4 text-center mb-4" style="font-family: 'Roboto', sans-serif;">All News</h5>
+                    <h5 class="display-4 text-center mb-4 mt-4" style="font-family: 'Roboto', sans-serif;">All News</h5>
                 </div>
                 <div class="row">
-                    <h6 class="display-6 text-left mb-4" style="font-family: 'Roboto', sans-serif;">Trending</h6>
+                    <h6 class="display-6 text-left mb-2 fs-3" style="font-family: 'Roboto', sans-serif;">Trending</h6>
                     @foreach ($news as $newsItem)
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card mt-4 mb-4">
@@ -35,7 +35,7 @@
                     @endforeach
                 </div>
                 <div class="row">
-                    <h6 class="display-6 text-left mb-4" style="font-family: 'Roboto', sans-serif;">News</h6>
+                    <h6 class="display-6 text-left mb-2 fs-3" style="font-family: 'Roboto', sans-serif;">News</h6>
                     @foreach ($newsbottom as $newsItem)
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div class="card mt-4 mb-4">
