@@ -46,9 +46,9 @@
               <div class="collapse navbar-collapse justify-content-end  " id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     <br>
-                  <li class="nav-item">
-                    <a class="nav-link text-white" href="#"><b>Berkarya Bersama</b></a>
-                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="https://forms.gle/zBxw87GGfJZwNW3E7" target="_blank"><b>Berkarya Bersama</b></a>
+                    </li>
                   <li class="nav-item">
                     <a class="nav-link text-white" href="{{ route('about') }}"><b>Tentang Busur Mamasa</b></a>
                   </li>

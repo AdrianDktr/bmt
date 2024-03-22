@@ -54,7 +54,7 @@
     <div class="row gy-3 mt-4" style="margin: auto">
         {{-- 3 foto --}}
         <div class="col-lg-4 center-block" style="text-align: center">
-            <img src="{{ asset('assets/founding/Adrian.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 50%;" alt="Avatar">
+            <img src="{{ asset('assets/founding/ian.jpg') }}" class="rounded-circle" width="100" height="100" style="object-fit: cover; object-position: center 30%; margin-right: 10px; margin-bottom: 10px;" alt="Avatar">
             <h4 class="mt-3">Adrian Adhi Wicaksana</h3>
             <p style="font-size: 17px">Head of IT Division</p>
         </div>
@@ -102,20 +102,5 @@
         </div>
     </div>
 </div>
-
-<hr>
-{{-- <div class="row me-auto">
-    <div class="col-md-7">
-        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
-        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
-    </div>
-    <div class="col-md-5 d-flex align-items-center justify-content-center">
-        <img src="{{ asset('path/to/your/image.jpg') }}" class="img-fluid" alt="Placeholder Image">
-    </div>
-</div> --}}
-
-
-
-
 
 @endsection

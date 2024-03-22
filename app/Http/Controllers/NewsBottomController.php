@@ -186,10 +186,6 @@ class NewsBottomController extends Controller
             $thumbnailFileName = $newsbottom->thumbnail;
         }
 
-
-
-
-
         $videoFileName = null;
         if ($request->has('video_option')) {
             if ($request->video_option == 'upload' && $request->hasFile('video_file')) {

@@ -8,7 +8,7 @@
             <div class="col-md-7">
                 <!-- Search Form -->
                 <br>
-                <form action="{{ route('index-news') }}" method="GET" id="searchForm">
+                <form action="{{ route('search') }}" method="GET" id="searchForm">
                     <div class="input-group mb-3 mt-4">
                         <input type="text" class="form-control" placeholder="Search news..." name="query" value="{{ request('query') }}">
                         <button type="submit" class="btn btn-primary">Search</button>
@@ -118,7 +118,7 @@
                                 <div class="media mb-3 d-flex flex-column align-items-center">
                                     <div class="card">
                                         <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
-                                            <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 250px;">
+                                            <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 190px;">
                                             <div class="card-body">
                                                 <h5 class="card-title" style="font-size: 14px;">{{ $data->judul }}</h5>
                                                 <div class="post-meta text-muted">
@@ -170,22 +170,29 @@
     </div>
 <br>
 <br>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="row">
-                    <h5 class="display-4 text-center mb-4" style="font-size: 2rem; font-family: 'Roboto', sans-serif;">News</h5>
-                </div>
-                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        @php
-                            $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(4);
-                        @endphp
-                        @foreach ($chunked_news as $key => $chunk)
-                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                                <div class="row justify-content-center">
-                                    @foreach ($chunk as $newsbot)
-                                        @if(is_object($newsbot))
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="row">
+                <h5 class="display-4 text-center mb-4" style="font-size: 2rem; font-family: 'Roboto', sans-serif;">News</h5>
+            </div>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @php
+                        $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(4);
+                        $slide_counter = 0;
+                    @endphp
+                    @foreach ($chunked_news as $key => $chunk)
+                        @if ($slide_counter >= 6)
+                            @break
+                        @endif
+                        <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                            <div class="row justify-content-center">
+                                @foreach ($chunk as $newsbot)
+                                    @if ($slide_counter >= 6)
+                                        @break
+                                    @endif
+                                    @if (is_object($newsbot))
                                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
                                             <div class="card h-100 d-flex flex-column">
                                                 <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark text-decoration-none">
@@ -207,35 +214,39 @@
                                                 @endif
                                             </div>
                                         </div>
-
-                                        @endif
-                                    @endforeach
-                                </div>
+                                        @php
+                                            $slide_counter++;
+                                        @endphp
+                                    @endif
+                                @endforeach
                             </div>
-                        @endforeach
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                    <br>
-                    <br>
-                    <ol class="carousel-indicators">
-                        @foreach ($chunked_news as $key => $chunk)
+                        </div>
+                    @endforeach
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+                <br>
+                <br>
+                <ol class="carousel-indicators">
+                    @foreach ($chunked_news as $key => $chunk)
+                        @if ($key < 6) {{-- Max 6 indicators --}}
                             <li data-bs-target="#carouselExampleControls" data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" style="background-color: #050505;"></li>
-                        @endforeach
-                    </ol>
-                </div>
-                    <div class="text-center mt-4">
-                        <a href="{{ route('show-all-news') }}" class="btn btn-primary">View More</a>
-                    </div>
-                </div>
+                        @endif
+                    @endforeach
+                </ol>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ route('show-all-news') }}" class="btn btn-primary">View More</a>
+            </div>
         </div>
     </div>
+</div>
 
     <div class="container mt-5 mb-5">
         <div class="row">
@@ -287,7 +298,7 @@
     <script>
        $(document).ready(function(){
             $(".owl-carousel").owlCarousel({
-                loop: false,
+                loop: true,
                 margin: 10,
                 nav: true,
                 autoplay: true,

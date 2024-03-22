@@ -19,6 +19,7 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
+        $news = News::all();
         $events = Event::all();
         $query = $request->input('query');
 
@@ -44,15 +45,15 @@ class NewsController extends Controller
     }
 
 
-public function allnews()
-{
-    $news = News::all();
-    $newsbottom = NewsBottom::all();
-    $all_news = $news->merge($newsbottom);
-    $total_news = $all_news->count();
+    public function allnews()
+    {
+        $news = News::all();
+        $newsbottom = NewsBottom::all();
+        $total_news = $news->count() + $newsbottom->count();
 
-    return view('news.show-all-news', compact('all_news','total_news'));
-}
+        return view('news.show-all-news', compact('news', 'newsbottom', 'total_news'));
+    }
+
 
 
 
@@ -336,6 +337,24 @@ public function allnews()
         $mergedNews = $news->merge($newsBottom);
 
         return view('news.news-show-category', compact('category', 'mergedNews'));
+    }
+
+
+    public function searchNews(Request $request)
+    {
+        $keyword = $request->input('query');
+
+        $newsResults = News::where('judul', 'LIKE', "%{$keyword}%")
+                            ->orWhere('isi', 'LIKE', "%{$keyword}%")
+                            ->get();
+
+        $newsBottomResults = NewsBottom::where('judul_bawah', 'LIKE', "%{$keyword}%")
+                                        ->orWhere('berita', 'LIKE', "%{$keyword}%")
+                                        ->get();
+
+        $searchResults = $newsResults->merge($newsBottomResults);
+
+        return view('news.show-search', compact('searchResults','keyword'));
     }
 
 
