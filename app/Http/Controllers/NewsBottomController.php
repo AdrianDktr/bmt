@@ -106,6 +106,7 @@ class NewsBottomController extends Controller
 
         $newsBottom = NewsBottom::create([
             'judul_bawah' => $request->judul_bawah,
+            'slug'=> Str::slug($request->judul_bawah),
             'berita' => $dom->saveHTML(),
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
@@ -126,10 +127,12 @@ class NewsBottomController extends Controller
 
 
 
-    public function show2(NewsBottom $newsbottom){
-
-        return view('news.show-newsbottom',compact('newsbottom'));
+    public function show2($slug)
+    {
+        $newsbottom = NewsBottom::where('slug', $slug)->firstOrFail();
+        return view('news.show-newsbottom', compact('newsbottom'));
     }
+
 
     public function edit2( NewsBottom $newsbottom){
         $users=User::all();
@@ -212,6 +215,7 @@ class NewsBottomController extends Controller
 
         $newsbottom->update([
             'judul_bawah' => $request->judul_bawah,
+            'slug'=> Str::slug($request->judul_bawah),
             'berita' => $request->berita,
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,

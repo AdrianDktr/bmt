@@ -195,7 +195,7 @@
                                     @if (is_object($newsbot))
                                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
                                             <div class="card h-100 d-flex flex-column">
-                                                <a href="{{ route('news-bottom-show',['newsbottom'=>$newsbot->id]) }}" class="text-dark text-decoration-none">
+                                                <a href="{{ route('news-bottom-show', ['slug' => $newsbot->slug]) }}" class="text-dark text-decoration-none">
                                                     <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
                                                     <div class="card-body flex-grow-1">
                                                         <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>

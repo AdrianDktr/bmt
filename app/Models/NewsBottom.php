@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class NewsBottom extends Model
 {
@@ -11,6 +12,7 @@ class NewsBottom extends Model
     protected $fillable =
     [
         'judul_bawah',
+        'slug',
         'berita',
         'user_id',
         'penulis_berita',
@@ -30,6 +32,16 @@ class NewsBottom extends Model
     public function penulis()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getSlugAttribute()
+    {
+        return Str::slug($this->judul_bawah);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 
 

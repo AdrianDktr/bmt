@@ -20,6 +20,7 @@ class NewsController extends Controller
     public function index(Request $request)
     {
         $news = News::all();
+        $newsbot = NewsBottom::all();
         $events = Event::all();
         $query = $request->input('query');
 
@@ -161,10 +162,12 @@ class NewsController extends Controller
 
 
 
-    public function show(News $news){
-
-        return view('news.show-news',compact('news'));
+    public function show($slug)
+    {
+        $news = News::where('slug', $slug)->firstOrFail();
+        return view('news.show-news', compact('news'));
     }
+
 
     public function edit( News $news){
         $users=User::all();

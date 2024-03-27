@@ -28,8 +28,8 @@ Auth::routes();
 Route::get('/', [NewsController::class, 'index'])->name('index-news');
 Route::get('/all-news', [NewsController::class, 'allnews'])->name('show-all-news');
 Route::get('/search-news', [NewsController::class, 'searchNews'])->name('search');
-Route::get('/show-news/{news}', [NewsController::class, 'show'])->name('news-show');
-Route::get('/show-news-bottom/{newsbottom}', [NewsBottomController::class, 'show2'])->name('news-bottom-show');
+Route::get('/show-news/{slug}', [NewsController::class, 'show'])->name('news-show');
+Route::get('show-news-bottom/{slug}', [NewsBottomController::class, 'show2'])->name('news-bottom-show');
 Route::get('/about', [Aboutcontroller::class, 'about'])->name('about');
 Route::get('/category/{category}', [NewsController::class, 'showByCategory'])->name('category-news');
 

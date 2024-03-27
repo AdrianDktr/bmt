@@ -5,6 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        @foreach ($news as $newsItem)
+            <meta property="og:url" content="{{ route('news-show', $newsItem) }}">
+            <meta property="og:title" content="{{ $newsItem->judul }}">
+            <meta property="og:description" content="{{ substr(strip_tags($newsItem->isi), 0, 200) }}">
+            <meta property="og:image" content="{{ asset('assets/img/thumbnail/' . $newsItem->thumbnail_path) }}">
+        @endforeach
+
+        @foreach ($newsbottom as $newsBottomItem)
+            <meta property="og:url" content="{{ route('news-bottom-show', $newsBottomItem) }}">
+            <meta property="og:title" content="{{ $newsBottomItem->judul_bawah }}">
+            <meta property="og:description" content="{{ substr(strip_tags($newsBottomItem->berita), 0, 200) }}">
+            <meta property="og:image" content="{{ asset('assets/img2/thumbnail2/' . $newsBottomItem->thumbnail) }}">
+         @endforeach
+         
         <title>Busur mamasa</title>
 
         <link rel="icon" type="image/png" href="{{ asset('assets/logo/mamasa.png') }}">
