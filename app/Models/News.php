@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class News extends Model
 {
     use HasFactory;
 protected $fillable = [
     'judul',
+    'slug',
     'isi',
     'user_id',
     'penulis_berita',
@@ -31,5 +33,16 @@ public function category()
 {
     return $this->belongsToMany(NewsCategory::class, 'category_id');
 }
+
+public function getSlugAttribute()
+{
+    return Str::slug($this->judul);
+}
+
+public function getRouteKeyName()
+{
+    return 'slug';
+}
+
 
 }

@@ -134,13 +134,18 @@ class NewsBottomController extends Controller
     }
 
 
-    public function edit2( NewsBottom $newsbottom){
-        $users=User::all();
+    public function edit2($slug)
+    {
+        $newsbottom = NewsBottom::where('slug', $slug)->firstOrFail();
+        $users = User::all();
         $category = NewsCategory::all();
-        return view('admin.edit-newsbottom',compact('newsbottom','users','category'));
+        return view('admin.edit-newsbottom', compact('newsbottom', 'users', 'category'));
     }
 
-    public function update2(Request $request, NewsBottom $newsbottom){
+
+    public function update2(Request $request,$slug){
+        $newsbottom = NewsBottom::where('slug', $slug)->firstOrFail();
+
         if ($request->has('remove_video')) {
             // Hapus video lama jika ada
             if ($newsbottom->video_file) {
@@ -171,10 +176,8 @@ class NewsBottomController extends Controller
             'thumbnail.mimes' => 'Format gambar tidak valid. Hanya mendukung format jpeg, png, dan jpg.',
         ]);
 
-
         $thumbnailFileName = null;
         if ($request->hasFile('thumbnail')) {
-
             if ($newsbottom->thumbnail) {
                 $oldThumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
                 if (file_exists($oldThumbnailPath)) {
@@ -211,11 +214,9 @@ class NewsBottomController extends Controller
         }
 
         // Simpan thumbnail baru jika diunggah
-
-
         $newsbottom->update([
-            'judul_bawah' => $request->judul_bawah,
-            'slug'=> Str::slug($request->judul_bawah),
+            'judul_bawah' => $request->filled('judul_bawah') ? $request->judul_bawah : $newsbottom->judul_bawah,
+            'slug'=> Str::slug($request->filled('judul_bawah') ? $request->judul_bawah : $newsbottom->judul_bawah),
             'berita' => $request->berita,
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
@@ -229,7 +230,6 @@ class NewsBottomController extends Controller
 
         $content = $request->berita;
 
-        // Pastikan $content tidak kosong dan merupakan HTML yang valid
         if (!empty($content)) {
             // Bersihkan konten dari tag o:p yang tidak valid
             $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $content);
@@ -269,15 +269,15 @@ class NewsBottomController extends Controller
             }
         }
 
-
-
         return redirect()->route('admin-index')->with('success', 'Data berhasil diperbarui.');
     }
 
 
 
-    public function delete2(NewsBottom $newsbottom){
 
+    public function delete2($slug)
+    {
+        $newsbottom = NewsBottom::where('slug', $slug)->firstOrFail();
 
         $thumbnailPath = public_path('assets/img2/thumbnail2/' . $newsbottom->thumbnail);
         if (file_exists($thumbnailPath)) {
@@ -299,11 +299,11 @@ class NewsBottomController extends Controller
                 unlink($imagePath);
             }
         }
+
         // Menghapus berita
         $newsbottom->delete();
 
         return redirect()->back();
-
-
     }
+
 }

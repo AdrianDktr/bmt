@@ -17,41 +17,36 @@
                 <br>
                 <!-- Large Featured News -->
                 <div class="card mb-4">
-                  <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
+                    <div class="card-header"><strong>{{ __('Trending News') }}</strong></div>
                     <div class="card-body bg-light">
-                        @foreach ($searchResults['news'] ?? $news as $data)
-                            @if(is_object($data))
-                                @if($loop->first)
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="{{ route('news-show',['news'=> $data->id]) }}">
-                                            <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5 class="card-title mt-3">
-                                            <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
-                                        </h5>
-                                        <p class="post-meta text-dark" style="font-size: 12px;">
-                                            Posted by {{ optional($data->penulis)->name }}
-                                            on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
-                                        </p>
+                        @foreach ($news as $data)
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{ route('news-show', ['slug' => $data->slug]) }}">
+                                    <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="card-title mt-3">
+                                    <a href="{{ route('news-show', ['slug' => $data->slug]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
+                                </h5>
+                                <p class="post-meta text-dark" style="font-size: 12px;">
+                                    Posted by {{ optional($data->penulis)->name }}
+                                    on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
+                                </p>
 
-                                        @if (Auth::check() && Auth::user()->is_admin)
-                                            <div class="mt-2">
-                                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                </form>
-                                            </div>
-                                        @endif
-                                    </div>
+                                @if (Auth::check() && Auth::user()->is_admin)
+                                <div class="mt-2">
+                                    <a href="{{ route('news-edit', ['slug' => $data->slug]) }}" class="btn btn-warning me-2">Edit</a>
+                                    <form action="{{ route('news-delete', ['slug' => $data->slug]) }}" method="post" style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                    </form>
                                 </div>
-
                                 @endif
-                            @endif
+                            </div>
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -98,10 +93,6 @@
                         @endforeach
                     </div>
                 </div>
-
-
-
-
             </div>
 
             <div class="col-md-4 mt-4">
@@ -113,7 +104,7 @@
 
                     <div class="card-body h-100" style="max-height: 500px; overflow-y: auto;">
                         @foreach ($searchResults['news'] ?? $news as $data)
-                            @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
+                        @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6 && !empty($data->slug))
                             <div class="item">
                                 <div class="media mb-3 d-flex flex-column align-items-center">
                                     <div class="card">
@@ -179,7 +170,7 @@
             <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @php
-                        $chunked_news = collect($searchResults['newsbottom'] ?? $newsbottom)->chunk(4);
+                        $chunked_news = collect($newsbot)->chunk(4);
                         $slide_counter = 0;
                     @endphp
                     @foreach ($chunked_news as $key => $chunk)
@@ -189,13 +180,10 @@
                         <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                             <div class="row justify-content-center">
                                 @foreach ($chunk as $newsbot)
-                                    @if ($slide_counter >= 6)
-                                        @break
-                                    @endif
-                                    @if (is_object($newsbot))
+                                    @if(is_object($newsbot) && !empty($newsbot->slug))
                                         <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
                                             <div class="card h-100 d-flex flex-column">
-                                                <a href="{{ route('news-bottom-show', ['slug' => $newsbot->slug]) }}" class="text-dark text-decoration-none">
+                                                <a href="{{ route('news-bottom-show',['slug'=>$newsbot->slug]) }}" class="text-dark text-decoration-none">
                                                     <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
                                                     <div class="card-body flex-grow-1">
                                                         <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
@@ -204,8 +192,8 @@
                                                 </a>
                                                 @if (Auth::check() && Auth::user()->is_admin)
                                                     <div class="card-footer mt-auto">
-                                                        <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                        <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
+                                                        <a href="{{ route('news-bottom-edit', ['slug' => $newsbot->slug]) }}" class="btn btn-warning me-2">Edit</a>
+                                                        <form action="{{ route('news-bottom-delete', ['slug' => $newsbot->slug]) }}" method="post" style="display: inline-block;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
@@ -214,13 +202,13 @@
                                                 @endif
                                             </div>
                                         </div>
-                                        @php
-                                            $slide_counter++;
-                                        @endphp
                                     @endif
                                 @endforeach
                             </div>
                         </div>
+                        @php
+                            $slide_counter++;
+                        @endphp
                     @endforeach
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" style="background-color: #050505; width: 40px; height: 40px; margin-top: -50px;">

@@ -13,17 +13,17 @@ return new class extends Migration
     {
         Schema::create('news_bottom', function (Blueprint $table) {
             $table->id();
-            $table->string('judul_bawah');
-        // $table->string('slug')->default('')->unique();
-            $table->foreignId('category_id')->constrained('news_category')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('judul_bawah')->default('');
+            $table->foreignId('category_id')->nullable()->constrained('news_category')->cascadeOnUpdate()->cascadeOnDelete();
             $table->longText('berita');
-            $table->date('tanggal_terbit');
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
-            $table->string('penulis_berita');
-            $table->string('photo_by');
+            $table->date('tanggal_terbit')->default(date('Y-m-d'));
+            $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->string('penulis_berita')->nullable();
+            $table->string('photo_by')->nullable();
             $table->string('video_file')->nullable();
             $table->string('video_link')->nullable();
             $table->string('thumbnail')->nullable();
+
             $table->timestamps();
         });
     }

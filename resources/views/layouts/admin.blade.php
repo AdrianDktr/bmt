@@ -82,42 +82,40 @@
                     <!-- Large Featured News -->
                     <div class="card mb-4">
                       <div class="card-header"> <strong>{{ __('Trending News') }}</strong></div>
-                        <div class="card-body bg-light">
-                            @foreach ($searchResults['news'] ?? $news as $data)
-                                @if(is_object($data))
-                                    @if($loop->first)
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <a href="{{ route('news-show',['news'=> $data->id]) }}">
-                                                <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
-                                            </a>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h5 class="card-title mt-3">
-                                                <a href="{{ route('news-show',['news'=> $data->id]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
-                                            </h5>
-                                            <p class="post-meta text-dark" style="font-size: 12px;">
-                                                Posted by {{ optional($data->penulis)->name }}
-                                                on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
-                                            </p>
-
-                                            @if (Auth::check() && Auth::user()->is_admin)
-                                                <div class="mt-2">
-                                                    <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                    <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                    </form>
-                                                </div>
-                                            @endif
-                                        </div>
+                      <div class="card-body bg-light">
+                        @foreach ($searchResults['news'] ?? $news as $data)
+                            @if(is_object($data) && !empty($data->slug))
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <a href="{{ route('news-show', ['slug' => $data->slug]) }}" class="text-decoration-none text-dark">
+                                            <img class="card-img-top" src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" alt="Featured News Image">
+                                        </a>
                                     </div>
+                                    <div class="col-md-6">
+                                        <h5 class="card-title mt-3">
+                                            <a href="{{ route('news-show',['slug'=> $data->slug]) }}" style="color: inherit; text-decoration: none; font-size: 16px;">{{ $data->judul }}</a>
+                                        </h5>
+                                        <p class="post-meta text-dark" style="font-size: 12px;">
+                                            Posted by {{ optional($data->penulis)->name }}
+                                            on {{ \Carbon\Carbon::parse($data->tanggal_terbit)->format('d F Y') }}
+                                        </p>
 
-                                    @endif
-                                @endif
-                            @endforeach
-                        </div>
+                                        @if (Auth::check() && Auth::user()->is_admin)
+                                            <div class="mt-2">
+                                                <a href="{{ route('news-edit', ['slug' => $data->slug]) }}" class="btn btn-warning me-2">Edit</a>
+                                                <form action="{{ route('news-delete', ['slug' => $data->slug]) }}" method="post" style="display: inline-block;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+
+                    </div>
                     </div>
                     <br>
                     {{-- Event --}}
@@ -175,11 +173,11 @@
 
                         <div class="card-body h-100" style="max-height: 500px; overflow-y: auto;">
                             @foreach ($searchResults['news'] ?? $news as $data)
-                                @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6)
+                            @if(is_object($data) && !$loop->first && !in_array($data->id, $displayedNewsIds) && count($displayedNewsIds) < 6 && !empty($data->slug))
                                 <div class="item">
                                     <div class="media mb-3 d-flex flex-column align-items-center">
                                         <div class="card">
-                                            <a href="{{ route('news-show', ['news' => $data->id]) }}" class="text-decoration-none text-dark">
+                                            <a href="{{ route('news-show', ['slug' => $data->slug]) }}" class="text-decoration-none text-dark">
                                                 <img src="{{ asset('assets/img/thumbnail/' . $data->thumbnail_path) }}" class="card-img-top" alt="News Thumbnail" style="object-fit: cover; height: 250px;">
                                                 <div class="card-body">
                                                     <h5 class="card-title" style="font-size: 14px;">{{ $data->judul }}</h5>
@@ -190,8 +188,8 @@
                                             </a>
                                             @if (Auth::check() && Auth::user()->is_admin)
                                             <div class="card-footer">
-                                                <a href="{{ route('news-edit', ['news' => $data->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                <form action="{{ route('news-delete', ['news' => $data->id]) }}" method="post" style="display: inline-block;">
+                                                <a href="{{ route('news-edit', ['slug' => $data->slug]) }}" class="btn btn-warning me-2">Edit</a>
+                                                <form action="{{ route('news-delete', ['slug' => $data->slug]) }}" method="post" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
@@ -247,32 +245,32 @@
                                 <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                     <div class="row justify-content-center">
                                         @foreach ($chunk as $newsbot)
-                                            @if(is_object($newsbot))
-                                            <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
-                                                <div class="card h-100 d-flex flex-column">
-                                                    <a href="{{ route('news-bottom-show', $newsbot->slug) }}" class="text-dark text-decoration-none">
-                                                        <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
-                                                        <div class="card-body flex-grow-1">
-                                                            <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
-                                                            <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
-                                                        </div>
-                                                    </a>
-                                                    @if (Auth::check() && Auth::user()->is_admin)
-                                                        <div class="card-footer mt-auto">
-                                                            <a href="{{ route('news-bottom-edit', ['newsbottom' => $newsbot->id]) }}" class="btn btn-warning me-2">Edit</a>
-                                                            <form action="{{ route('news-bottom-delete', ['newsbottom' => $newsbot->id]) }}" method="post" style="display: inline-block;">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
-                                                            </form>
-                                                        </div>
-                                                    @endif
+                                            @if(is_object($newsbot) && !empty($newsbot->slug))
+                                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 mb-lg-0">
+                                                    <div class="card h-100 d-flex flex-column">
+                                                        <a href="{{ route('news-bottom-show',['slug'=>$newsbot->slug]) }}" class="text-dark text-decoration-none">
+                                                            <img src="{{ asset('assets/img2/thumbnail2/' . $newsbot->thumbnail) }}" class="card-img-top" alt="News Thumbnail">
+                                                            <div class="card-body flex-grow-1">
+                                                                <h5 class="card-title fs-6">{{ $newsbot->judul_bawah }}</h5>
+                                                                <p class="card-text">{{ \Carbon\Carbon::parse($newsbot->tanggal_terbit)->format('d F Y') }}</p>
+                                                            </div>
+                                                        </a>
+                                                        @if (Auth::check() && Auth::user()->is_admin)
+                                                            <div class="card-footer mt-auto">
+                                                                <a href="{{ route('news-bottom-edit', ['slug' => $newsbot->slug]) }}" class="btn btn-warning me-2">Edit</a>
+                                                                <form action="{{ route('news-bottom-delete', ['slug' => $newsbot->slug]) }}" method="post" style="display: inline-block;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus berita ini?')">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-
                                             @endif
                                         @endforeach
                                     </div>
+
                                 </div>
                             @endforeach
                         </div>

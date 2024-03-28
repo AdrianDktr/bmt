@@ -22,29 +22,22 @@ class NewsController extends Controller
         $news = News::all();
         $newsbot = NewsBottom::all();
         $events = Event::all();
-        $query = $request->input('query');
 
-        $news = News::where('judul', 'LIKE', "%$query%")
-                    ->orWhere('isi', 'LIKE', "%$query%")
-                    ->get();
-
-        $newsbottom = NewsBottom::where('judul_bawah', 'LIKE', "%$query%")
-                                ->orWhere('berita', 'LIKE', "%$query%")
-                                ->get();
-
-        $searchResults = $news->merge($newsbottom);
-        $searchResults = $searchResults->unique('judul');
+        foreach ($news as $item) {
+            if (empty($item->slug)) {
+                $item->slug = Str::slug($item->judul); // Menggunakan judul untuk generate slug
+                $item->save();
+            }
+        }
 
         $newsViewedIds = News::whereDate('created_at', '<', Carbon::now()->subDays(5))->pluck('id')->toArray();
 
-        $news = News::where('judul', 'LIKE', "%$query%")
-                    ->whereDate('created_at', '>=', Carbon::now()->subDays(7))
+        $news = News::whereDate('created_at', '>=', Carbon::now()->subDays(7))
                     ->whereNotIn('id', $newsViewedIds)
                     ->get();
 
-        return view('news.index-news', compact('searchResults', 'news', 'newsbottom','events'));
+        return view('news.index-news', compact('news', 'newsbot', 'events'));
     }
-
 
     public function allnews()
     {
@@ -120,6 +113,7 @@ class NewsController extends Controller
 
         $news = News::create([
             'judul' => $request->judul,
+            'slug'=> Str::slug($request->judul),
             'isi' => '',
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
@@ -169,16 +163,20 @@ class NewsController extends Controller
     }
 
 
-    public function edit( News $news){
-        $users=User::all();
+    public function edit($slug)
+    {
+        $news = News::where('slug', $slug)->firstOrFail();
+        $users = User::all();
         $category = NewsCategory::all();
-        return view('admin.edit-news',compact('news','users','category'));
+        return view('admin.edit-news', compact('news', 'users', 'category'));
     }
 
 
 
-        public function update(Request $request, News $news)
+
+    public function update(Request $request, $slug)
     {
+        $news = News::where('slug', $slug)->firstOrFail();
 
         if ($request->has('remove_video')) {
 
@@ -187,7 +185,7 @@ class NewsController extends Controller
                 if (File::exists($oldVideoPath)) {
                     File::delete($oldVideoPath);
                 }
-        }
+            }
             $news->update(['video_file' => null]);
 
             return redirect()->route('news-edit', ['news' => $news])->with('success', 'Video berhasil dihapus.');
@@ -217,14 +215,13 @@ class NewsController extends Controller
         ]);
 
         $oldThumbnail = $news->thumbnail_path;
-
         $oldVideo = $news->video_file;
 
         $videoPath = null;
         $videoFileName = null;
 
         if ($request->has('video_option')) {
-        if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
+            if ($request->video_option == 'upload' && $request->hasFile('video_file')) {
                 $request->validate([
                     'video_file' => 'mimes:mp4,webm,quicktime|max:50000',
                 ]);
@@ -232,7 +229,7 @@ class NewsController extends Controller
                 $videoFile = $request->file('video_file');
                 $videoFileName = time() . '_' . $videoFile->getClientOriginalName();
                 $videoPath = $videoFile->move(public_path('assets/vid'), $videoFileName);
-        } elseif ($request->video_option == 'import') {
+            } elseif ($request->video_option == 'import') {
                 $request->validate([
                     'video_link' => 'url',
                 ]);
@@ -250,7 +247,8 @@ class NewsController extends Controller
 
         // Update data berita
         $news->update([
-            'judul' => $request->judul,
+            'judul' => $request->filled('judul') ? $request->judul : $news->judul,
+            'slug'=> Str::slug($request->filled('judul') ? $request->judul : $news->judul),
             'isi' => $request->isi,
             'user_id' => $request->user_id,
             'penulis_berita' => $request->penulis_berita,
@@ -290,44 +288,46 @@ class NewsController extends Controller
                     }
                 }
 
-
                 $news->isi = $dom->saveHTML();
                 $news->save();
             }
         }
 
-
-
         return redirect()->route('admin-index')->with('success', 'Data berhasil diperbarui.');
     }
 
-    public function delete(News $news){
-        // Menghapus thumbnail
-        $thumbnailPath = public_path('assets/img/thumbnail/' . $news->thumbnail_path);
-        if (file_exists($thumbnailPath)) {
-            unlink($thumbnailPath);
-        }
+    public function delete($slug)
+{
+    $news = News::where('slug', $slug)->firstOrFail();
 
-        // Menghapus gambar-gambar terkait
-        $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $news->isi);
-        $content = preg_replace('/<p[^>]*>/', '', $content);
-        $content = preg_replace('/<\/p>/', '', $content);
-
-        $dom = new \DomDocument();
-        $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-
-        $images = $dom->getElementsByTagName('img');
-        foreach ($images as $img) {
-            $imagePath = public_path('assets/img/berita') . '/' . basename($img->getAttribute('src'));
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
-        // Menghapus berita
-        $news->delete();
-
-        return redirect()->back();
+    // Menghapus thumbnail
+    $thumbnailPath = public_path('assets/img/thumbnail/' . $news->thumbnail_path);
+    if (file_exists($thumbnailPath)) {
+        unlink($thumbnailPath);
     }
+
+    // Menghapus gambar-gambar terkait
+    $content = preg_replace('/<o:p>.*?<\/o:p>/', '', $news->isi);
+    $content = preg_replace('/<p[^>]*>/', '', $content);
+    $content = preg_replace('/<\/p>/', '', $content);
+
+    $dom = new \DomDocument();
+    $dom->loadHtml(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    $images = $dom->getElementsByTagName('img');
+    foreach ($images as $img) {
+        $imagePath = public_path('assets/img/berita') . '/' . basename($img->getAttribute('src'));
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+
+    // Menghapus berita
+    $news->delete();
+
+    return redirect()->back();
+}
+
 
     public function showByCategory($category)
     {

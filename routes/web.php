@@ -39,10 +39,10 @@ Route::middleware(['admin'])->group(function(){
     //news
     Route::get('/admin/create-news', [NewsController::class, 'create'])->name('news-create');
     Route::post('/admin/store-news', [NewsController::class, 'store'])->name('news-store');
-    Route::get('/admin/edit-news/{news}', [NewsController::class, 'edit'])->name('news-edit');
-    Route::delete('/admin/edit-news/{news}/remove-video',  [NewsController::class, 'update'])->name('remove-video');
-    Route::patch('/admin/update-news/{news}', [NewsController::class, 'update'])->name('news-update');
-    Route::delete('/admin/delete-news/{news}', [NewsController::class, 'delete'])->name('news-delete');
+    Route::get('/admin/edit-news/{slug}', [NewsController::class, 'edit'])->name('news-edit');
+    Route::delete('/admin/edit-news/{slug}/remove-video',  [NewsController::class, 'update'])->name('remove-video');
+    Route::patch('/admin/update-news/{slug}', [NewsController::class, 'update'])->name('news-update');
+    Route::delete('/admin/delete-news/{slug}', [NewsController::class, 'delete'])->name('news-delete');
 
     // event
     Route::get('/admin/create-events]', [EventController::class, 'create'])->name('events-create');
@@ -54,10 +54,10 @@ Route::middleware(['admin'])->group(function(){
     // news bottom
     Route::get('/admin/create-news-bottom', [NewsBottomController::class, 'create2'])->name('create-news-bottom');
     Route::post('/admin/store-news-bottom', [NewsBottomController::class, 'store2'])->name('store-news-bottom');
-    Route::get('/admin/edit-news-bottom/{newsbottom}', [NewsBottomController::class, 'edit2'])->name('news-bottom-edit');
-    Route::patch('/admin/update-news-bottom/{newsbottom}', [NewsBottomController::class, 'update2'])->name('news-bottom-update');
+    Route::get('/admin/edit-news-bottom/{slug}', [NewsBottomController::class, 'edit2'])->name('news-bottom-edit');
+    Route::patch('/admin/update-news-bottom/{slug}', [NewsBottomController::class, 'update2'])->name('news-bottom-update');
     Route::delete('/admin/edit-news-bottom/{newsbottom}/remove-video',  [NewsBottomController::class, 'update2'])->name('remove-video-bottom');
-    Route::delete('/admin/delete-news-bottom/{newsbottom}', [NewsBottomController::class, 'delete2'])->name('news-bottom-delete');
+    Route::delete('/admin/delete-news-bottom/{slug}', [NewsBottomController::class, 'delete2'])->name('news-bottom-delete');
 });
 
 
